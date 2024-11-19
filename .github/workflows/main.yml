@@ -1,0 +1,12 @@
+name: Unity
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+    with:
+      projectName: "StickmanSliding"
+      projectPath: "./StickmanSliding.Unity/"
