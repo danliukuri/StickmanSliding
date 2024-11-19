@@ -1,0 +1,48 @@
+name: Deploy
+
+on: 
+  workflow_call:
+    inputs:
+      projectName:
+        required: true
+        type: string
+
+jobs:
+  deploy-github-pages:
+    name: Github Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: Develop
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      targetPlatform: WebGL
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Configure Github Pages
+        uses: actions/configure-pages@v5.0.0
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: ${{ inputs.projectName }}${{ env.targetPlatform }}
+          path: build/${{ env.targetPlatform }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          # ${{ inputs.projectName }} in "path" input is needed because of build name
+          # Check "buildName" input of "game-ci/unity-builder" action
+          path: build/${{ env.targetPlatform }}/${{ inputs.projectName }}
+          name: ${{ inputs.projectName }}${{ env.targetPlatform }}GithubPages 
+
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
+        with:
+          artifact_name: ${{ inputs.projectName }}${{ env.targetPlatform }}GithubPages

@@ -42,8 +42,7 @@ jobs:
             Library-Build-
             Library-
 
-      - if: matrix.targetPlatform == 'Android'
-        name: Free disk space
+      - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
 
       - name: Build
