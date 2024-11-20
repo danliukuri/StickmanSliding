@@ -1,0 +1,63 @@
+# Cache reusing
+# Workflow runs can restore caches created in either the current branch or the default branch
+# More cache restrictions:
+#   * https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+
+name: Build
+
+on: 
+  workflow_call:
+    inputs:
+      projectName:
+        required: true
+        type: string
+      projectPath:
+        required: false
+        default: ./
+        type: string
+
+jobs:
+  build-all-target-platforms:
+    name: ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Names as specified in Unity - https://docs.unity3d.com/ScriptReference/BuildTarget
+        targetPlatform:
+          - Android
+          - StandaloneWindows64
+          - WebGL
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Restore library cache
+        uses: actions/cache@v4.1.2
+        with:
+          path: ${{ inputs.projectPath }}/Library
+          key: Library-Build-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-Build-
+            Library-
+
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+
+      - name: Build
+        uses: game-ci/unity-builder@v4.3.0
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: ${{ inputs.projectPath }}
+          buildName: ${{ inputs.projectName }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: ${{ inputs.projectName }}${{ matrix.targetPlatform }} 
+          path: build/${{ matrix.targetPlatform }}
