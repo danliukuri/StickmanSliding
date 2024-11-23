@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StickmanSliding.Infrastructure.ObjectsCreation
+namespace StickmanSliding.Infrastructure.ObjectCreation
 {
     public interface IGameObjectResetter<in TComponent> where TComponent : Component
     {

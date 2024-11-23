@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace StickmanSliding.Data.Static.Configuration.ObjectsCreation
+namespace StickmanSliding.Data.Static.Configuration.ObjectCreation
 {
     [Serializable]
     public class PoolConfig
