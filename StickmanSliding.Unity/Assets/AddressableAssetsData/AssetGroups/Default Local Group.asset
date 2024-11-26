@@ -14,7 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: fb76e48ec3676864c8b1360354c2e1d1
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 617d9c4b40bb90745aca909b8085f884
+    m_Address: GameHub
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fab26704f8370d74faf505b5535a1445
+    m_Address: Gameplay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 19a9655caa6fcb549971ebb3c85af7dc, type: 2}
   m_SchemaSet:
