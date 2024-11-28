@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using StickmanSliding.Architecture.GameStates;
+using StickmanSliding.Architecture.GameStates.Global;
 using StickmanSliding.Utilities.Patterns.State.Containers;
 using StickmanSliding.Utilities.Patterns.State.Creation;
 using StickmanSliding.Utilities.Patterns.State.Machines;
@@ -12,7 +12,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
     {
         public override void InstallBindings()
         {
-            var gameStatesTypes = new List<Type> { typeof(SceneLoadingGameState) };
+            var gameStatesTypes = new List<Type> { typeof(BootstrapGameState), typeof(SceneLoadingGameState) };
 
             BindStateFactory();
             BindStateContainer(gameStatesTypes);

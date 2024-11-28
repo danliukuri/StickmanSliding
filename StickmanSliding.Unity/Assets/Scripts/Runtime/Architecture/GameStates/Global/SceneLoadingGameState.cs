@@ -4,7 +4,7 @@ using StickmanSliding.Infrastructure.AssetLoading;
 using StickmanSliding.Utilities.Patterns.State.Types;
 using Zenject;
 
-namespace StickmanSliding.Architecture.GameStates
+namespace StickmanSliding.Architecture.GameStates.Global
 {
     public class SceneLoadingGameState : IAsyncEnterableState<SceneName>
     {
