@@ -18,6 +18,7 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
         [Inject]         private readonly IInstantiator                       _instantiator;
         [InjectOptional] private readonly IGameObjectConfigurator<TComponent> _configurator;
         [InjectOptional] private readonly IGameObjectResetter<TComponent>     _resetter;
+        [InjectOptional] private readonly Transform                           _parent;
 
         private ObjectPool<TComponent> _pool;
 
@@ -52,11 +53,10 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
         {
             if (Prefab != default)
                 using (Prefab.AsInactive())
-                    return _instantiator.InstantiatePrefabForComponent<TComponent>(Prefab);
+                    return _instantiator.InstantiatePrefabForComponent<TComponent>(Prefab, _parent);
 
-            throw new InvalidOperationException(
-                $"Prefab {Prefab.name} is not loaded!\n" +
-                $"Make sure factory {typeof(GameObjectFactory<TComponent>).Name} is initialized.");
+            throw new InvalidOperationException($"Prefab {Prefab.name} is not loaded!\n" +
+                                                $"Make sure factory {GetType().Name} is initialized.");
         }
 
         private void Configure(TComponent component)
