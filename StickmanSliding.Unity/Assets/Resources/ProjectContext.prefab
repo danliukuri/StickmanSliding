@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9073767818356703662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c055c9a202624ed486d244fa561831d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7eea0d97ec406134b8f60c0be6086bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6513760759251624337
@@ -90,3 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8865d748b448db9d37f1fe284868b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  factoryConfigReferences:
+    <TrackPart>k__BackingField:
+      m_AssetGUID: 3f9f60a744d2d0c4ca28312192f51704
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

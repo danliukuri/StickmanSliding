@@ -16,7 +16,7 @@ namespace StickmanSliding.Architecture.Bootstrap
         private async UniTaskVoid Initialize()
         {
             await _gameStateMachine.ChangeState<BootstrapGameState>();
-            _gameStateMachine.ChangeState<SceneLoadingGameState, SceneName>(SceneName.GameHub).Forget();
+            _gameStateMachine.ChangeState<SceneLoadingGameState, SceneName>(SceneName.Gameplay).Forget();
         }
     }
 }
