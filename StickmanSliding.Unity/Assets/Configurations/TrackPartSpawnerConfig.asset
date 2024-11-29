@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TrackLength>k__BackingField: 80
   <TrackDirection>k__BackingField: {x: 0, y: 0, z: 1}
-  <SpawnOrigin>k__BackingField: {x: 0, y: 0, z: 10}
+  <SpawnOrigin>k__BackingField: {x: 0, y: -0.5, z: 5}
