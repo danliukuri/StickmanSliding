@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
-namespace StickmanSliding.Data.Static.Configuration.ObjectCreation
+namespace StickmanSliding.Data.Static.Configuration
 {
-    [Serializable]
-    public class PoolConfig
+    [CreateAssetMenu(fileName = nameof(PoolConfig), menuName = "Configuration/Pool")]
+    public class PoolConfig : ScriptableObject
     {
         [field: SerializeField, Min(default)] public int StartCount    { get; private set; }
         [field: SerializeField, Min(default)] public int StartCapacity { get; private set; }

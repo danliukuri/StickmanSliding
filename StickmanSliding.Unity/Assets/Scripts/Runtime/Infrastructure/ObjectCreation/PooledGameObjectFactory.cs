@@ -1,56 +1,40 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
-using StickmanSliding.Data.Static.Configuration.ObjectCreation;
-using StickmanSliding.Infrastructure.AssetLoading;
+﻿using Cysharp.Threading.Tasks;
+using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
-using StickmanSliding.Utilities.Extensions.Wrappers;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace StickmanSliding.Infrastructure.ObjectCreation
 {
-    public class PooledGameObjectFactory<TComponent> : IPooledGameObjectFactory<TComponent> where TComponent : Component
+    public class PooledGameObjectFactory<TComponent> : GameObjectFactory<TComponent> where TComponent : Component
     {
-        [Inject]         private readonly IFactoryConfigLoader                _factoryConfigLoader;
-        [Inject]         private readonly IAssetLoader                        _assetLoader;
-        [Inject]         private readonly IInstantiator                       _instantiator;
-        [InjectOptional] private readonly IGameObjectConfigurator<TComponent> _configurator;
-        [InjectOptional] private readonly IGameObjectResetter<TComponent>     _resetter;
+        [Inject]         private readonly IPoolConfigLoader               _poolConfigLoader;
+        [InjectOptional] private readonly IGameObjectResetter<TComponent> _resetter;
 
-        [InjectOptional] private readonly Vector3    _position;
-        [InjectOptional] private readonly Quaternion _rotation = Quaternion.identity;
-        [InjectOptional] private readonly Transform  _parent;
+        private ObjectPool<TComponent> _pool;
 
-        private AssetReferenceGameObject _prefabReference;
-        private ObjectPool<TComponent>   _pool;
-
-        public GameObject Prefab { get; private set; }
-
-        public async UniTask Initialize()
+        public override async UniTask Initialize()
         {
-            FactoryConfig factoryConfig = await _factoryConfigLoader.Load<TComponent>();
-            _prefabReference = factoryConfig.Prefab;
-            Prefab           = await _assetLoader.Load<GameObject>(_prefabReference);
-            CreatePool(factoryConfig.Pool);
-            InitializePool(factoryConfig.Pool);
-            _factoryConfigLoader.Release<TComponent>();
+            await base.Initialize();
+            PoolConfig poolConfig = await _poolConfigLoader.Load<TComponent>();
+            CreatePool(poolConfig);
+            InitializePool(poolConfig);
+            _poolConfigLoader.Release<TComponent>();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            _assetLoader.Release(_prefabReference);
+            base.Dispose();
             _pool.Clear();
         }
 
-        public TComponent Create() => _pool.Get();
+        public override TComponent Create() => _pool.Get();
 
-        public void Release(TComponent component) => _pool.Release(component);
+        public override void Release(TComponent component) => _pool.Release(component);
 
         private void CreatePool(PoolConfig poolConfig) =>
-            _pool = new ObjectPool<TComponent>(CreateActualObject, Configure, Reset, Destroy,
+            _pool = new ObjectPool<TComponent>(CreateActualObject, Configure, Reset, base.Release,
                 poolConfig.ThrowErrorIfItemAlreadyInPoolWhenRelease, poolConfig.StartCapacity, poolConfig.MaxSize);
 
         private void InitializePool(PoolConfig poolConfig)
@@ -59,33 +43,10 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
                 _pool.Release(CreateActualObject());
         }
 
-        private TComponent CreateActualObject()
-        {
-            if (Prefab != default)
-                using (Prefab.AsInactive())
-                    return _instantiator.InstantiatePrefabForComponent<TComponent>(Prefab,
-                        _position, _rotation, _parent);
-
-            throw new InvalidOperationException($"Prefab {Prefab.name} is not loaded!\n" +
-                                                $"Make sure factory {GetType().Name} is initialized.");
-        }
-
-        private void Configure(TComponent component)
-        {
-            _configurator?.Configure(component);
-            component.gameObject.SetActive(true);
-        }
-
         private void Reset(TComponent component)
         {
             _resetter?.Reset(component);
             component.gameObject.SetActive(false);
-        }
-
-        private void Destroy(TComponent component)
-        {
-            if (component != default)
-                Object.Destroy(component.gameObject);
         }
     }
 }

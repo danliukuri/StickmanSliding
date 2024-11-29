@@ -11,6 +11,6 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
         public UniTask Initialize();
 
         public TComponent Create();
-        public void       Destroy(TComponent component);
+        public void       Release(TComponent component);
     }
 }

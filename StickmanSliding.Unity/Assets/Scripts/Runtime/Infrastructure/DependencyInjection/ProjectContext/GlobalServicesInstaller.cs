@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using StickmanSliding.Data.Static.Configuration.ObjectCreation;
+using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
@@ -12,26 +12,26 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
 {
     public class GlobalServicesInstaller : MonoInstaller
     {
-        [SerializeField] private FactoryConfigReferences factoryConfigReferences;
+        [SerializeField] private PoolConfigReferences poolConfigReferences;
 
         public override void InstallBindings()
         {
             BindSceneLoader();
             BindAssetLoader();
-            BindFactoryConfigLoader();
+            BindPoolConfigLoader();
         }
 
         private void BindSceneLoader() => Container.BindInterfacesTo<SceneLoader>().AsSingle();
 
         private void BindAssetLoader() => Container.BindInterfacesTo<AssetLoader>().AsSingle();
 
-        private void BindFactoryConfigLoader() => Container.BindInterfacesTo<FactoryConfigLoader>().AsSingle()
-            .WithArguments(factoryConfigReferences.ToDictionary());
+        private void BindPoolConfigLoader() => Container.BindInterfacesTo<PoolConfigLoader>().AsSingle()
+            .WithArguments(poolConfigReferences.ToDictionary());
 
         [Serializable]
-        public class FactoryConfigReferences
+        public class PoolConfigReferences
         {
-            [field: SerializeField] public AssetReferenceT<FactoryConfig> TrackPart { get; private set; }
+            [field: SerializeField] public AssetReferenceT<PoolConfig> TrackPart { get; private set; }
 
             public Dictionary<Type, AssetReference> ToDictionary() => new()
             {

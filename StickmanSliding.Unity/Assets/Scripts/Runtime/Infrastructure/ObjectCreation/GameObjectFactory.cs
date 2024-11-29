@@ -23,24 +23,24 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
 
         public GameObject Prefab { get; private set; }
 
-        public async UniTask Initialize() => Prefab = await _assetLoader.Load<GameObject>(_prefabReference);
+        public virtual async UniTask Initialize() => Prefab = await _assetLoader.Load<GameObject>(_prefabReference);
 
-        public void Dispose() => _assetLoader.Release(_prefabReference);
+        public virtual void Dispose() => _assetLoader.Release(_prefabReference);
 
-        public TComponent Create()
+        public virtual TComponent Create()
         {
             TComponent component = CreateActualObject();
             Configure(component);
             return component;
         }
 
-        public void Destroy(TComponent component)
+        public virtual void Release(TComponent component)
         {
             if (component != default)
                 Object.Destroy(component.gameObject);
         }
 
-        private TComponent CreateActualObject()
+        protected TComponent CreateActualObject()
         {
             if (Prefab != default)
                 using (Prefab.AsInactive())
@@ -51,7 +51,7 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
                                                 $"Make sure factory {GetType().Name} is initialized.");
         }
 
-        private void Configure(TComponent component)
+        protected void Configure(TComponent component)
         {
             _configurator?.Configure(component);
             component.gameObject.SetActive(true);
