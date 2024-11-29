@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: fb76e48ec3676864c8b1360354c2e1d1
   m_SerializeEntries:
+  - m_GUID: 117d96075ef60a340bd0b3cdae7f051c
+    m_Address: TrackPart
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f9f60a744d2d0c4ca28312192f51704
+    m_Address: FactoryConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 617d9c4b40bb90745aca909b8085f884
     m_Address: GameHub
     m_ReadOnly: 0
