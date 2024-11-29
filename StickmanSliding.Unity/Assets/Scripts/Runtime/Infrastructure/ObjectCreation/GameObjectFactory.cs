@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using StickmanSliding.Data.Static.Configuration.ObjectCreation;
 using StickmanSliding.Infrastructure.AssetLoading;
+using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Utilities.Extensions.Wrappers;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -12,25 +13,26 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
 {
     public class GameObjectFactory<TComponent> : IGameObjectFactory<TComponent> where TComponent : Component
     {
-        [Inject]         private readonly IFactoryConfigurationLoader         _factoryConfigurationLoader;
+        [Inject]         private readonly IFactoryConfigLoader                _factoryConfigLoader;
         [Inject]         private readonly IAssetLoader                        _assetLoader;
         [Inject]         private readonly IInstantiator                       _instantiator;
         [InjectOptional] private readonly IGameObjectConfigurator<TComponent> _configurator;
         [InjectOptional] private readonly IGameObjectResetter<TComponent>     _resetter;
 
         private ObjectPool<TComponent> _pool;
-        private TComponent             _prefab;
 
-        public void Dispose() => _pool.Clear();
+        public GameObject Prefab { get; private set; }
 
         public async UniTask Initialize()
         {
-            FactoryConfig factoryConfig = await _factoryConfigurationLoader.Load<TComponent>();
-            _prefab = await _assetLoader.Load<TComponent>(factoryConfig.Prefab);
+            FactoryConfig factoryConfig = await _factoryConfigLoader.Load<TComponent>();
+            Prefab = await _assetLoader.Load<GameObject>(factoryConfig.Prefab);
             CreatePool(factoryConfig.Pool);
             InitializePool(factoryConfig.Pool);
-            _factoryConfigurationLoader.Release<TComponent>();
+            _factoryConfigLoader.Release<TComponent>();
         }
+
+        public void Dispose() => _pool.Clear();
 
         public TComponent Create() => _pool.Get();
 
@@ -48,12 +50,12 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
 
         private TComponent CreateActualObject()
         {
-            if (_prefab != default)
-                using (_prefab.AsInactive())
-                    return _instantiator.InstantiatePrefabForComponent<TComponent>(_prefab);
+            if (Prefab != default)
+                using (Prefab.AsInactive())
+                    return _instantiator.InstantiatePrefabForComponent<TComponent>(Prefab);
 
             throw new InvalidOperationException(
-                $"Prefab {_prefab.name} is not loaded!\n" +
+                $"Prefab {Prefab.name} is not loaded!\n" +
                 $"Make sure factory {typeof(GameObjectFactory<TComponent>).Name} is initialized.");
         }
 
@@ -69,6 +71,10 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
             component.gameObject.SetActive(false);
         }
 
-        private void Destroy(TComponent component) => Object.Destroy(component.gameObject);
+        private void Destroy(TComponent component)
+        {
+            if (component != default)
+                Object.Destroy(component.gameObject);
+        }
     }
 }

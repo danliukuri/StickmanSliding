@@ -5,14 +5,14 @@ using StickmanSliding.Data.Static.Configuration.ObjectCreation;
 using UnityEngine.AddressableAssets;
 using Zenject;
 
-namespace StickmanSliding.Infrastructure.AssetLoading
+namespace StickmanSliding.Infrastructure.AssetLoading.Configuration
 {
-    public class FactoryConfigurationLoader : IFactoryConfigurationLoader
+    public class FactoryConfigLoader : IFactoryConfigLoader
     {
         [Inject] private readonly IAssetLoader                     _assetLoader;
         [Inject] private readonly Dictionary<Type, AssetReference> _factoryConfigReferences;
 
-        private Dictionary<Type, FactoryConfig> _factoryConfigs;
+        private readonly Dictionary<Type, FactoryConfig> _factoryConfigs = new();
 
         public async UniTask<FactoryConfig> Load<TComponent>()
         {
@@ -25,7 +25,10 @@ namespace StickmanSliding.Infrastructure.AssetLoading
             return config;
         }
 
-        public void Release<TComponent>() =>
-            _assetLoader.Release(_factoryConfigReferences[typeof(TComponent)]);
+        public void Release<TComponent>()
+        {
+            if (_factoryConfigReferences.Remove(typeof(TComponent), out AssetReference assetReference))
+                _assetLoader.Release(assetReference);
+        }
     }
 }
