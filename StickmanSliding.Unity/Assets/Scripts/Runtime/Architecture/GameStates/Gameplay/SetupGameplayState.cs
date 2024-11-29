@@ -8,8 +8,8 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 {
     public class SetupGameplayState : IAsyncEnterableState
     {
-        [Inject] private readonly IGameObjectFactory<TrackPart> _trackPartFactory;
-        [Inject] private readonly ITrackPartSpawner             _trackPartSpawner;
+        [Inject] private readonly IPooledGameObjectFactory<TrackPart> _trackPartFactory;
+        [Inject] private readonly ITrackPartSpawner                   _trackPartSpawner;
 
         public async UniTask Enter()
         {

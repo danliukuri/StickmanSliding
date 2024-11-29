@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace StickmanSliding.Infrastructure.ObjectCreation
 {
-    public interface IGameObjectFactory<TComponent> : IDisposable where TComponent : Component
+    public interface IPooledGameObjectFactory<TComponent> : IDisposable where TComponent : Component
     {
         GameObject Prefab { get; }
 
         public UniTask Initialize();
 
         public TComponent Create();
-        public void       Destroy(TComponent component);
+        public void       Release(TComponent component);
     }
 }

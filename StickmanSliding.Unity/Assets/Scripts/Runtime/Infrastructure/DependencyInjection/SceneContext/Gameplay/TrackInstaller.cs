@@ -22,7 +22,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         }
 
         private void BindTrackPartFactory() =>
-            Container.BindInterfacesTo<GameObjectFactory<TrackPart>>().AsSingle().WithArguments(trackPartsParent);
+            Container.BindInterfacesTo<PooledGameObjectFactory<TrackPart>>().AsSingle().WithArguments(trackPartsParent);
 
         private void BindTrackPartSpawnerConfigLoader() =>
             Container
