@@ -1,4 +1,6 @@
-﻿using StickmanSliding.Features.Player;
+﻿using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.Player;
+using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,11 +10,21 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 {
     public class PlayerInstaller : MonoInstaller
     {
-        [SerializeField] private AssetReferenceGameObject playerPrefab;
+        [SerializeField] private AssetReferenceGameObject      playerPrefab;
+        [SerializeField] private AssetReferenceT<PlayerConfig> config;
 
-        public override void InstallBindings() => BindPlayerFactory();
 
-        private void BindPlayerFactory() =>
+        public override void InstallBindings()
+        {
+            BindFactory();
+            BindConfigLoader();
+        }
+
+        private void BindFactory() =>
             Container.BindInterfacesTo<GameObjectFactory<Player>>().AsSingle().WithArguments(playerPrefab);
+
+
+        private void BindConfigLoader() =>
+            Container.BindInterfacesTo<PlayerConfigLoader>().AsSingle().WithArguments(config);
     }
 }

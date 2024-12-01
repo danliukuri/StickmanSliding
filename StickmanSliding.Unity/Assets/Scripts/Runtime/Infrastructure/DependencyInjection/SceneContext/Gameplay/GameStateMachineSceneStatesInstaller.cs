@@ -10,7 +10,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             Container.BindStateFactory();
             Container.BindStateContainerInitializer(new[]
             {
-                typeof(SetupGameplayState)
+                typeof(SetupGameplayState), typeof(ProcessGameplayState)
             });
         }
     }
