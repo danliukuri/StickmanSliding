@@ -26,7 +26,11 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _gameStateMachine.ChangeState<ProcessGameplayState, Player>(player).Forget();
         }
 
-        private UniTask InitializeTrack() => _trackPartFactory.Initialize().ContinueWith(_trackPartSpawner.Initialize);
+        private async UniTask InitializeTrack()
+        {
+            await _trackPartFactory.Initialize();
+            await _trackPartSpawner.Initialize();
+        }
 
         private async UniTask<Player> InitializePlayer()
         {

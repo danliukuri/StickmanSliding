@@ -26,7 +26,7 @@ namespace StickmanSliding.Features.Track
             var initialNumberOfTrackParts = (int)(config.TrackLength / _spawnOffset.magnitude);
             State = new TrackPartSpawnerState(config.SpawnOrigin);
             _configLoader.Release();
-            
+
             Spawn(initialNumberOfTrackParts);
         }
 

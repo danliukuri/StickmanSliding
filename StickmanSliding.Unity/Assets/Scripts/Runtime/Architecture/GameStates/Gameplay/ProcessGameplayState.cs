@@ -3,8 +3,12 @@ using StickmanSliding.Utilities.Patterns.State.Types;
 
 namespace StickmanSliding.Architecture.GameStates.Gameplay
 {
-    public class ProcessGameplayState : IEnterableState<Player>
+    public class ProcessGameplayState : IEnterableState<Player>, IExitableState
     {
-        public void Enter(Player player) => player.Mover.StartMoving();
+        private Player _player;
+
+        public void Enter(Player player) => (_player = player).Mover.StartMoving();
+
+        public void Exit() => _player.Mover.StopMoving();
     }
 }
