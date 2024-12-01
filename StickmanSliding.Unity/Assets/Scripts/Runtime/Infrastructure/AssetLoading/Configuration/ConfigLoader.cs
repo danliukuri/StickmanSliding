@@ -1,19 +1,19 @@
 ﻿using Cysharp.Threading.Tasks;
-using StickmanSliding.Data.Static.Configuration;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace StickmanSliding.Infrastructure.AssetLoading.Configuration
 {
-    public class PlayerConfigLoader : IConfigLoader<PlayerConfig>, IConfigProvider<PlayerConfig>
+    public class ConfigLoader<TConfig> : IConfigLoader<TConfig>, IConfigProvider<TConfig>
+        where TConfig : ScriptableObject
     {
         [Inject] private readonly IAssetLoader   _assetLoader;
         [Inject] private readonly AssetReference _configReferences;
 
-        public PlayerConfig Config { get; private set; }
+        public TConfig Config { get; private set; }
 
-        public async UniTask<PlayerConfig> Load() =>
-            Config ??= await _assetLoader.Load<PlayerConfig>(_configReferences);
+        public async UniTask<TConfig> Load() => Config ??= await _assetLoader.Load<TConfig>(_configReferences);
 
         public void Release()
         {

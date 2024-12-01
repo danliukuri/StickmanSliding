@@ -27,7 +27,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
                 .WithArguments(trackPartPrefab, trackPartsParent);
 
         private void BindTrackPartSpawnerConfigLoader() =>
-            Container.BindInterfacesTo<TrackPartSpawnerConfigLoader>().AsSingle()
+            Container.BindInterfacesTo<ConfigLoader<TrackPartSpawnerConfig>>().AsSingle()
                 .WithArguments(trackPartSpawnerConfig);
 
         private void BindTrackPartSpawner() =>

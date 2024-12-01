@@ -25,6 +25,6 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 
 
         private void BindConfigLoader() =>
-            Container.BindInterfacesTo<PlayerConfigLoader>().AsSingle().WithArguments(config);
+            Container.BindInterfacesTo<ConfigLoader<PlayerConfig>>().AsSingle().WithArguments(config);
     }
 }
