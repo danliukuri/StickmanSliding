@@ -2,5 +2,9 @@
 
 namespace StickmanSliding.Features.Track
 {
-    public class TrackPart : MonoBehaviour { }
+    [SelectionBase]
+    public class TrackPart : MonoBehaviour
+    {
+        [field: SerializeField] public Transform Body { get; private set; }
+    }
 }

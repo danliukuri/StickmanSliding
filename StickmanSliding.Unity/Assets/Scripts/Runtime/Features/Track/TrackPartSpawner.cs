@@ -22,7 +22,7 @@ namespace StickmanSliding.Features.Track
         public async UniTask Initialize()
         {
             TrackPartSpawnerConfig config = await _configLoader.Load();
-            _spawnOffset = Vector3.Scale(config.TrackDirection, _trackPartFactory.Prefab.transform.lossyScale);
+            _spawnOffset = Vector3.Scale(config.TrackDirection, _trackPartFactory.Prefab.Body.lossyScale);
             var initialNumberOfTrackParts = (int)(config.TrackLength / _spawnOffset.magnitude);
             State = new TrackPartSpawnerState(config.SpawnOrigin);
             _configLoader.Release();

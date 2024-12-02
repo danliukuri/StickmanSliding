@@ -6,6 +6,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
 {
     public class PlayerInstaller : MonoInstaller
     {
+        [SerializeField] private new Rigidbody rigidbody;
+
         public override void InstallBindings()
         {
             BindRigidbody();
@@ -13,7 +15,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
             BindMover();
         }
 
-        private void BindRigidbody() => Container.Bind<Rigidbody>().FromComponentOnRoot().AsSingle();
+        private void BindRigidbody() => Container.Bind<Rigidbody>().FromInstance(rigidbody).AsSingle();
 
         private void BindMover() => Container.BindInterfacesTo<PlayerMover>().AsSingle();
     }

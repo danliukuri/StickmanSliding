@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4056292952434452422}
-  - component: {fileID: 3753440563632233748}
-  - component: {fileID: -5179775070479331733}
+  - component: {fileID: 2701941508595047727}
   - component: {fileID: 3905909182251924003}
   - component: {fileID: -5533522102826353688}
   - component: {fileID: -2854722776455878724}
@@ -37,30 +36,7 @@ Transform:
   - {fileID: 490349677592067703}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3753440563632233748
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3728458900269121624}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!54 &-5179775070479331733
+--- !u!54 &2701941508595047727
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,12 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a2a43d012545bd8c8e0ba698a87376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config:
-    m_AssetGUID: 195f30fbec8103d4da4ba01c485e85ea
-    m_SubObjectName: 
-    m_SubObjectGUID: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  rigidbody: {fileID: 2701941508595047727}
 --- !u!1 &8514150040442604150
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,8 +118,9 @@ GameObject:
   - component: {fileID: 490349677592067703}
   - component: {fileID: 4085929485368207458}
   - component: {fileID: 8503252884160605763}
+  - component: {fileID: 3445074254331271088}
   m_Layer: 0
-  m_Name: Mesh
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,3 +194,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &3445074254331271088
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514150040442604150}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

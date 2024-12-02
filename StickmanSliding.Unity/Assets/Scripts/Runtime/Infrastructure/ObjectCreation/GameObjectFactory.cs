@@ -21,9 +21,15 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
         [InjectOptional] private readonly Quaternion               _rotation = Quaternion.identity;
         [InjectOptional] private readonly Transform                _parent;
 
-        public GameObject Prefab { get; private set; }
+        private GameObject _prefab;
 
-        public virtual async UniTask Initialize() => Prefab = await _assetLoader.Load<GameObject>(_prefabReference);
+        public TComponent Prefab { get; private set; }
+
+        public virtual async UniTask Initialize()
+        {
+            _prefab = await _assetLoader.Load<GameObject>(_prefabReference);
+            Prefab  = _prefab.GetComponent<TComponent>();
+        }
 
         public virtual void Dispose() => _assetLoader.Release(_prefabReference);
 
@@ -42,13 +48,11 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
 
         protected TComponent CreateActualObject()
         {
-            if (Prefab != default)
-                using (Prefab.AsInactive())
-                    return _instantiator.InstantiatePrefabForComponent<TComponent>(Prefab,
-                        _position, _rotation, _parent);
-
-            throw new InvalidOperationException($"Prefab {Prefab.name} is not loaded!\n" +
-                                                $"Make sure factory {GetType().Name} is initialized.");
+            if (_prefab == default)
+                throw new InvalidOperationException($"Prefab {_prefab.name} is not loaded!\n" +
+                                                    $"Make sure factory {GetType().Name} is initialized.");
+            using (_prefab.AsInactive())
+                return _instantiator.InstantiatePrefabForComponent<TComponent>(_prefab, _position, _rotation, _parent);
         }
 
         protected void Configure(TComponent component)

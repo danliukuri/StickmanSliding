@@ -6,6 +6,7 @@ using Zenject;
 
 namespace StickmanSliding.Features.Player
 {
+    [SelectionBase]
     public class Player : MonoBehaviour
     {
         [Inject] private IConfigLoader<PlayerConfig> _configLoader;
