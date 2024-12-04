@@ -542,14 +542,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7cb7ecace744969a3d0af2a4678c915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackPartPrefab:
-    m_AssetGUID: 117d96075ef60a340bd0b3cdae7f051c
+  trackSpawnerConfig:
+    m_AssetGUID: 1333741773e19bd488e864aec5226eeb
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  trackPartSpawnerConfig:
-    m_AssetGUID: 1333741773e19bd488e864aec5226eeb
+  trackPartPrefab:
+    m_AssetGUID: 117d96075ef60a340bd0b3cdae7f051c
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 

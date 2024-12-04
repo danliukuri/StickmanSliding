@@ -10,30 +10,26 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 {
     public class TrackInstaller : MonoInstaller
     {
-        [SerializeField] private AssetReferenceGameObject                trackPartPrefab;
-        [SerializeField] private AssetReferenceT<TrackPartSpawnerConfig> trackPartSpawnerConfig;
-        [SerializeField] private Transform                               trackPartsParent;
+        [SerializeField] private AssetReferenceT<TrackSpawnerConfig> trackSpawnerConfig;
+        [SerializeField] private AssetReferenceGameObject            trackPartPrefab;
+        [SerializeField] private Transform                           trackPartsParent;
 
         public override void InstallBindings()
         {
             BindTrackPartFactory();
-            BindTrackPartSpawnerConfigLoader();
-            BindTrackPartSpawner();
-            BindTrackPartTrackPartConfigurator();
+            BindTrackSpawnerConfigLoader();
+            BindTrackSpawner();
         }
 
         private void BindTrackPartFactory() =>
             Container.BindInterfacesTo<PooledGameObjectFactory<TrackPart>>().AsSingle()
                 .WithArguments(trackPartPrefab, trackPartsParent);
 
-        private void BindTrackPartSpawnerConfigLoader() =>
-            Container.BindInterfacesTo<ConfigLoader<TrackPartSpawnerConfig>>().AsSingle()
-                .WithArguments(trackPartSpawnerConfig);
+        private void BindTrackSpawnerConfigLoader() =>
+            Container.BindInterfacesTo<ConfigLoader<TrackSpawnerConfig>>().AsSingle()
+                .WithArguments(trackSpawnerConfig);
 
-        private void BindTrackPartSpawner() =>
-            Container.BindInterfacesTo<TrackPartSpawner>().AsSingle();
-
-        private void BindTrackPartTrackPartConfigurator() =>
-            Container.BindInterfacesTo<TrackPartConfigurator>().AsSingle();
+        private void BindTrackSpawner() =>
+            Container.BindInterfacesTo<TrackSpawner>().AsSingle();
     }
 }

@@ -12,32 +12,38 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 {
     public class SetupGameplayState : IAsyncEnterableState
     {
-        [Inject] private readonly IStateMachine                 _gameStateMachine;
-        [Inject] private readonly IGameObjectFactory<TrackPart> _trackPartFactory;
-        [Inject] private readonly ITrackPartSpawner             _trackPartSpawner;
-        [Inject] private readonly IGameObjectFactory<Player>    _playerFactory;
-        [Inject] private readonly IConfigLoader<PlayerConfig>   _playerConfigLoader;
+        [Inject] private readonly IStateMachine                     _gameStateMachine;
+        [Inject] private readonly IConfigLoader<TrackSpawnerConfig> _trackPartSpawnerConfigLoader;
+        [Inject] private readonly IConfigLoader<PlayerConfig>       _playerConfigLoader;
+        [Inject] private readonly IGameObjectFactory<TrackPart>     _trackPartFactory;
+        [Inject] private readonly IGameObjectFactory<Player>        _playerFactory;
+        [Inject] private readonly ITrackSpawner                     _trackSpawner;
 
         public async UniTask Enter()
         {
+            await LoadAssets();
             await InitializeTrack();
             Player player = await InitializePlayer();
 
             _gameStateMachine.ChangeState<ProcessGameplayState, Player>(player).Forget();
         }
 
+        private UniTask LoadAssets() => UniTask.WhenAll(
+            _trackPartSpawnerConfigLoader.Load(),
+            _playerConfigLoader.Load()
+        );
+
         private async UniTask InitializeTrack()
         {
             await _trackPartFactory.Initialize();
-            await _trackPartSpawner.Initialize();
+            _trackSpawner.Initialize();
+            _trackSpawner.Spawn();
         }
 
         private async UniTask<Player> InitializePlayer()
         {
             await _playerFactory.Initialize();
-            Player player = _playerFactory.Create();
-            await player.Initialize();
-            return player;
+            return _playerFactory.Create();
         }
     }
 }

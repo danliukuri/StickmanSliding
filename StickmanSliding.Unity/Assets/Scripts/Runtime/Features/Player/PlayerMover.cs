@@ -15,8 +15,7 @@ namespace StickmanSliding.Features.Player
         private IDisposable _movingSubscription;
 
         public void StartMoving() => _movingSubscription =
-            Observable.EveryUpdate(UnityFrameProvider.FixedUpdate).Subscribe(this, (value, mover) => mover.Move())
-                .AddTo(_rigidbody.gameObject);
+            Observable.EveryUpdate(UnityFrameProvider.FixedUpdate).Subscribe(_ => Move()).AddTo(_rigidbody);
 
         public void StopMoving() => _movingSubscription.Dispose();
 

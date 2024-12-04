@@ -26,7 +26,7 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
         public override void Dispose()
         {
             base.Dispose();
-            _pool.Clear();
+            _pool.Dispose();
         }
 
         public override TComponent Create() => _pool.Get();

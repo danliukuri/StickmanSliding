@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871c6bb2facfa1148a1ca6609977327e, type: 3}
   m_Name: TrackPartPoolConfig
   m_EditorClassIdentifier: 
-  <StartCount>k__BackingField: 5
+  <StartCount>k__BackingField: 4
   <StartCapacity>k__BackingField: 10
   <MaxSize>k__BackingField: 20
   <ThrowErrorIfItemAlreadyInPoolWhenRelease>k__BackingField: 0
