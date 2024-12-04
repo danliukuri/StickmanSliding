@@ -5,11 +5,11 @@ using Zenject;
 
 namespace StickmanSliding.Utilities.Patterns.State.Machines
 {
-    public class StateMachine : IStateMachine
+    public class StateMachine : IStateMachine, IStateMachineStateProvider
     {
         [Inject] private readonly IStateProvider _stateProvider;
 
-        private IState _currentState;
+        public IState CurrentState { get; private set; }
 
         public async UniTask ChangeState<TState>() where TState : IAsyncEnterableState
         {
@@ -27,14 +27,14 @@ namespace StickmanSliding.Utilities.Patterns.State.Machines
         }
 
         private UniTask ExitCurrentState() =>
-            _currentState is IAsyncExitableState asyncExitableState
+            CurrentState is IAsyncExitableState asyncExitableState
                 ? asyncExitableState.Exit()
                 : UniTask.CompletedTask;
 
         private TState ChangeCurrentState<TState>() where TState : IState
         {
             var newState = _stateProvider.Get<TState>();
-            _currentState = newState;
+            CurrentState = newState;
             return newState;
         }
 

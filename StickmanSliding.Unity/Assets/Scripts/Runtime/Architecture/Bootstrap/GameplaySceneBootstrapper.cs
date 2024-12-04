@@ -1,18 +1,13 @@
 using Cysharp.Threading.Tasks;
 using StickmanSliding.Architecture.GameStates.Gameplay;
-using StickmanSliding.Utilities.Patterns.State.Machines;
-using UnityEngine;
-using Zenject;
 
 namespace StickmanSliding.Architecture.Bootstrap
 {
-    public class GameplaySceneBootstrapper : MonoBehaviour
+    public class GameplaySceneBootstrapper : GameBootstrapper
     {
-        [Inject] private IStateMachine _gameStateMachine;
+        protected override void BootstrapScene() => BootstrapSceneAsync().Forget();
 
-        private void Start() => Initialize().Forget();
-
-        private async UniTaskVoid Initialize()
+        private async UniTaskVoid BootstrapSceneAsync()
         {
             await _gameStateMachine.ChangeState<SetupGameplayState>();
             _gameStateMachine.ChangeState<ProcessGameplayState>().Forget();
