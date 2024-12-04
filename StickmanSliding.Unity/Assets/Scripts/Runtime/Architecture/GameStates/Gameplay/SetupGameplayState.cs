@@ -12,20 +12,22 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 {
     public class SetupGameplayState : IAsyncEnterableState
     {
-        [Inject] private readonly IStateMachine                     _gameStateMachine;
+        [Inject] private readonly IStateMachine _gameStateMachine;
+
         [Inject] private readonly IConfigLoader<TrackSpawnerConfig> _trackPartSpawnerConfigLoader;
-        [Inject] private readonly IConfigLoader<PlayerConfig>       _playerConfigLoader;
         [Inject] private readonly IGameObjectFactory<TrackPart>     _trackPartFactory;
-        [Inject] private readonly IGameObjectFactory<Player>        _playerFactory;
         [Inject] private readonly ITrackSpawner                     _trackSpawner;
+
+        [Inject] private readonly IConfigLoader<PlayerConfig> _playerConfigLoader;
+        [Inject] private readonly IGameObjectFactory<Player>  _playerFactory;
+        [Inject] private readonly IPlayerProvider             _playerProvider;
+
 
         public async UniTask Enter()
         {
             await LoadAssets();
             await InitializeTrack();
-            Player player = await InitializePlayer();
-
-            _gameStateMachine.ChangeState<ProcessGameplayState, Player>(player).Forget();
+            await InitializePlayer();
         }
 
         private UniTask LoadAssets() => UniTask.WhenAll(
@@ -40,10 +42,11 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _trackSpawner.Spawn();
         }
 
-        private async UniTask<Player> InitializePlayer()
+        private async UniTask InitializePlayer()
         {
             await _playerFactory.Initialize();
-            return _playerFactory.Create();
+            Player player = _playerFactory.Create();
+            _playerProvider.Initialize(player);
         }
     }
 }

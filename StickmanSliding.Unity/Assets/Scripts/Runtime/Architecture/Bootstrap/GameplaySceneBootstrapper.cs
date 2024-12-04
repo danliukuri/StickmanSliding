@@ -10,6 +10,12 @@ namespace StickmanSliding.Architecture.Bootstrap
     {
         [Inject] private IStateMachine _gameStateMachine;
 
-        private void Start() => _gameStateMachine.ChangeState<SetupGameplayState>().Forget();
+        private void Start() => Initialize().Forget();
+
+        private async UniTaskVoid Initialize()
+        {
+            await _gameStateMachine.ChangeState<SetupGameplayState>();
+            _gameStateMachine.ChangeState<ProcessGameplayState>().Forget();
+        }
     }
 }

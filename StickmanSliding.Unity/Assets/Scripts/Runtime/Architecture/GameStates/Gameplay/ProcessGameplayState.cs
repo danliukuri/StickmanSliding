@@ -1,14 +1,14 @@
 ﻿using StickmanSliding.Features.Player;
 using StickmanSliding.Utilities.Patterns.State.Types;
+using Zenject;
 
 namespace StickmanSliding.Architecture.GameStates.Gameplay
 {
-    public class ProcessGameplayState : IEnterableState<Player>, IExitableState
+    public class ProcessGameplayState : IEnterableState, IExitableState
     {
-        private Player _player;
+        [Inject] private IPlayerProvider _playerProvider;
 
-        public void Enter(Player player) => (_player = player).Mover.StartMoving();
-
-        public void Exit() => _player.Mover.StopMoving();
+        public void Enter() => _playerProvider.Player.Mover.StartMoving();
+        public void Exit()  => _playerProvider.Player.Mover.StopMoving();
     }
 }
