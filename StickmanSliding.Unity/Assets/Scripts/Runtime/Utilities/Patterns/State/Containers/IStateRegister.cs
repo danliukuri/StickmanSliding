@@ -4,8 +4,8 @@ namespace StickmanSliding.Utilities.Patterns.State.Containers
 {
     public interface IStateRegister
     {
-        public void Register(IState state);
+        void Register(IState state);
 
-        public void Unregister(IState state);
+        void Unregister(IState state);
     }
 }

@@ -5,7 +5,7 @@ namespace StickmanSliding.Infrastructure.AssetLoading.Configuration
 {
     public interface IPoolConfigLoader
     {
-        public UniTask<PoolConfig> Load<TComponent>();
-        void                       Release<TComponent>();
+        UniTask<PoolConfig> Load<TComponent>();
+        void                Release<TComponent>();
     }
 }
