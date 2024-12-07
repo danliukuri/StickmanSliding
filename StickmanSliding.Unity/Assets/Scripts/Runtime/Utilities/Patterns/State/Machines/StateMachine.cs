@@ -5,10 +5,11 @@ using Zenject;
 
 namespace StickmanSliding.Utilities.Patterns.State.Machines
 {
-    public class StateMachine : IStateMachine
+    public class StateMachine : IStateMachine, IStateMachineStateProvider
     {
         [Inject] private readonly IStateProvider _stateProvider;
-        private                   IState         _currentState;
+
+        public IState CurrentState { get; private set; }
 
         public async UniTask ChangeState<TState>() where TState : IAsyncEnterableState
         {
@@ -21,33 +22,30 @@ namespace StickmanSliding.Utilities.Patterns.State.Machines
             where TState : IAsyncEnterableState<TEnterArgument>
         {
             await ExitCurrentState();
-            await EnterState(ChangeCurrentState<TState>(), argument);
+            var newState = ChangeCurrentState<TState>();
+            await EnterState(newState, argument);
         }
 
-        private async UniTask ExitCurrentState()
-        {
-            if (_currentState is IAsyncExitableState asyncExitableState)
-                await asyncExitableState.Exit();
-
-        }
+        private UniTask ExitCurrentState() =>
+            CurrentState is IAsyncExitableState asyncExitableState
+                ? asyncExitableState.Exit()
+                : UniTask.CompletedTask;
 
         private TState ChangeCurrentState<TState>() where TState : IState
         {
             var newState = _stateProvider.Get<TState>();
-            _currentState = newState;
+            CurrentState = newState;
             return newState;
         }
 
-        private async UniTask EnterState<TState>(TState state) where TState : IState
-        {
-            if (state is IAsyncEnterableState asyncEnterableState)
-                await asyncEnterableState.Enter();
-        }
+        private UniTask EnterState<TState>(TState state) where TState : IState =>
+            state is IAsyncEnterableState asyncEnterableState
+                ? asyncEnterableState.Enter()
+                : UniTask.CompletedTask;
 
-        private async UniTask EnterState<TState, TArgument>(TState state, TArgument argument) where TState : IState
-        {
-            if (state is IAsyncEnterableState<TArgument> asyncEnterableState)
-                await asyncEnterableState.Enter(argument);
-        }
+        private UniTask EnterState<TState, TArgument>(TState state, TArgument argument) where TState : IState =>
+            state is IAsyncEnterableState<TArgument> asyncEnterableState
+                ? asyncEnterableState.Enter(argument)
+                : UniTask.CompletedTask;
     }
 }

@@ -15,8 +15,33 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: fb76e48ec3676864c8b1360354c2e1d1
   m_SerializeEntries:
+  - m_GUID: 117d96075ef60a340bd0b3cdae7f051c
+    m_Address: TrackPart
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1333741773e19bd488e864aec5226eeb
+    m_Address: TrackSpawnerConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 195f30fbec8103d4da4ba01c485e85ea
+    m_Address: PlayerConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ebba9c9ec31d754f8a084b0f784e9b8
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 617d9c4b40bb90745aca909b8085f884
     m_Address: GameHub
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dae4879d832b7cb4a800d6e02f04bb47
+    m_Address: TrackPartPoolConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

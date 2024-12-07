@@ -47,3 +47,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Tt]ext*[Mm]esh*[Pp]ro.meta
 /[Aa]ssets/[Pp]lugins/[Tt]ext*[Mm]esh*[Pp]ro
 /[Aa]ssets/[Pp]lugins/[Tt]ext*[Mm]esh*[Pp]ro.meta
+
+# NuGetForUnity package
+/[Pp]ackages/[Nn]uget*[Pp]ackages/[Ii]nstalled*[Pp]ackages/
+/[Pp]ackages/[Nn]uget*[Pp]ackages/[Ii]nstalled*[Pp]ackages.meta

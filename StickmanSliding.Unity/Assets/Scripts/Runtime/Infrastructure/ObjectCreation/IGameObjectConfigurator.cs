@@ -4,6 +4,6 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
 {
     public interface IGameObjectConfigurator<in TComponent> where TComponent : Component
     {
-        public void Configure(TComponent component);
+        void Configure(TComponent component);
     }
 }

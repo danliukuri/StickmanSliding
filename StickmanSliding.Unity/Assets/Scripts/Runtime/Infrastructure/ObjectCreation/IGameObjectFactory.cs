@@ -6,9 +6,11 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
 {
     public interface IGameObjectFactory<TComponent> : IDisposable where TComponent : Component
     {
-        public UniTask Initialize();
+        TComponent Prefab { get; }
 
-        public TComponent Create();
-        public void       Release(TComponent component);
+        UniTask Initialize();
+
+        TComponent Create();
+        void       Release(TComponent component);
     }
 }
