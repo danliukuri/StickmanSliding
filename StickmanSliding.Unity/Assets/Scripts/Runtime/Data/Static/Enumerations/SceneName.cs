@@ -4,6 +4,6 @@
     {
         Entry    = 0,
         GameHub  = 1,
-        GamePlay = 2
+        Gameplay = 2
     }
 }

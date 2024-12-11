@@ -8,9 +8,9 @@ namespace StickmanSliding.Infrastructure.AssetLoading
 {
     public interface ISceneLoader
     {
-        public AsyncOperationHandle<SceneInstance> LoadingOperation { get; }
+        AsyncOperationHandle<SceneInstance> LoadingOperation { get; }
 
-        public UniTask<Scene> Load(SceneName sceneName, LoadSceneMode mode = LoadSceneMode.Single);
-        public UniTask<Scene> ActivateLastLoaded();
+        UniTask<Scene> Load(SceneName sceneName, LoadSceneMode mode = LoadSceneMode.Single);
+        UniTask<Scene> ActivateLastLoaded();
     }
 }

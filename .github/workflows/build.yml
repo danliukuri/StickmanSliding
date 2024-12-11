@@ -42,6 +42,11 @@ jobs:
             Library-Build-
             Library-
 
+      - name: Restore NuGet packages
+        run : |
+          dotnet tool install --global NuGetForUnity.Cli
+          nugetforunity restore ${{ inputs.projectPath }}
+
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
 

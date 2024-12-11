@@ -4,26 +4,33 @@ namespace StickmanSliding.Utilities.Patterns.State.Types
 {
     public interface IAsyncEnterableState : IState
     {
-        public UniTask Enter();
+        UniTask Enter();
     }
 
     public interface IAsyncEnterableState<in TArgument> : IState
     {
-        public UniTask Enter(TArgument argument);
+        UniTask Enter(TArgument argument);
     }
 
     public interface IEnterableState : IAsyncEnterableState
     {
-        UniTask IAsyncEnterableState.Enter() => UniTask.CompletedTask.ContinueWith(Enter);
+        UniTask IAsyncEnterableState.Enter()
+        {
+            Enter();
+            return UniTask.CompletedTask;
+        }
 
-        public new void Enter();
+        new void Enter();
     }
 
     public interface IEnterableState<in TArgument> : IAsyncEnterableState<TArgument>
     {
-        UniTask IAsyncEnterableState<TArgument>.Enter(TArgument argument) =>
-            UniTask.CompletedTask.ContinueWith(() => Enter(argument));
+        UniTask IAsyncEnterableState<TArgument>.Enter(TArgument argument)
+        {
+            Enter(argument);
+            return UniTask.CompletedTask;
+        }
 
-        public new void Enter(TArgument argument);
+        new void Enter(TArgument argument);
     }
 }

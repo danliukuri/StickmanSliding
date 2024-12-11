@@ -20,14 +20,16 @@ namespace StickmanSliding.Infrastructure.AssetLoading
 
         public async UniTask<TAsset> Load<TAsset>(AssetReference assetReference) where TAsset : class
         {
-            if (!_assetRequests.TryGetValue(assetReference, out AsyncOperationHandle handle))
+            AsyncOperationHandle<TAsset> handle;
+
+            if (_assetRequests.TryGetValue(assetReference, out AsyncOperationHandle cachedHandle))
+                handle = cachedHandle.Convert<TAsset>();
+            else
                 _assetRequests.Add(assetReference, handle = Addressables.LoadAssetAsync<TAsset>(assetReference));
 
-            await handle.ToUniTask();
-
-            return handle.Result as TAsset;
+            return await handle.ToUniTask();
         }
-        
+
         public void Release(AssetReference assetReference)
         {
             if (_assetRequests.Remove(assetReference, out AsyncOperationHandle handle))
