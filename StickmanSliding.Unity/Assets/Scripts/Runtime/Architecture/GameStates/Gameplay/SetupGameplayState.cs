@@ -3,6 +3,7 @@ using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
+using StickmanSliding.Infrastructure.InputServices;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Utilities.Patterns.State.Machines;
 using StickmanSliding.Utilities.Patterns.State.Types;
@@ -22,12 +23,15 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IGameObjectFactory<Player>  _playerFactory;
         [Inject] private readonly IPlayerProvider             _playerProvider;
 
+        [Inject] private readonly IMoveInputService _moveInputService;
 
         public async UniTask Enter()
         {
             await LoadAssets();
-            await InitializeTrack();
-            await InitializePlayer();
+            await InitializeServices();
+
+            PlaceTrack();
+            PlacePlayer();
         }
 
         private UniTask LoadAssets() => UniTask.WhenAll(
@@ -35,16 +39,20 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _playerConfigLoader.Load()
         );
 
-        private async UniTask InitializeTrack()
+        private UniTask InitializeServices() => UniTask.WhenAll(
+            _trackPartFactory.Initialize(),
+            _playerFactory.Initialize(),
+            _moveInputService.Initialize()
+        );
+
+        private void PlaceTrack()
         {
-            await _trackPartFactory.Initialize();
             _trackSpawner.Initialize();
             _trackSpawner.Spawn();
         }
 
-        private async UniTask InitializePlayer()
+        private void PlacePlayer()
         {
-            await _playerFactory.Initialize();
             Player player = _playerFactory.Create();
             _playerProvider.Initialize(player);
         }

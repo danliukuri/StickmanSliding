@@ -4,21 +4,25 @@ using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
+using StickmanSliding.Infrastructure.InputServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
 {
     public class GlobalServicesInstaller : MonoInstaller
     {
-        [SerializeField] private PoolConfigReferences poolConfigReferences;
+        [SerializeField] private PoolConfigReferences  poolConfigReferences;
+        [SerializeField] private InputActionReferences inputActionReferences;
 
         public override void InstallBindings()
         {
             BindSceneLoader();
             BindAssetLoader();
             BindPoolConfigLoader();
+            BindInputServices();
         }
 
         private void BindSceneLoader() => Container.BindInterfacesTo<SceneLoader>().AsSingle();
@@ -27,6 +31,9 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
 
         private void BindPoolConfigLoader() => Container.BindInterfacesTo<PoolConfigLoader>().AsSingle()
             .WithArguments(poolConfigReferences.ToDictionary());
+
+        private void BindInputServices() => Container.BindInterfacesTo<MoveInputService>().AsSingle()
+            .WithArguments(inputActionReferences.Move);
 
         [Serializable]
         public class PoolConfigReferences
@@ -37,6 +44,12 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
             {
                 { typeof(TrackPart), TrackPart }
             };
+        }
+
+        [Serializable]
+        public class InputActionReferences
+        {
+            [field: SerializeField] public AssetReferenceT<InputActionReference> Move { get; private set; }
         }
     }
 }
