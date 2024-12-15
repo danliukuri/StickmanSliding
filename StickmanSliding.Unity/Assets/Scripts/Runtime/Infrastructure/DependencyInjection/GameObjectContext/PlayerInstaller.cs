@@ -8,15 +8,9 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
     {
         [SerializeField] private new Rigidbody rigidbody;
 
-        public override void InstallBindings()
-        {
-            BindRigidbody();
+        public override void InstallBindings() => BindMover();
 
-            BindMover();
-        }
-
-        private void BindRigidbody() => Container.Bind<Rigidbody>().FromInstance(rigidbody).AsSingle();
-
-        private void BindMover() => Container.BindInterfacesTo<PlayerMover>().AsSingle();
+        private void BindMover() => Container.BindInterfacesTo<PlayerMover>().AsSingle()
+            .WithArguments(transform, rigidbody);
     }
 }

@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2512e5c89d8e4711a83cf2287374bad5, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
-  <Direction>k__BackingField: {x: 0, y: 0, z: 1}
-  <Speed>k__BackingField: 4
-  <SidesDirection>k__BackingField: {x: 1, y: 0, z: 0}
-  <SidesSpeed>k__BackingField: 10
+  <ForwardSpeed>k__BackingField: 5
+  <LateralSpeed>k__BackingField: 5

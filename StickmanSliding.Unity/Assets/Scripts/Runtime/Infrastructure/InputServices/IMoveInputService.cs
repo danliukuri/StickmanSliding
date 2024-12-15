@@ -8,7 +8,6 @@ namespace StickmanSliding.Infrastructure.InputServices
         UniTask Initialize();
         void    Enable();
         void    Disable();
-        bool    IsMoving();
         float   GetMovement();
     }
 }

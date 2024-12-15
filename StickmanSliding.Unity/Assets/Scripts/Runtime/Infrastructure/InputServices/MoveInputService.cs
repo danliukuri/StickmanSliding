@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using StickmanSliding.Infrastructure.AssetLoading;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -25,8 +24,6 @@ namespace StickmanSliding.Infrastructure.InputServices
 
         public void Enable()  => _inputAction.Enable();
         public void Disable() => _inputAction.Disable();
-
-        public bool IsMoving() => !Mathf.Approximately(GetMovement(), default);
 
         public float GetMovement() => _inputAction.ReadValue<float>();
     }

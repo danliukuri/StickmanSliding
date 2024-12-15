@@ -10,9 +10,11 @@ namespace StickmanSliding.Features.Player
 {
     public class PlayerMover : IPlayerMover
     {
-        [Inject] private readonly Rigidbody                     _rigidbody;
         [Inject] private readonly IConfigProvider<PlayerConfig> _configProvider;
         [Inject] private readonly IMoveInputService             _moveInputService;
+
+        [Inject] private readonly Transform _transform;
+        [Inject] private readonly Rigidbody _rigidbody;
 
         private IDisposable _movingSubscription;
 
@@ -23,17 +25,25 @@ namespace StickmanSliding.Features.Player
 
         private void Move()
         {
-            Vector3 positionDelta = CalculateFrontMovement() + CalculateSideMovement();
+            Vector3 velocityChange = CalculateVelocityChange();
 
-            _rigidbody.MovePosition(_rigidbody.position + positionDelta * Time.fixedDeltaTime);
+            if (velocityChange != Vector3.zero)
+                _rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
         }
 
-        private Vector3 CalculateFrontMovement() => _configProvider.Config.Speed * _configProvider.Config.Direction;
+        private Vector3 CalculateVelocityChange()
+        {
+            Vector3 localCurrentVelocity = _transform.InverseTransformDirection(_rigidbody.linearVelocity);
 
-        private Vector3 CalculateSideMovement() => _moveInputService.IsMoving()
-            ? _moveInputService.GetMovement()   *
-              _configProvider.Config.SidesSpeed *
-              _configProvider.Config.SidesDirection
-            : Vector3.zero;
+            Vector3 localTargetVelocity = new(
+                _moveInputService.GetMovement() * _configProvider.Config.LateralSpeed,
+                localCurrentVelocity.y,
+                _configProvider.Config.ForwardSpeed
+            );
+
+            Vector3 localVelocityChange = localTargetVelocity - localCurrentVelocity;
+
+            return _transform.TransformDirection(localVelocityChange);
+        }
     }
 }
