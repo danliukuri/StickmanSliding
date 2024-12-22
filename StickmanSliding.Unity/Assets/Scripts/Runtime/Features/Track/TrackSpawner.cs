@@ -95,7 +95,11 @@ namespace StickmanSliding.Features.Track
                 subscription.Dispose();
         }
 
-        private void Despawn(TrackPart trackPart) => _trackPartFactory.Release(trackPart);
+        private void Despawn(TrackPart trackPart)
+        {
+            _collectableCubeSpawner.Despawn(trackPart);
+            _trackPartFactory.Release(trackPart);
+        }
 
         private void DespawnLastTrackPart() => Despawn(_trackParts.Dequeue());
     }

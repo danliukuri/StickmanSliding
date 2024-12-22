@@ -22,6 +22,14 @@ namespace StickmanSliding.Features.CollectableCube
             SpawnCubes(trackPart, numberOfCubesToSpawn);
         }
 
+        public void Despawn(TrackPart trackPart)
+        {
+            foreach (CollectableCube cube in trackPart.State.CollectableCubes.Values)
+                _factory.Release(cube);
+
+            trackPart.State.CollectableCubes.Clear();
+        }
+
         private CollectableCube SpawnCube(TrackPart trackPart)
         {
             CollectableCube cube = _factory.Create();
@@ -29,7 +37,10 @@ namespace StickmanSliding.Features.CollectableCube
             Vector3 cubeLocalPosition = GenerateRandomLocalPosition(trackPart, cube);
 
             trackPart.State.CollectableCubes.Add(cubeLocalPosition, cube);
+
             cube.transform.position = trackPart.transform.position + cubeLocalPosition;
+            cube.transform.rotation = Quaternion.identity;
+
             return cube;
         }
 
