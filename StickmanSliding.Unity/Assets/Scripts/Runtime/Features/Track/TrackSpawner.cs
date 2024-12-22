@@ -7,6 +7,7 @@ using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
+using StickmanSliding.Utilities.Extensions;
 using UnityEngine;
 using Zenject;
 
@@ -27,15 +28,9 @@ namespace StickmanSliding.Features.Track
 
         public void Initialize()
         {
-            _trackPartSpawnOffset =
-                Vector3.Scale(_configProvider.Config.Direction, _trackPartFactory.Prefab.Body.lossyScale);
-
-            _trackPartSpawnPosition = _configProvider.Config.SpawnOrigin;
-
-            // TODO: Move length calculation to the properties of the objects
-            float trackPartLength =
-                Mathf.Abs(Vector3.Dot(_configProvider.Config.Direction, _trackPartFactory.Prefab.Body.lossyScale));
-            _initialNumberOfTrackParts = (int)(_configProvider.Config.Length / trackPartLength);
+            _trackPartSpawnOffset      = _trackPartFactory.Prefab.Body.forward * _trackPartFactory.Prefab.Body.Length();
+            _trackPartSpawnPosition    = _configProvider.Config.SpawnOrigin;
+            _initialNumberOfTrackParts = (int)(_configProvider.Config.Length / _trackPartFactory.Prefab.Body.Length());
         }
 
         public void Dispose()

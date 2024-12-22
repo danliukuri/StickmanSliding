@@ -25,7 +25,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IPlayerProvider             _playerProvider;
 
         [Inject] private readonly IConfigLoader<CollectableCubeSpawnerConfig> _collectableCubesSpawnerConfigLoader;
-        [Inject] private readonly IGameObjectFactory<CollectableCube>          _collectableCubeFactory;
+        [Inject] private readonly IGameObjectFactory<CollectableCube>         _collectableCubeFactory;
 
         [Inject] private readonly IMoveInputService _moveInputService;
 

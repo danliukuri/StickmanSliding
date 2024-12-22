@@ -6,7 +6,6 @@ namespace StickmanSliding.Data.Static.Configuration
     public class TrackSpawnerConfig : ScriptableObject
     {
         [field: SerializeField] public int     Length      { get; private set; }
-        [field: SerializeField] public Vector3 Direction   { get; private set; }
         [field: SerializeField] public Vector3 SpawnOrigin { get; private set; }
     }
 }

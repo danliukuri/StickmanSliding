@@ -5,6 +5,7 @@ using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Infrastructure.Randomization;
+using StickmanSliding.Utilities.Extensions;
 using UnityEngine;
 using Zenject;
 
@@ -34,7 +35,7 @@ namespace StickmanSliding.Features.CollectableCube
         {
             CollectableCube cube = _factory.Create();
 
-            Vector3 cubeLocalPosition = GenerateRandomLocalPosition(trackPart, cube);
+            Vector3 cubeLocalPosition = GenerateRandomLocalPositionInGrid(trackPart, cube);
 
             trackPart.State.CollectableCubes.Add(cubeLocalPosition, cube);
 
@@ -44,17 +45,18 @@ namespace StickmanSliding.Features.CollectableCube
             return cube;
         }
 
-        private Vector3 GenerateRandomLocalPosition(TrackPart trackPart, CollectableCube cube)
+        private Vector3 GenerateRandomLocalPositionInGrid(TrackPart trackPart, CollectableCube cube)
         {
-            (int Horizontal, int Vertical) positionExtremum = FindPositionExtremum(trackPart, cube);
+            var horizontalPositionExtremum = (int)(trackPart.Body.HalfWidth()  - cube.HalfWidth());
+            var verticalPositionExtremum   = (int)(trackPart.Body.HalfLength() - cube.HalfLength());
 
             Vector3 cubeLocalPosition;
             do
             {
                 int randomHorizontalPosition =
-                    _randomizer.NextInclusive(-positionExtremum.Horizontal, positionExtremum.Horizontal);
+                    _randomizer.NextInclusive(-horizontalPositionExtremum, horizontalPositionExtremum);
                 int randomVerticalPosition =
-                    _randomizer.NextInclusive(-positionExtremum.Vertical, positionExtremum.Vertical);
+                    _randomizer.NextInclusive(-verticalPositionExtremum, verticalPositionExtremum);
 
                 cubeLocalPosition = trackPart.transform.right   * randomHorizontalPosition +
                                     trackPart.transform.forward * randomVerticalPosition;
@@ -62,22 +64,6 @@ namespace StickmanSliding.Features.CollectableCube
             while (trackPart.State.CollectableCubes.ContainsKey(cubeLocalPosition));
 
             return cubeLocalPosition;
-        }
-
-        // TODO: Move width and length calculation to the properties of the objects
-        private (int Horizontal, int Vertical) FindPositionExtremum(TrackPart trackPart, CollectableCube cube)
-        {
-            const float snapToGridDistance = 0.5f;
-
-            float cubeWidth = Mathf.Abs(Vector3.Dot(cube.transform.forward, cube.transform.lossyScale));
-
-            float trackPartWidth     = Mathf.Abs(Vector3.Dot(trackPart.transform.right, trackPart.Body.lossyScale));
-            float horizontalPosition = trackPartWidth / 2 - snapToGridDistance - (cubeWidth / 2 - snapToGridDistance);
-
-            float trackPartLength  = Mathf.Abs(Vector3.Dot(trackPart.transform.forward, trackPart.Body.lossyScale));
-            float verticalPosition = trackPartLength / 2 - snapToGridDistance - (cubeWidth / 2 - snapToGridDistance);
-
-            return ((int)horizontalPosition, (int)verticalPosition);
         }
 
         private List<CollectableCube> SpawnCubes(TrackPart trackPart, int count) =>
