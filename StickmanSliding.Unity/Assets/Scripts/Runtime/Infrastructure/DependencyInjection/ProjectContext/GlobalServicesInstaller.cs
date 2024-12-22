@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.InputServices;
+using StickmanSliding.Infrastructure.Randomization;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
@@ -23,7 +25,9 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
             BindAssetLoader();
             BindPoolConfigLoader();
             BindInputServices();
+            BindRandomizer();
         }
+
 
         private void BindSceneLoader() => Container.BindInterfacesTo<SceneLoader>().AsSingle();
 
@@ -35,14 +39,18 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
         private void BindInputServices() => Container.BindInterfacesTo<MoveInputService>().AsSingle()
             .WithArguments(inputActionReferences.Move);
 
+        private void BindRandomizer() => Container.BindInterfacesTo<UnityRandomizer>().AsSingle();
+
         [Serializable]
         public class PoolConfigReferences
         {
-            [field: SerializeField] public AssetReferenceT<PoolConfig> TrackPart { get; private set; }
+            [field: SerializeField] public AssetReferenceT<PoolConfig> TrackPart       { get; private set; }
+            [field: SerializeField] public AssetReferenceT<PoolConfig> CollectableCube { get; private set; }
 
             public Dictionary<Type, AssetReference> ToDictionary() => new()
             {
-                { typeof(TrackPart), TrackPart }
+                [typeof(TrackPart)]       = TrackPart,
+                [typeof(CollectableCube)] = CollectableCube
             };
         }
 

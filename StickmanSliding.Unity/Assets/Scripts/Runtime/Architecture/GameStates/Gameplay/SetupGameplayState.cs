@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
@@ -23,6 +24,9 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IGameObjectFactory<Player>  _playerFactory;
         [Inject] private readonly IPlayerProvider             _playerProvider;
 
+        [Inject] private readonly IConfigLoader<CollectableCubeSpawnerConfig> _collectableCubesSpawnerConfigLoader;
+        [Inject] private readonly IGameObjectFactory<CollectableCube>          _collectableCubeFactory;
+
         [Inject] private readonly IMoveInputService _moveInputService;
 
         public async UniTask Enter()
@@ -36,12 +40,14 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 
         private UniTask LoadAssets() => UniTask.WhenAll(
             _trackPartSpawnerConfigLoader.Load(),
-            _playerConfigLoader.Load()
+            _playerConfigLoader.Load(),
+            _collectableCubesSpawnerConfigLoader.Load()
         );
 
         private UniTask InitializeServices() => UniTask.WhenAll(
             _trackPartFactory.Initialize(),
             _playerFactory.Initialize(),
+            _collectableCubeFactory.Initialize(),
             _moveInputService.Initialize()
         );
 

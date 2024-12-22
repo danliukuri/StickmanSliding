@@ -4,6 +4,7 @@ using System.Linq;
 using R3;
 using R3.Triggers;
 using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace StickmanSliding.Features.Track
     {
         [Inject] private readonly IGameObjectFactory<TrackPart>       _trackPartFactory;
         [Inject] private readonly IConfigProvider<TrackSpawnerConfig> _configProvider;
+        [Inject] private readonly ICollectableCubeSpawner             _collectableCubeSpawner;
 
         private readonly Queue<TrackPart>                   _trackParts                        = new();
         private readonly Dictionary<TrackPart, IDisposable> _trackPartsRespawningSubscriptions = new();
@@ -30,8 +32,9 @@ namespace StickmanSliding.Features.Track
 
             _trackPartSpawnPosition = _configProvider.Config.SpawnOrigin;
 
+            // TODO: Move length calculation to the properties of the objects
             float trackPartLength =
-                Vector3.Dot(_configProvider.Config.Direction, _trackPartFactory.Prefab.Body.lossyScale);
+                Mathf.Abs(Vector3.Dot(_configProvider.Config.Direction, _trackPartFactory.Prefab.Body.lossyScale));
             _initialNumberOfTrackParts = (int)(_configProvider.Config.Length / trackPartLength);
         }
 
@@ -66,6 +69,8 @@ namespace StickmanSliding.Features.Track
 
             SubscribeToRespawningTrackParts(trackPart);
             _trackParts.Enqueue(trackPart);
+
+            _collectableCubeSpawner.Spawn(trackPart);
 
             return trackPart;
         }

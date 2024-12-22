@@ -97,6 +97,12 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+    <CollectableCube>k__BackingField:
+      m_AssetGUID: fe2e1d8c32f7fd64fb37b53cbdd5baa5
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   inputActionReferences:
     <Move>k__BackingField:
       m_AssetGUID: 052faaac586de48259a63d0c4782560b

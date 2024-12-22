@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3134509601770985276}
   - component: {fileID: 4312983527395096055}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpawnNewTrackPartTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8351431347564859950}
   - component: {fileID: 2178450460846254850}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DestroyLastTrackPartTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
