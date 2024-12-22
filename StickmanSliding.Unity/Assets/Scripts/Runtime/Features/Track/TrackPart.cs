@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StickmanSliding.Data.Dynamic.State;
+using UnityEngine;
 
 namespace StickmanSliding.Features.Track
 {
@@ -7,5 +8,7 @@ namespace StickmanSliding.Features.Track
     {
         [field: SerializeField] public Transform         Body     { get; private set; }
         [field: SerializeField] public TrackPartTriggers Triggers { get; private set; }
+
+        public TrackPartState State { get; } = new();
     }
 }
