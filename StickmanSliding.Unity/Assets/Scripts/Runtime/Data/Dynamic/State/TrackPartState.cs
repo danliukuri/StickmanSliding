@@ -6,6 +6,6 @@ namespace StickmanSliding.Data.Dynamic.State
 {
     public class TrackPartState
     {
-        public Dictionary<Vector3, CollectableCube> CollectableCubes { get; } = new();
+        public Dictionary<Vector3, CollectableCubeEntity> CollectableCubes { get; } = new();
     }
 }

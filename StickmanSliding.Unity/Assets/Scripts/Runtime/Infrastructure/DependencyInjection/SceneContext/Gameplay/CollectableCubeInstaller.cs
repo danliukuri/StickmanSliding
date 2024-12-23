@@ -22,7 +22,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         }
 
         private void BindCollectableCubeFactory() =>
-            Container.BindInterfacesTo<PooledGameObjectFactory<CollectableCube>>().AsSingle()
+            Container.BindInterfacesTo<PooledGameObjectFactory<CollectableCubeEntity>>().AsSingle()
                 .WithArguments(collectableCubePrefab, collectableCubeParent);
 
         private void BindCollectableCubeSpawnerConfigLoader() =>

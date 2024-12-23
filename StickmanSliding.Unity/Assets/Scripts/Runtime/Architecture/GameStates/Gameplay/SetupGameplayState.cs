@@ -16,16 +16,16 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
     {
         [Inject] private readonly IStateMachine _gameStateMachine;
 
-        [Inject] private readonly IConfigLoader<TrackSpawnerConfig> _trackPartSpawnerConfigLoader;
-        [Inject] private readonly IGameObjectFactory<TrackPart>     _trackPartFactory;
-        [Inject] private readonly ITrackSpawner                     _trackSpawner;
+        [Inject] private readonly IConfigLoader<TrackSpawnerConfig>   _trackPartSpawnerConfigLoader;
+        [Inject] private readonly IGameObjectFactory<TrackPartEntity> _trackPartFactory;
+        [Inject] private readonly ITrackSpawner                       _trackSpawner;
 
-        [Inject] private readonly IConfigLoader<PlayerConfig> _playerConfigLoader;
-        [Inject] private readonly IGameObjectFactory<Player>  _playerFactory;
-        [Inject] private readonly IPlayerProvider             _playerProvider;
+        [Inject] private readonly IConfigLoader<PlayerConfig>      _playerConfigLoader;
+        [Inject] private readonly IGameObjectFactory<PlayerEntity> _playerFactory;
+        [Inject] private readonly IPlayerProvider                  _playerProvider;
 
         [Inject] private readonly IConfigLoader<CollectableCubeSpawnerConfig> _collectableCubesSpawnerConfigLoader;
-        [Inject] private readonly IGameObjectFactory<CollectableCube>         _collectableCubeFactory;
+        [Inject] private readonly IGameObjectFactory<CollectableCubeEntity>   _collectableCubeFactory;
 
         [Inject] private readonly IMoveInputService _moveInputService;
 
@@ -59,7 +59,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 
         private void PlacePlayer()
         {
-            Player player = _playerFactory.Create();
+            PlayerEntity player = _playerFactory.Create();
             _playerProvider.Initialize(player);
         }
     }

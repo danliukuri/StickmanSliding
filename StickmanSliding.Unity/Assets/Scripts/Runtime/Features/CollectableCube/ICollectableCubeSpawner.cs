@@ -4,8 +4,8 @@ namespace StickmanSliding.Features.CollectableCube
 {
     public interface ICollectableCubeSpawner
     {
-        void Spawn(TrackPart trackPart);
+        void Spawn(TrackPartEntity trackPart);
 
-        void Despawn(TrackPart trackPart);
+        void Despawn(TrackPartEntity trackPart);
     }
 }

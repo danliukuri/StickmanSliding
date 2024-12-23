@@ -6,18 +6,18 @@ namespace StickmanSliding.Editor
 {
     public static class BoxColliderWithBuiltinIconGizmoDrawer
     {
-        private static readonly float _colliderColorTransparency = 0.2f;
+        private const float ColliderColorTransparency = 0.2f;
 
         private static readonly Color[] _colliderColors =
         {
-            new(0.5f, 0.5f, 0.5f, _colliderColorTransparency),
-            new(0.0f, 0.0f, 1.0f, _colliderColorTransparency),
-            new(0.0f, 1.0f, 1.0f, _colliderColorTransparency),
-            new(0.0f, 1.0f, 0.0f, _colliderColorTransparency),
-            new(1.0f, 1.0f, 0.0f, _colliderColorTransparency),
-            new(1.0f, 0.5f, 0.0f, _colliderColorTransparency),
-            new(1.0f, 0.0f, 0.0f, _colliderColorTransparency),
-            new(1.0f, 0.0f, 1.0f, _colliderColorTransparency)
+            new(r: 0.5f, g: 0.5f, b: 0.5f, ColliderColorTransparency),
+            new(r: 0.0f, g: 0.0f, b: 1.0f, ColliderColorTransparency),
+            new(r: 0.0f, g: 1.0f, b: 1.0f, ColliderColorTransparency),
+            new(r: 0.0f, g: 1.0f, b: 0.0f, ColliderColorTransparency),
+            new(r: 1.0f, g: 1.0f, b: 0.0f, ColliderColorTransparency),
+            new(r: 1.0f, g: 0.5f, b: 0.0f, ColliderColorTransparency),
+            new(r: 1.0f, g: 0.0f, b: 0.0f, ColliderColorTransparency),
+            new(r: 1.0f, g: 0.0f, b: 1.0f, ColliderColorTransparency)
         };
 
         [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]

@@ -49,8 +49,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
 
             public Dictionary<Type, AssetReference> ToDictionary() => new()
             {
-                [typeof(TrackPart)]       = TrackPart,
-                [typeof(CollectableCube)] = CollectableCube
+                [typeof(TrackPartEntity)]       = TrackPart,
+                [typeof(CollectableCubeEntity)] = CollectableCube
             };
         }
 

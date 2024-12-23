@@ -15,12 +15,12 @@ namespace StickmanSliding.Features.Track
 {
     public class TrackSpawner : ITrackSpawner
     {
-        [Inject] private readonly IGameObjectFactory<TrackPart>       _trackPartFactory;
+        [Inject] private readonly IGameObjectFactory<TrackPartEntity> _trackPartFactory;
         [Inject] private readonly IConfigProvider<TrackSpawnerConfig> _configProvider;
         [Inject] private readonly ICollectableCubeSpawner             _collectableCubeSpawner;
 
-        private readonly Queue<TrackPart>                   _trackParts                        = new();
-        private readonly Dictionary<TrackPart, IDisposable> _trackPartsRespawningSubscriptions = new();
+        private readonly Queue<TrackPartEntity>                   _trackParts                        = new();
+        private readonly Dictionary<TrackPartEntity, IDisposable> _trackPartsRespawningSubscriptions = new();
 
         private Vector3 _trackPartSpawnOffset;
         private Vector3 _trackPartSpawnPosition;
@@ -49,16 +49,16 @@ namespace StickmanSliding.Features.Track
 
         public void Despawn()
         {
-            foreach (TrackPart trackPart in _trackParts)
+            foreach (TrackPartEntity trackPart in _trackParts)
             {
                 UnsubscribeToRespawningTrackParts(trackPart);
                 Despawn(trackPart);
             }
         }
 
-        private TrackPart SpawnTrackPart()
+        private TrackPartEntity SpawnTrackPart()
         {
-            TrackPart trackPart = _trackPartFactory.Create();
+            TrackPartEntity trackPart = _trackPartFactory.Create();
             trackPart.transform.position =  _trackPartSpawnPosition;
             _trackPartSpawnPosition      += _trackPartSpawnOffset;
 
@@ -70,10 +70,10 @@ namespace StickmanSliding.Features.Track
             return trackPart;
         }
 
-        private List<TrackPart> SpawnTrackParts(int count) =>
-            Enumerable.Range(default, count).Select(index => SpawnTrackPart()).ToList();
+        private List<TrackPartEntity> SpawnTrackParts(int count) =>
+            Enumerable.Range(start: default, count).Select(index => SpawnTrackPart()).ToList();
 
-        private void SubscribeToRespawningTrackParts(TrackPart trackPart)
+        private void SubscribeToRespawningTrackParts(TrackPartEntity trackPart)
         {
             if (!_trackPartsRespawningSubscriptions.ContainsKey(trackPart))
                 _trackPartsRespawningSubscriptions.Add(trackPart, Disposable.Combine(
@@ -84,13 +84,13 @@ namespace StickmanSliding.Features.Track
                 ));
         }
 
-        private void UnsubscribeToRespawningTrackParts(TrackPart trackPart)
+        private void UnsubscribeToRespawningTrackParts(TrackPartEntity trackPart)
         {
             if (_trackPartsRespawningSubscriptions.Remove(trackPart, out IDisposable subscription))
                 subscription.Dispose();
         }
 
-        private void Despawn(TrackPart trackPart)
+        private void Despawn(TrackPartEntity trackPart)
         {
             _collectableCubeSpawner.Despawn(trackPart);
             _trackPartFactory.Release(trackPart);
