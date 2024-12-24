@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3905909182251924003}
-  rigidbody: {fileID: 2701941508595047727}
   collider: {fileID: 4253999011802949016}
 --- !u!1 &5623696158547029324
 GameObject:
