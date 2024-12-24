@@ -61,6 +61,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         {
             PlayerEntity player = _playerFactory.Create();
             _playerProvider.Initialize(player);
+            player.CubeSpawner.SpawnInitial();
         }
     }
 }

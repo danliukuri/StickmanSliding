@@ -9,6 +9,10 @@ namespace StickmanSliding.Features.Player
     [SelectionBase]
     public class PlayerEntity : MonoBehaviour
     {
-        [Inject] public IPlayerMover Mover { get; }
+        [Inject] public IPlayerMover       Mover       { get; }
+        [Inject] public IPlayerCubeSpawner CubeSpawner { get; }
+
+        [field: SerializeField] public Transform Character   { get; private set; }
+        [field: SerializeField] public Transform CubesParent { get; private set; }
     }
 }

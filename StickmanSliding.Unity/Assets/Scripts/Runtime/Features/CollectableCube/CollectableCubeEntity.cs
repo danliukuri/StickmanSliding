@@ -6,5 +6,8 @@ namespace StickmanSliding.Features.CollectableCube
     /// Representative of the entity which provides access to game object components, services, and state
     /// </summary>
     [SelectionBase]
-    public class CollectableCubeEntity : MonoBehaviour { }
+    public class CollectableCubeEntity : MonoBehaviour
+    {
+        [field: SerializeField] public Collider Collider { get; private set; }
+    }
 }

@@ -28,7 +28,7 @@ namespace StickmanSliding.Features.Track
 
         public void Initialize()
         {
-            _trackPartSpawnOffset      = _trackPartFactory.Prefab.Body.forward * _trackPartFactory.Prefab.Body.Length();
+            _trackPartSpawnOffset      = _trackPartFactory.Prefab.Body.LengthVector();
             _trackPartSpawnPosition    = _configProvider.Config.SpawnOrigin;
             _initialNumberOfTrackParts = (int)(_configProvider.Config.Length / _trackPartFactory.Prefab.Body.Length());
         }
