@@ -55,6 +55,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6cc3553f7f3b2c4e898b09ca0d598bf
+    m_Address: InitialTrackPart
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dae4879d832b7cb4a800d6e02f04bb47
     m_Address: TrackPartPoolConfig
     m_ReadOnly: 0

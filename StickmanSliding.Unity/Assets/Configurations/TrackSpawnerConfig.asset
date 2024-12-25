@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71e06ca0d1143f0a709817a9b208bf4, type: 3}
   m_Name: TrackSpawnerConfig
   m_EditorClassIdentifier: 
-  <Length>k__BackingField: 60
-  <SpawnOrigin>k__BackingField: {x: 0, y: -0.5, z: 5}
+  <Length>k__BackingField: 75
+  <SpawnOrigin>k__BackingField: {x: 0, y: -0.5, z: -5}

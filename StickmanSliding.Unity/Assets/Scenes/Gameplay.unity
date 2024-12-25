@@ -744,6 +744,12 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  initialTrackPartPrefab:
+    m_AssetGUID: a6cc3553f7f3b2c4e898b09ca0d598bf
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   trackPartPrefab:
     m_AssetGUID: 117d96075ef60a340bd0b3cdae7f051c
     m_SubObjectName: 

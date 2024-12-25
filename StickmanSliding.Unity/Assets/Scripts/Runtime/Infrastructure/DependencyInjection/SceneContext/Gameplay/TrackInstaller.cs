@@ -11,16 +11,22 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
     public class TrackInstaller : MonoInstaller
     {
         [SerializeField] private AssetReferenceT<TrackSpawnerConfig> trackSpawnerConfig;
+        [SerializeField] private AssetReferenceGameObject            initialTrackPartPrefab;
         [SerializeField] private AssetReferenceGameObject            trackPartPrefab;
         [SerializeField] private Transform                           trackPartsParent;
 
         public override void InstallBindings()
         {
+            BindInitialTrackPartFactory();
             BindTrackPartFactory();
             BindTrackSpawnerConfigLoader();
             BindTrackSpawner();
             BindTrackSpawningSubscriber();
         }
+
+        private void BindInitialTrackPartFactory() =>
+            Container.BindInterfacesTo<GameObjectFactory<InitialTrackPartEntity>>().AsSingle()
+                .WithArguments(initialTrackPartPrefab, trackPartsParent);
 
         private void BindTrackPartFactory() =>
             Container.BindInterfacesTo<PooledGameObjectFactory<TrackPartEntity>>().AsSingle()

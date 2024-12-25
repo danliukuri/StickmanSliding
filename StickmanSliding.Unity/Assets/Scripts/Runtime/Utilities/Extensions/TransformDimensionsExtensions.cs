@@ -17,6 +17,10 @@ namespace StickmanSliding.Utilities.Extensions
         public static Vector3 WidthVector(this  Transform transform) => Vector3.right   * transform.Width();
         public static Vector3 HeightVector(this Transform transform) => Vector3.up      * transform.Height();
         public static Vector3 LengthVector(this Transform transform) => Vector3.forward * transform.Length();
+
+        public static Vector3 HalfWidthVector(this  Transform transform) => Vector3.right   * transform.HalfWidth();
+        public static Vector3 HalfHeightVector(this Transform transform) => Vector3.up      * transform.HalfHeight();
+        public static Vector3 HalfLengthVector(this Transform transform) => Vector3.forward * transform.HalfLength();
     }
 
     public static class ComponentDimensionsExtensions

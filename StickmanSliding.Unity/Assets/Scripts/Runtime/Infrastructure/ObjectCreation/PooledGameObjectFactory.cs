@@ -31,7 +31,11 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
 
         public override TComponent Create() => _pool.Get();
 
-        public override void Release(TComponent component) => _pool.Release(component);
+        public override void Release(TComponent component)
+        {
+            if (component != default)
+                _pool.Release(component);
+        }
 
         private void CreatePool(PoolConfig poolConfig) =>
             _pool = new ObjectPool<TComponent>(CreateActualObject, Configure, Reset, base.Release,

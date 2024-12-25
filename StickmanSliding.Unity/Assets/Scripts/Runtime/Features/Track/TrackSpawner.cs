@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
@@ -12,65 +11,64 @@ namespace StickmanSliding.Features.Track
 {
     public class TrackSpawner : ITrackSpawner
     {
-        [Inject] private readonly IGameObjectFactory<TrackPartEntity> _trackPartFactory;
         [Inject] private readonly IConfigProvider<TrackSpawnerConfig> _configProvider;
-        [Inject] private readonly ICollectableCubeSpawner             _collectableCubeSpawner;
-        [Inject] private readonly ITrackPartSpawningSubscriber        _trackPartSpawningSubscriber;
 
-        private readonly Queue<TrackPartEntity> _trackParts = new();
+        [Inject] private readonly IGameObjectFactory<TrackPartEntity>        _trackPartFactory;
+        [Inject] private readonly IGameObjectFactory<InitialTrackPartEntity> _initialTrackPartFactory;
 
-        private Vector3 _trackPartSpawnOffset;
+        [Inject] private readonly ITrackPartSpawningSubscriber _trackPartSpawningSubscriber;
+        [Inject] private readonly ICollectableCubeSpawner      _collectableCubeSpawner;
+
+        private readonly Queue<ITrackPart> _trackParts = new();
+
+        private Vector3 _trackSpawnPosition;
         private Vector3 _trackPartSpawnPosition;
-        private int     _initialNumberOfTrackParts;
 
-        public void Initialize()
-        {
-            _trackPartSpawnOffset      = _trackPartFactory.Prefab.Body.LengthVector();
-            _trackPartSpawnPosition    = _configProvider.Config.SpawnOrigin;
-            _initialNumberOfTrackParts = (int)(_configProvider.Config.Length / _trackPartFactory.Prefab.Body.Length());
-        }
+        public void Initialize() => _trackSpawnPosition = _configProvider.Config.SpawnOrigin;
 
         public void Dispose()
         {
+            Despawn();
+            _initialTrackPartFactory.Dispose();
             _trackPartFactory.Dispose();
-            _trackPartSpawningSubscriber.Dispose();
         }
 
         public void Spawn()
         {
-            SpawnTrackParts(_initialNumberOfTrackParts);
-
-            _trackPartSpawningSubscriber.UnsubscribeToSpawnTriggerEnter(_trackParts.Peek());
-            _trackPartSpawningSubscriber.UnsubscribeToDespawnTriggerEnter(_trackParts.Peek());
+            SpawnInitialTrackPart();
+            while (_trackPartSpawnPosition.magnitude - _trackSpawnPosition.magnitude < _configProvider.Config.Length)
+                SpawnTrackPart();
         }
 
         public void Despawn()
         {
-            foreach (TrackPartEntity trackPart in _trackParts)
-            {
-                _trackPartSpawningSubscriber.UnsubscribeToSpawnTriggerEnter(trackPart);
-                _trackPartSpawningSubscriber.UnsubscribeToDespawnTriggerEnter(trackPart);
+            _trackPartSpawningSubscriber.Dispose();
+            foreach (ITrackPart trackPart in _trackParts)
                 Despawn(trackPart);
-            }
+        }
+
+        private InitialTrackPartEntity SpawnInitialTrackPart()
+        {
+            InitialTrackPartEntity trackPart = _initialTrackPartFactory.Create();
+            PlaceTrackPart(trackPart);
+            _trackParts.Enqueue(trackPart);
+            return trackPart;
         }
 
         private TrackPartEntity SpawnTrackPart()
         {
             TrackPartEntity trackPart = _trackPartFactory.Create();
-            trackPart.transform.position =  _trackPartSpawnPosition;
-            _trackPartSpawnPosition      += _trackPartSpawnOffset;
+            PlaceTrackPart(trackPart);
+            _collectableCubeSpawner.Spawn(trackPart);
 
             _trackPartSpawningSubscriber.SubscribeToSpawnTriggerEnter(trackPart, _ => SpawnTrackPart());
             _trackPartSpawningSubscriber.SubscribeToDespawnTriggerEnter(trackPart, _ => DespawnLastTrackPart());
             _trackParts.Enqueue(trackPart);
 
-            _collectableCubeSpawner.Spawn(trackPart);
-
             return trackPart;
         }
 
-        private List<TrackPartEntity> SpawnTrackParts(int count) =>
-            Enumerable.Range(start: default, count).Select(index => SpawnTrackPart()).ToList();
+        private void Despawn(InitialTrackPartEntity trackPart) => _initialTrackPartFactory.Release(trackPart);
 
         private void Despawn(TrackPartEntity trackPart)
         {
@@ -78,6 +76,26 @@ namespace StickmanSliding.Features.Track
             _trackPartFactory.Release(trackPart);
         }
 
+        private void Despawn(ITrackPart trackPart)
+        {
+            switch (trackPart)
+            {
+                case InitialTrackPartEntity initialTrackPart:
+                    Despawn(initialTrackPart);
+                    break;
+                case TrackPartEntity trackPartEntity:
+                    Despawn(trackPartEntity);
+                    break;
+            }
+        }
+
         private void DespawnLastTrackPart() => Despawn(_trackParts.Dequeue());
+
+        private void PlaceTrackPart(ITrackPart trackPart)
+        {
+            _trackPartSpawnPosition      += trackPart.Body.HalfLengthVector();
+            trackPart.Transform.position =  _trackSpawnPosition + _trackPartSpawnPosition;
+            _trackPartSpawnPosition      += trackPart.Body.HalfLengthVector();
+        }
     }
 }
