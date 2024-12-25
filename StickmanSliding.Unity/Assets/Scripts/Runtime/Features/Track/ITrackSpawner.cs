@@ -6,6 +6,5 @@ namespace StickmanSliding.Features.Track
     {
         void Initialize();
         void Spawn();
-        void Despawn();
     }
 }

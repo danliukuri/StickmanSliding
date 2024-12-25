@@ -19,6 +19,11 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         {
             BindInitialTrackPartFactory();
             BindTrackPartFactory();
+            BindInitialTrackPartConfigurator();
+            BindTrackPartConfigurator();
+            BindTrackPartPlacer();
+            BindTrackPartSpawner();
+
             BindTrackSpawnerConfigLoader();
             BindTrackSpawner();
             BindTrackSpawningSubscriber();
@@ -31,6 +36,18 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         private void BindTrackPartFactory() =>
             Container.BindInterfacesTo<PooledGameObjectFactory<TrackPartEntity>>().AsSingle()
                 .WithArguments(trackPartPrefab, trackPartsParent);
+
+        private void BindInitialTrackPartConfigurator() =>
+            Container.BindInterfacesTo<InitialTrackPartConfigurator>().AsSingle();
+
+        private void BindTrackPartConfigurator() =>
+            Container.BindInterfacesTo<TrackPartConfigurator>().AsSingle();
+
+        private void BindTrackPartPlacer() =>
+            Container.BindInterfacesTo<TrackPartPlacer>().AsSingle();
+
+        private void BindTrackPartSpawner() =>
+            Container.BindInterfacesTo<TrackPartSpawner>().AsSingle();
 
         private void BindTrackSpawnerConfigLoader() =>
             Container.BindInterfacesTo<ConfigLoader<TrackSpawnerConfig>>().AsSingle()
