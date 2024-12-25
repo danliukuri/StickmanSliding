@@ -19,6 +19,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             BindTrackPartFactory();
             BindTrackSpawnerConfigLoader();
             BindTrackSpawner();
+            BindTrackSpawningSubscriber();
         }
 
         private void BindTrackPartFactory() =>
@@ -31,5 +32,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 
         private void BindTrackSpawner() =>
             Container.BindInterfacesTo<TrackSpawner>().AsSingle();
+
+        private void BindTrackSpawningSubscriber() =>
+            Container.BindInterfacesTo<TrackPartSpawningSubscriber>().AsSingle();
     }
 }
