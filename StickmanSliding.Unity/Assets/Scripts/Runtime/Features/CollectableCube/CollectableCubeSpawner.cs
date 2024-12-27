@@ -26,21 +26,33 @@ namespace StickmanSliding.Features.CollectableCube
         public void Despawn(TrackPartEntity trackPart)
         {
             foreach (CollectableCubeEntity cube in trackPart.State.CollectableCubes.Values)
+            {
+                cube.CollectingSubscriber.UnsubscribeToCollectByPlayer();
                 _factory.Release(cube);
+            }
 
             trackPart.State.CollectableCubes.Clear();
+        }
+
+        public void Despawn(CollectableCubeEntity cube)
+        {
+            cube.CollectingSubscriber.UnsubscribeToCollectByPlayer();
+            cube.State.OriginTrackPart.State.CollectableCubes.Remove(cube.State.OriginLocalPosition);
+            _factory.Release(cube);
         }
 
         private CollectableCubeEntity SpawnCube(TrackPartEntity trackPart)
         {
             CollectableCubeEntity cube = _factory.Create();
 
-            Vector3 cubeLocalPosition = GenerateRandomLocalPositionInGrid(trackPart, cube);
+            cube.State.OriginLocalPosition = GenerateRandomLocalPositionInGrid(trackPart, cube);
+            cube.State.OriginTrackPart     = trackPart;
+            trackPart.State.CollectableCubes.Add(cube.State.OriginLocalPosition, cube);
 
-            trackPart.State.CollectableCubes.Add(cubeLocalPosition, cube);
-
-            cube.transform.position = trackPart.transform.position + cubeLocalPosition;
+            cube.transform.position = trackPart.transform.position + cube.State.OriginLocalPosition;
             cube.transform.rotation = Quaternion.identity;
+
+            cube.CollectingSubscriber.SubscribeToCollectByPlayer();
 
             return cube;
         }

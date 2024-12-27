@@ -18,15 +18,18 @@ namespace StickmanSliding.Features.Player
 
         public void SpawnInitial() => Spawn(_configProvider.Config.InitialCubesCount);
 
-        private CollectableCubeEntity Spawn()
+        public CollectableCubeEntity Spawn()
         {
             CollectableCubeEntity cube = _factory.Create();
+
+            cube.transform.SetParent(_player.CubesParent);
+            cube.Collider.gameObject.layer = _player.gameObject.layer;
 
             cube.transform.position    =  _player.Character.position;
             _player.Character.position += cube.transform.HeightVector();
 
-            cube.transform.SetParent(_player.CubesParent);
-            cube.Collider.gameObject.layer = _player.gameObject.layer;
+            cube.Collider.isTrigger    = false;
+            cube.Rigidbody.isKinematic = false;
 
             return cube;
         }

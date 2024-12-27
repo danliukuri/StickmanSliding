@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using StickmanSliding.Data.Dynamic.State;
+using UnityEngine;
+using Zenject;
 
 namespace StickmanSliding.Features.CollectableCube
 {
@@ -8,6 +10,11 @@ namespace StickmanSliding.Features.CollectableCube
     [SelectionBase]
     public class CollectableCubeEntity : MonoBehaviour
     {
-        [field: SerializeField] public Collider Collider { get; private set; }
+        [Inject] public ICubeCollectingSubscriber CollectingSubscriber { get; private set; }
+
+        [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
+        [field: SerializeField] public Collider  Collider  { get; private set; }
+
+        public CollectableCubeState State { get; } = new();
     }
 }

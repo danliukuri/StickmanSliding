@@ -7,5 +7,7 @@ namespace StickmanSliding.Features.CollectableCube
         void Spawn(TrackPartEntity trackPart);
 
         void Despawn(TrackPartEntity trackPart);
+
+        void Despawn(CollectableCubeEntity cube);
     }
 }

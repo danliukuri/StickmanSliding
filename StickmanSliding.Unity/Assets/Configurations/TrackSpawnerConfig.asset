@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TrackSpawnerConfig
   m_EditorClassIdentifier: 
   <Length>k__BackingField: 75
-  <SpawnOrigin>k__BackingField: {x: 0, y: -0.5, z: -5}
+  <SpawnOrigin>k__BackingField: {x: 0, y: 0, z: -5}
