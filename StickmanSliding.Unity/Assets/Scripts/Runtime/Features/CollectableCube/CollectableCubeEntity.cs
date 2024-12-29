@@ -4,17 +4,14 @@ using Zenject;
 
 namespace StickmanSliding.Features.CollectableCube
 {
-    /// <summary>
-    /// Representative of the entity which provides access to game object components, services, and state
-    /// </summary>
-    [SelectionBase]
-    public class CollectableCubeEntity : MonoBehaviour
+    /// <inheritdoc/>
+    public class CollectableCubeEntity : Entity
     {
         [Inject] public ICubeCollectingSubscriber CollectingSubscriber { get; private set; }
 
         [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
         [field: SerializeField] public Collider  Collider  { get; private set; }
 
-        public CollectableCubeState State { get; } = new();
+        public TrackPlacementObjectState TrackPlacementState { get; } = new();
     }
 }

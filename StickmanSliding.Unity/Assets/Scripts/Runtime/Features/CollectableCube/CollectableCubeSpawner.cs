@@ -37,7 +37,8 @@ namespace StickmanSliding.Features.CollectableCube
         public void Despawn(CollectableCubeEntity cube)
         {
             cube.CollectingSubscriber.UnsubscribeToCollectByPlayer();
-            cube.State.OriginTrackPart.State.CollectableCubes.Remove(cube.State.OriginLocalPosition);
+            cube.TrackPlacementState.OriginTrackPart.State.CollectableCubes
+                .Remove(cube.TrackPlacementState.OriginLocalPosition);
             _factory.Release(cube);
         }
 
@@ -45,11 +46,11 @@ namespace StickmanSliding.Features.CollectableCube
         {
             CollectableCubeEntity cube = _factory.Create();
 
-            cube.State.OriginLocalPosition = GenerateRandomLocalPositionInGrid(trackPart, cube);
-            cube.State.OriginTrackPart     = trackPart;
-            trackPart.State.CollectableCubes.Add(cube.State.OriginLocalPosition, cube);
+            cube.TrackPlacementState.OriginLocalPosition = GenerateRandomLocalPositionInGrid(trackPart, cube);
+            cube.TrackPlacementState.OriginTrackPart     = trackPart;
+            trackPart.State.CollectableCubes.Add(cube.TrackPlacementState.OriginLocalPosition, cube);
 
-            cube.transform.position = trackPart.transform.position + cube.State.OriginLocalPosition;
+            cube.transform.position = trackPart.transform.position + cube.TrackPlacementState.OriginLocalPosition;
             cube.transform.rotation = Quaternion.identity;
 
             cube.CollectingSubscriber.SubscribeToCollectByPlayer();

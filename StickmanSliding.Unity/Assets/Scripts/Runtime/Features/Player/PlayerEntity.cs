@@ -3,11 +3,8 @@ using Zenject;
 
 namespace StickmanSliding.Features.Player
 {
-    /// <summary>
-    /// Representative of the entity which provides access to game object components, services, and state
-    /// </summary>
-    [SelectionBase]
-    public class PlayerEntity : MonoBehaviour
+    /// <inheritdoc cref="Entity"/>
+    public class PlayerEntity : Entity
     {
         [Inject] public IPlayerMover       Mover       { get; }
         [Inject] public IPlayerCubeSpawner CubeSpawner { get; }

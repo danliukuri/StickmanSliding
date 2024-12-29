@@ -2,11 +2,8 @@
 
 namespace StickmanSliding.Features.Track
 {
-    /// <summary>
-    /// Representative of the entity which provides access to game object components, services, and state
-    /// </summary>
-    [SelectionBase]
-    public class InitialTrackPartEntity : MonoBehaviour, ITrackPart
+    /// <inheritdoc cref="Entity"/>
+    public class InitialTrackPartEntity : Entity, ITrackPart
     {
         [field: SerializeField] public Transform Body { get; private set; }
 

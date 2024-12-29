@@ -50,6 +50,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ba22900468e7c14d84e803f3c8dd1f4
+    m_Address: ObstacleCube
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c36c412de8725f4e9a69d1a6ff8a0df
+    m_Address: ObstacleCubePoolConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a21f773c458ab214db0e736900765cde
     m_Address: CollectibleCube
     m_ReadOnly: 0

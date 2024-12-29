@@ -3,6 +3,7 @@ using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Track;
+using StickmanSliding.Features.WallObstacle;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.InputServices;
 using StickmanSliding.Infrastructure.ObjectCreation;
@@ -24,6 +25,8 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IConfigLoader<PlayerConfig>      _playerConfigLoader;
         [Inject] private readonly IGameObjectFactory<PlayerEntity> _playerFactory;
         [Inject] private readonly IPlayerProvider                  _playerProvider;
+
+        [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity> _obstacleCubeFactory;
 
         [Inject] private readonly IConfigLoader<CollectableCubeSpawnerConfig> _collectableCubesSpawnerConfigLoader;
         [Inject] private readonly IGameObjectFactory<CollectableCubeEntity>   _collectableCubeFactory;
@@ -49,6 +52,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _initialTrackPartFactory.Initialize(),
             _trackPartFactory.Initialize(),
             _playerFactory.Initialize(),
+            _obstacleCubeFactory.Initialize(),
             _collectableCubeFactory.Initialize(),
             _moveInputService.Initialize()
         );

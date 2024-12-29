@@ -103,6 +103,12 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+    <ObstacleCube>k__BackingField:
+      m_AssetGUID: 9c36c412de8725f4e9a69d1a6ff8a0df
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   inputActionReferences:
     <Move>k__BackingField:
       m_AssetGUID: 052faaac586de48259a63d0c4782560b

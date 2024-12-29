@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace StickmanSliding.Data.Dynamic.State
 {
-    public class CollectableCubeState
+    public class TrackPlacementObjectState
     {
         public Vector3         OriginLocalPosition { get; set; }
         public TrackPartEntity OriginTrackPart     { get; set; }

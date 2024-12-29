@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Track;
+using StickmanSliding.Features.WallObstacle;
 using StickmanSliding.Infrastructure.AssetLoading;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.InputServices;
@@ -46,11 +47,13 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
         {
             [field: SerializeField] public AssetReferenceT<PoolConfig> TrackPart       { get; private set; }
             [field: SerializeField] public AssetReferenceT<PoolConfig> CollectableCube { get; private set; }
+            [field: SerializeField] public AssetReferenceT<PoolConfig> ObstacleCube    { get; private set; }
 
             public Dictionary<Type, AssetReference> ToDictionary() => new()
             {
                 [typeof(TrackPartEntity)]       = TrackPart,
-                [typeof(CollectableCubeEntity)] = CollectableCube
+                [typeof(CollectableCubeEntity)] = CollectableCube,
+                [typeof(ObstacleCubeEntity)]    = ObstacleCube
             };
         }
 
