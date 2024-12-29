@@ -2,8 +2,8 @@
 {
     public class PlayerProvider : IPlayerProvider
     {
-        public Player Player { get; private set; }
+        public PlayerEntity Player { get; private set; }
 
-        public void Initialize(Player player) => Player = player;
+        public void Initialize(PlayerEntity player) => Player = player;
     }
 }

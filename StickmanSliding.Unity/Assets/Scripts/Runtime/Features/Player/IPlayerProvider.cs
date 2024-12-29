@@ -2,8 +2,8 @@
 {
     public interface IPlayerProvider
     {
-        Player Player { get; }
+        PlayerEntity Player { get; }
 
-        void Initialize(Player player);
+        void Initialize(PlayerEntity player);
     }
 }

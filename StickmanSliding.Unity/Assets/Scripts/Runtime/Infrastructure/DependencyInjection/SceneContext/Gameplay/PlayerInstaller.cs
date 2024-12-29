@@ -22,7 +22,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         }
 
         private void BindFactory() =>
-            Container.BindInterfacesTo<GameObjectFactory<Player>>().AsSingle().WithArguments(playerPrefab);
+            Container.BindInterfacesTo<GameObjectFactory<PlayerEntity>>().AsSingle().WithArguments(playerPrefab);
 
         private void BindConfigLoader() =>
             Container.BindInterfacesTo<ConfigLoader<PlayerConfig>>().AsSingle().WithArguments(config);

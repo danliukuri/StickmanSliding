@@ -6,17 +6,18 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
 {
     public class PlayerInstaller : MonoInstaller
     {
-        [SerializeField] private new Rigidbody rigidbody;
+        [SerializeField] private     PlayerEntity player;
+        [SerializeField] private new Collider     collider;
 
         public override void InstallBindings()
         {
-            BindRigidbody();
-
             BindMover();
+            BindCubeSpawner();
         }
 
-        private void BindRigidbody() => Container.Bind<Rigidbody>().FromInstance(rigidbody).AsSingle();
+        private void BindCubeSpawner() => Container.BindInterfacesTo<PlayerCubeSpawner>().AsSingle()
+            .WithArguments(player);
 
-        private void BindMover() => Container.BindInterfacesTo<PlayerMover>().AsSingle();
+        private void BindMover() => Container.BindInterfacesTo<PlayerMover>().AsSingle().WithArguments(transform);
     }
 }
