@@ -7,13 +7,12 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
     public class ObstacleCubeInstaller : MonoInstaller
     {
         [SerializeField] private ObstacleCubeEntity obstacleCube;
-
-        [SerializeField] private new Collider collider;
+        [SerializeField] private Collider           playerCubesDetachCollider;
 
         public override void InstallBindings() => BindPlayerCubeDetachingSubscriber();
 
         private void BindPlayerCubeDetachingSubscriber() =>
             Container.BindInterfacesTo<PlayerCubeDetachingSubscriber>().AsSingle()
-                .WithArguments(obstacleCube, collider);
+                .WithArguments(obstacleCube, playerCubesDetachCollider);
     }
 }

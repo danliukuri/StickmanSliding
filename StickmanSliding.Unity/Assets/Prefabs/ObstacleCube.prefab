@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 7758044810269718314}
   - component: {fileID: 431501479309215344}
   m_Layer: 0
-  m_Name: Collider (1)
+  m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 1887700135370724611}
   - component: {fileID: 6827739408346914610}
   m_Layer: 0
-  m_Name: Graphics (2)
+  m_Name: GraphicsForRecognizability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 4455455615528974684}
   - component: {fileID: 2125950189783076199}
   m_Layer: 0
-  m_Name: Collider (2)
+  m_Name: PlayerCubesDetachCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleCube: {fileID: -5812588162412063617}
-  collider: {fileID: 2125950189783076199}
+  playerCubesDetachCollider: {fileID: 2125950189783076199}
 --- !u!1 &9176765464961763602
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 9134848263294226443}
   - component: {fileID: 3298693268911985733}
   m_Layer: 0
-  m_Name: Graphics (1)
+  m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
