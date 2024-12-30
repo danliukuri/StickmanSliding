@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using StickmanSliding.Features.CollectableCube;
-using StickmanSliding.Features.WallObstacle;
+using StickmanSliding.Features.ObstacleCube;
 using UnityEngine;
 
 namespace StickmanSliding.Data.Dynamic.State

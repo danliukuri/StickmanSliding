@@ -1,9 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
+using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Track;
-using StickmanSliding.Features.WallObstacle;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.InputServices;
 using StickmanSliding.Infrastructure.ObjectCreation;

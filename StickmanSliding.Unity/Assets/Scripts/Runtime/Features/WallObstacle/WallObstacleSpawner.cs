@@ -1,4 +1,5 @@
-﻿using StickmanSliding.Features.Track;
+﻿using StickmanSliding.Features.ObstacleCube;
+using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Infrastructure.Randomization;
 using StickmanSliding.Utilities.Extensions;
@@ -23,13 +24,18 @@ namespace StickmanSliding.Features.WallObstacle
             cube.transform.position = trackPart.transform.position + cube.TrackPlacementState.OriginLocalPosition;
             cube.transform.rotation = Quaternion.identity;
 
+            cube.PlayerCubeDetachingSubscriber.SubscribeToDetachPlayerCube();
+
             return cube;
         }
 
         public void Despawn(TrackPartEntity trackPart)
         {
             foreach (ObstacleCubeEntity cube in trackPart.State.ObstacleCubes.Values)
+            {
+                cube.PlayerCubeDetachingSubscriber.UnsubscribeToDetachPlayerCube();
                 _factory.Release(cube);
+            }
 
             trackPart.State.ObstacleCubes.Clear();
         }

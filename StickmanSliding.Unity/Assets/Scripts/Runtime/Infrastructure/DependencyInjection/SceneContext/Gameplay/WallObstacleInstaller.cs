@@ -1,4 +1,5 @@
-﻿using StickmanSliding.Features.WallObstacle;
+﻿using StickmanSliding.Features.ObstacleCube;
+using StickmanSliding.Features.WallObstacle;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

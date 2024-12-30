@@ -1,4 +1,5 @@
-﻿using StickmanSliding.Features.Track;
+﻿using StickmanSliding.Features.ObstacleCube;
+using StickmanSliding.Features.Track;
 
 namespace StickmanSliding.Features.WallObstacle
 {

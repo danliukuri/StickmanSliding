@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
+using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Track;
-using StickmanSliding.Features.WallObstacle;
 using StickmanSliding.Infrastructure.AssetLoading;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.InputServices;
