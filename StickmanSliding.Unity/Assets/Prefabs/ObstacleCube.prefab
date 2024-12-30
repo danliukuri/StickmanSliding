@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8787ef0ffdc54eee9d4cf70d80f7aa83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleCube: {fileID: -5812588162412063617}
   collider: {fileID: 2125950189783076199}
 --- !u!1 &9176765464961763602
 GameObject:

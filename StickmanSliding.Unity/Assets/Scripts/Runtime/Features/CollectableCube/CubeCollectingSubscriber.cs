@@ -19,7 +19,7 @@ namespace StickmanSliding.Features.CollectableCube
                 .Where(player => player != default)
                 .Subscribe(CollectCube);
 
-        public void UnsubscribeToCollectByPlayer() => _respawningSubscription.Dispose();
+        public void UnsubscribeToCollectByPlayer() => _respawningSubscription?.Dispose();
 
         private void CollectCube(PlayerEntity player)
         {

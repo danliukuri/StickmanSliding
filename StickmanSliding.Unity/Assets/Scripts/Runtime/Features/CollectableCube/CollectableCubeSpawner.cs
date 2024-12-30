@@ -51,7 +51,6 @@ namespace StickmanSliding.Features.CollectableCube
             trackPart.State.CollectableCubes.Add(cube.TrackPlacementState.OriginLocalPosition, cube);
 
             cube.transform.position = trackPart.transform.position + cube.TrackPlacementState.OriginLocalPosition;
-            cube.transform.rotation = Quaternion.identity;
 
             cube.CollectingSubscriber.SubscribeToCollectByPlayer();
 

@@ -10,26 +10,35 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 {
     public class CollectableCubeInstaller : MonoInstaller
     {
-        [SerializeField] private AssetReferenceT<CollectableCubeSpawnerConfig> collectableCubeSpawnerConfig;
-        [SerializeField] private AssetReferenceGameObject                      collectableCubePrefab;
-        [SerializeField] private Transform                                     collectableCubeParent;
+        [SerializeField] private AssetReferenceT<CollectableCubeSpawnerConfig> spawnerConfig;
+        [SerializeField] private AssetReferenceGameObject                      prefab;
+        [SerializeField] private Transform                                     defaultParent;
 
         public override void InstallBindings()
         {
-            BindCollectableCubeFactory();
-            BindCollectableCubeSpawnerConfigLoader();
-            BindCollectableCubeSpawner();
+            BindFactory();
+            BindResetter();
+            BindSpawnerConfigLoader();
+            BindSpawner();
+            BindParentProvider();
         }
 
-        private void BindCollectableCubeFactory() =>
+        private void BindFactory() =>
             Container.BindInterfacesTo<PooledGameObjectFactory<CollectableCubeEntity>>().AsSingle()
-                .WithArguments(collectableCubePrefab, collectableCubeParent);
+                .WithArguments(prefab, defaultParent);
 
-        private void BindCollectableCubeSpawnerConfigLoader() =>
+        private void BindResetter() =>
+            Container.BindInterfacesTo<CollectableCubeResetter>().AsSingle();
+
+        private void BindSpawnerConfigLoader() =>
             Container.BindInterfacesTo<ConfigLoader<CollectableCubeSpawnerConfig>>().AsSingle()
-                .WithArguments(collectableCubeSpawnerConfig);
+                .WithArguments(spawnerConfig);
 
-        private void BindCollectableCubeSpawner() =>
+        private void BindSpawner() =>
             Container.BindInterfacesTo<CollectableCubeSpawner>().AsSingle();
+
+        private void BindParentProvider() =>
+            Container.BindInterfacesTo<CollectableCubesParentProvider>().AsSingle()
+                .WithArguments(defaultParent);
     }
 }

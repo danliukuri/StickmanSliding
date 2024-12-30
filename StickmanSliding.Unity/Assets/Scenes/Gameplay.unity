@@ -852,19 +852,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104af7a4227645fa8a4a7da68f7a0d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectableCubeSpawnerConfig:
+  spawnerConfig:
     m_AssetGUID: 33ccbc90240ab6745af312c05a93f0b1
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  collectableCubePrefab:
+  prefab:
     m_AssetGUID: a21f773c458ab214db0e736900765cde
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  collectableCubeParent: {fileID: 1547680342}
+  defaultParent: {fileID: 1547680342}
 --- !u!114 &1081873150
 MonoBehaviour:
   m_ObjectHideFlags: 0

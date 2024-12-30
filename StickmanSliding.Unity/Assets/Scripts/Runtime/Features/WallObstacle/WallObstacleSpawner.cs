@@ -22,7 +22,6 @@ namespace StickmanSliding.Features.WallObstacle
             trackPart.State.ObstacleCubes.Add(cube.TrackPlacementState.OriginLocalPosition, cube);
 
             cube.transform.position = trackPart.transform.position + cube.TrackPlacementState.OriginLocalPosition;
-            cube.transform.rotation = Quaternion.identity;
 
             cube.PlayerCubeDetachingSubscriber.SubscribeToDetachPlayerCube();
 
