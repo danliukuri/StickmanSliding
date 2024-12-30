@@ -28,8 +28,9 @@ namespace StickmanSliding.Features.Player
             cube.transform.position    =  _player.Character.position;
             _player.Character.position += cube.transform.HeightVector();
 
-            cube.Collider.isTrigger    = false;
-            cube.Rigidbody.isKinematic = false;
+            cube.Rigidbody.isKinematic  = false;
+            cube.Collider.enabled       = true;
+            cube.CollectTrigger.enabled = false;
 
             return cube;
         }

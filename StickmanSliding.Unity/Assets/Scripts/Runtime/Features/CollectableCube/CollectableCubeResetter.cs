@@ -12,8 +12,9 @@ namespace StickmanSliding.Features.CollectableCube
 
             cube.Collider.gameObject.layer = default;
 
-            cube.Collider.isTrigger    = true;
-            cube.Rigidbody.isKinematic = true;
+            cube.Rigidbody.isKinematic  = true;
+            cube.Collider.enabled       = false;
+            cube.CollectTrigger.enabled = true;
         }
     }
 }

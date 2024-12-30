@@ -14,7 +14,7 @@ namespace StickmanSliding.Features.CollectableCube
         private IDisposable _respawningSubscription;
 
         public void SubscribeToCollectByPlayer() =>
-            _respawningSubscription = _cube.Collider.OnTriggerEnterAsObservable()
+            _respawningSubscription = _cube.CollectTrigger.OnTriggerEnterAsObservable()
                 .Select(collider => collider.GetComponentInParent<PlayerEntity>())
                 .Where(player => player != default)
                 .Subscribe(CollectCube);

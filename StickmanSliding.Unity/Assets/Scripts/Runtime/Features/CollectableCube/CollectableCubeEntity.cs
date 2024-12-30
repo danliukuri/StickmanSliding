@@ -9,8 +9,9 @@ namespace StickmanSliding.Features.CollectableCube
     {
         [Inject] public ICubeCollectingSubscriber CollectingSubscriber { get; private set; }
 
-        [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
-        [field: SerializeField] public Collider  Collider  { get; private set; }
+        [field: SerializeField] public Rigidbody Rigidbody      { get; private set; }
+        [field: SerializeField] public Collider  Collider       { get; private set; }
+        [field: SerializeField] public Collider  CollectTrigger { get; private set; }
 
         public TrackPlacementObjectState TrackPlacementState { get; } = new();
     }
