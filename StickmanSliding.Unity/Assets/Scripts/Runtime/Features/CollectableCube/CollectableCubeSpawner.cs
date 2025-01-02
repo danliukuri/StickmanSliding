@@ -37,7 +37,7 @@ namespace StickmanSliding.Features.CollectableCube
         public void Despawn(CollectableCubeEntity cube)
         {
             cube.CollectingSubscriber.UnsubscribeToCollectByPlayer();
-            cube.TrackPlacementState.OriginTrackPart.State.CollectableCubes
+            cube.TrackPlacementState.OriginTrackPart?.State.CollectableCubes
                 .Remove(cube.TrackPlacementState.OriginLocalPosition);
             _factory.Release(cube);
         }

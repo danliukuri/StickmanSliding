@@ -11,10 +11,11 @@ namespace StickmanSliding.Features.Track
                                          IGameObjectResetter<TrackPartEntity>,
                                          ITrackPartConfigurator
     {
-        [Inject] private readonly ITrackPartPlacer             _trackPartPlacer;
-        [Inject] private readonly IWallObstacleSpawner         _wallObstacleSpawner;
-        [Inject] private readonly ICollectableCubeSpawner      _collectableCubeSpawner;
-        [Inject] private readonly ITrackPartSpawningSubscriber _trackPartSpawningSubscriber;
+        [Inject] private readonly ITrackPartPlacer                     _trackPartPlacer;
+        [Inject] private readonly IWallObstacleSpawner                 _wallObstacleSpawner;
+        [Inject] private readonly ICollectableCubeSpawner              _collectableCubeSpawner;
+        [Inject] private readonly ITrackPartSpawningSubscriber         _trackPartSpawningSubscriber;
+        [Inject] private readonly ITrackPartPlayerDespawningSubscriber _trackPartPlayerDespawningSubscriber;
 
         private Action<Collider> _spawnAction;
         private Action<Collider> _despawnAction;
@@ -25,7 +26,11 @@ namespace StickmanSliding.Features.Track
             _spawnAction   = spawnAction;
         }
 
-        public void Dispose() => _trackPartSpawningSubscriber.Dispose();
+        public void Dispose()
+        {
+            _trackPartSpawningSubscriber.Dispose();
+            _trackPartPlayerDespawningSubscriber.Dispose();
+        }
 
         public void Configure(TrackPartEntity trackPart)
         {
@@ -35,6 +40,8 @@ namespace StickmanSliding.Features.Track
 
             _trackPartSpawningSubscriber.SubscribeToSpawnTriggerEnter(trackPart, _spawnAction);
             _trackPartSpawningSubscriber.SubscribeToDespawnTriggerEnter(trackPart, _despawnAction);
+            _trackPartPlayerDespawningSubscriber.SubscribeToDespawnPlayerCubes(trackPart);
+            _trackPartPlayerDespawningSubscriber.SubscribeToDespawnPlayerCharacter(trackPart);
         }
 
         public void Reset(TrackPartEntity trackPart)
