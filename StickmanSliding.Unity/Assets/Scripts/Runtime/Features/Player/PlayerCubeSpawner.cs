@@ -23,7 +23,6 @@ namespace StickmanSliding.Features.Player
             CollectableCubeEntity cube = _factory.Create();
 
             cube.transform.SetParent(_player.CubesParent);
-            cube.Collider.gameObject.layer = _player.gameObject.layer;
 
             cube.transform.position    =  _player.Character.position;
             _player.Character.position += cube.transform.HeightVector();

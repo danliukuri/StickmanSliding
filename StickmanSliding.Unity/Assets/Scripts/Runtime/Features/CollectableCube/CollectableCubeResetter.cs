@@ -10,8 +10,6 @@ namespace StickmanSliding.Features.CollectableCube
             cube.transform.position = Vector3.zero;
             cube.transform.rotation = Quaternion.identity;
 
-            cube.Collider.gameObject.layer = default;
-
             cube.Rigidbody.isKinematic  = true;
             cube.Collider.enabled       = false;
             cube.CollectTrigger.enabled = true;
