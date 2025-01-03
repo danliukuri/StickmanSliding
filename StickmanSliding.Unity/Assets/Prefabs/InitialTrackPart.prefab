@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Body>k__BackingField: {fileID: 594918915256418750}
   <PlayerDespawnTrigger>k__BackingField: {fileID: 5203624446358191965}
+  <PlayerCubesDetachCollider>k__BackingField: {fileID: 4702011496119163344}
 --- !u!1 &3901613546708049837
 GameObject:
   m_ObjectHideFlags: 0

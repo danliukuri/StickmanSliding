@@ -352,3 +352,4 @@ MonoBehaviour:
     <SpawnNewTrackPart>k__BackingField: {fileID: 4312983527395096055}
     <DespawnLastTrackPart>k__BackingField: {fileID: 2178450460846254850}
   <PlayerDespawnTrigger>k__BackingField: {fileID: 1184601001440976059}
+  <PlayerCubesDetachCollider>k__BackingField: {fileID: 8625353341299471744}

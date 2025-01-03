@@ -268,8 +268,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3809375252348606064}
   - component: {fileID: -5812588162412063617}
-  - component: {fileID: 6726082678625794993}
-  - component: {fileID: 6375552078295899334}
   m_Layer: 0
   m_Name: ObstacleCube
   m_TagString: Untagged
@@ -306,39 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3a00e303d84168811378032afb4e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6726082678625794993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7610896603731515440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 6375552078295899334}
-  _installerPrefabs: []
-  _findSiblingMonoInstallers: 0
-  _autoRun: 1
-  _kernel: {fileID: 0}
---- !u!114 &6375552078295899334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7610896603731515440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8787ef0ffdc54eee9d4cf70d80f7aa83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacleCube: {fileID: -5812588162412063617}
-  playerCubesDetachCollider: {fileID: 2125950189783076199}
+  <PlayerCubesDetachCollider>k__BackingField: {fileID: 2125950189783076199}
 --- !u!1 &9176765464961763602
 GameObject:
   m_ObjectHideFlags: 0

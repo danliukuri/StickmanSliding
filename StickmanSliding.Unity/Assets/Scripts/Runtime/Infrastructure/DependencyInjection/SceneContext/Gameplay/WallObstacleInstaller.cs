@@ -16,6 +16,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         {
             BindObstacleCubeFactory();
             BindWallObstacleSpawner();
+            BindPlayerCubeDetacher();
+            BindPlayerCubeDetachingSubscriber();
         }
 
         private void BindObstacleCubeFactory() =>
@@ -24,5 +26,11 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 
         private void BindWallObstacleSpawner() =>
             Container.BindInterfacesTo<WallObstacleSpawner>().AsSingle();
+
+        private void BindPlayerCubeDetacher() =>
+            Container.BindInterfacesTo<PlayerCubeDetacher>().AsSingle();
+
+        private void BindPlayerCubeDetachingSubscriber() =>
+            Container.BindInterfacesTo<PlayerCubeDetachingSubscriber>().AsSingle();
     }
 }

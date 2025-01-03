@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using R3;
 using R3.Triggers;
 using StickmanSliding.Features.CollectableCube;
@@ -12,28 +13,26 @@ namespace StickmanSliding.Features.ObstacleCube
     public class PlayerCubeDetachingSubscriber : IPlayerCubeDetachingSubscriber
     {
         [Inject] private readonly ICollectableCubesParentProvider _collectableCubesParentProvider;
+        [Inject] private readonly IPlayerCubeDetacher             _playerCubeDetacher;
 
-        [Inject] private readonly ObstacleCubeEntity _obstacleCube;
-        [Inject] private readonly Collider           _obstacleCubeCollider;
+        private readonly Dictionary<Collider, IDisposable> _detachingSubscriptions = new();
 
-        private IDisposable _detachingSubscription;
-
-        public void SubscribeToDetachPlayerCube() =>
-            _detachingSubscription = _obstacleCubeCollider.OnCollisionEnterAsObservable()
-                .Select(collision => collision.transform)
-                .Where(transform => transform.GetComponentInParent<PlayerEntity>() != default)
-                .Select(transform => transform.GetComponentInParent<CollectableCubeEntity>())
-                .Where(playerCube => playerCube != default)
-                .Subscribe(Detach);
-
-        public void UnsubscribeToDetachPlayerCube() => _detachingSubscription.Dispose();
-
-        private void Detach(CollectableCubeEntity playerCube)
+        public void SubscribeToDetachPlayerCube(Collider collider, TrackPartEntity trackPart = default)
         {
-            playerCube.transform.SetParent(_collectableCubesParentProvider.DefaultParent);
+            if (!_detachingSubscriptions.ContainsKey(collider))
+                _detachingSubscriptions.Add(collider, collider.OnCollisionEnterAsObservable()
+                    .Where(_playerCubeDetacher.IsCollisionFromDetachableDirection)
+                    .Select(collision => collision.transform)
+                    .Where(transform => transform.GetComponentInParent<PlayerEntity>() != default)
+                    .Select(transform => transform.GetComponentInParent<CollectableCubeEntity>())
+                    .Where(playerCube => playerCube != default)
+                    .Subscribe(trackPart, _playerCubeDetacher.Detach));
+        }
 
-            TrackPartEntity currentTrackPart = _obstacleCube.TrackPlacementState.OriginTrackPart;
-            currentTrackPart.State.CollectableCubes.Add(playerCube.transform.position, playerCube);
+        public void UnsubscribeToDetachPlayerCube(Collider collider)
+        {
+            if (_detachingSubscriptions.Remove(collider, out IDisposable subscription))
+                subscription.Dispose();
         }
     }
 }

@@ -7,6 +7,7 @@ namespace StickmanSliding.Features.Track
         Transform Transform { get; }
         Transform Body      { get; }
 
-        Collider PlayerDespawnTrigger { get; }
+        Collider PlayerDespawnTrigger      { get; }
+        Collider PlayerCubesDetachCollider { get; }
     }
 }
