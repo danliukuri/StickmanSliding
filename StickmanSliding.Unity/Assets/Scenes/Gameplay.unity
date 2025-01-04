@@ -884,6 +884,12 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   wallObstaclesParent: {fileID: 1059309235}
+  playerCubeDetachingConfig:
+    m_AssetGUID: 0fb65e286389c2e40bb009e0f5a2b567
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!1 &1243620421
 GameObject:
   m_ObjectHideFlags: 0

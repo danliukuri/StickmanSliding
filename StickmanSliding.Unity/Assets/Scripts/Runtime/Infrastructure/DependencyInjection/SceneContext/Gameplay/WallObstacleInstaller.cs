@@ -1,5 +1,7 @@
-﻿using StickmanSliding.Features.ObstacleCube;
+﻿using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.WallObstacle;
+using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,13 +11,15 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 {
     public class WallObstacleInstaller : MonoInstaller
     {
-        [SerializeField] private AssetReferenceGameObject obstacleCubePrefab;
-        [SerializeField] private Transform                wallObstaclesParent;
+        [SerializeField] private AssetReferenceGameObject                   obstacleCubePrefab;
+        [SerializeField] private Transform                                  wallObstaclesParent;
+        [SerializeField] private AssetReferenceT<PlayerCubeDetachingConfig> playerCubeDetachingConfig;
 
         public override void InstallBindings()
         {
             BindObstacleCubeFactory();
             BindWallObstacleSpawner();
+            BindPlayerCubeDetachingConfigLoader();
             BindPlayerCubeDetacher();
             BindPlayerCubeDetachingSubscriber();
         }
@@ -26,6 +30,10 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 
         private void BindWallObstacleSpawner() =>
             Container.BindInterfacesTo<WallObstacleSpawner>().AsSingle();
+
+        private void BindPlayerCubeDetachingConfigLoader() =>
+            Container.BindInterfacesTo<ConfigLoader<PlayerCubeDetachingConfig>>().AsSingle()
+                .WithArguments(playerCubeDetachingConfig);
 
         private void BindPlayerCubeDetacher() =>
             Container.BindInterfacesTo<PlayerCubeDetacher>().AsSingle();

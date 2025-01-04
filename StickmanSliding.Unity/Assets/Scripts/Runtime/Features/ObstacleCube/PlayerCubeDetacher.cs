@@ -1,5 +1,7 @@
-﻿using StickmanSliding.Features.CollectableCube;
+﻿using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Track;
+using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Utilities.Extensions;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -9,12 +11,8 @@ namespace StickmanSliding.Features.ObstacleCube
 {
     public class PlayerCubeDetacher : IPlayerCubeDetacher
     {
-        private const    float   FullDirectionDetachAngle = 45f;
-        private const    float   DetachAngleEpsilon       = 1f;
-        private const    float   MaxDetachAngle           = FullDirectionDetachAngle + DetachAngleEpsilon;
-        private readonly Vector3 _notDetachableDirection  = Vector3.up;
-
-        [Inject] private readonly ICollectableCubesParentProvider _collectableCubesParentProvider;
+        [Inject] private readonly ICollectableCubesParentProvider            _collectableCubesParentProvider;
+        [Inject] private readonly IConfigProvider<PlayerCubeDetachingConfig> _configProvider;
 
         public void Detach(CollectableCubeEntity cube, TrackPartEntity trackPart)
         {
@@ -28,7 +26,8 @@ namespace StickmanSliding.Features.ObstacleCube
             Vector3 contactPoint       = collision.contacts.Average(contact => contact.point);
             Vector3 collisionDirection = IgnoreSmallestAxis(collision.collider.transform.position - contactPoint);
 
-            return Vector3.Angle(collisionDirection, _notDetachableDirection) > MaxDetachAngle;
+            float objectsAngle = Vector3.Angle(collisionDirection, _configProvider.Config.NotDetachableDirection);
+            return objectsAngle > _configProvider.Config.MaxDetachAngle;
         }
 
         private static Vector3 IgnoreSmallestAxis(Vector3 source)

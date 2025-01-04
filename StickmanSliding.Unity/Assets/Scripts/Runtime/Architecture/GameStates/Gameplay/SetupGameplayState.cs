@@ -22,9 +22,10 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IGameObjectFactory<TrackPartEntity>        _trackPartFactory;
         [Inject] private readonly ITrackSpawner                              _trackSpawner;
 
-        [Inject] private readonly IConfigLoader<PlayerConfig>      _playerConfigLoader;
-        [Inject] private readonly IGameObjectFactory<PlayerEntity> _playerFactory;
-        [Inject] private readonly IPlayerProvider                  _playerProvider;
+        [Inject] private readonly IConfigLoader<PlayerConfig>              _playerConfigLoader;
+        [Inject] private readonly IConfigLoader<PlayerCubeDetachingConfig> _playerCubeDetachingConfigLoader;
+        [Inject] private readonly IGameObjectFactory<PlayerEntity>         _playerFactory;
+        [Inject] private readonly IPlayerProvider                          _playerProvider;
 
         [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity> _obstacleCubeFactory;
 
@@ -45,6 +46,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         private UniTask LoadAssets() => UniTask.WhenAll(
             _trackPartSpawnerConfigLoader.Load(),
             _playerConfigLoader.Load(),
+            _playerCubeDetachingConfigLoader.Load(),
             _collectableCubesSpawnerConfigLoader.Load()
         );
 
