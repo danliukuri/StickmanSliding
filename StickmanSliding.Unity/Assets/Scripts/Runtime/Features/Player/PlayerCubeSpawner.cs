@@ -5,6 +5,7 @@ using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Utilities.Extensions;
+using UnityEngine;
 using Zenject;
 
 namespace StickmanSliding.Features.Player
@@ -30,6 +31,8 @@ namespace StickmanSliding.Features.Player
             cube.Rigidbody.isKinematic  = false;
             cube.Collider.enabled       = true;
             cube.CollectTrigger.enabled = false;
+
+            cube.Rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
             return cube;
         }

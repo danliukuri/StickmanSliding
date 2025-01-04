@@ -18,6 +18,8 @@ namespace StickmanSliding.Features.ObstacleCube
         {
             cube.transform.SetParent(_collectableCubesParentProvider.DefaultParent);
 
+            cube.Rigidbody.constraints &= ~RigidbodyConstraints.FreezePositionX & ~RigidbodyConstraints.FreezePositionZ;
+
             trackPart?.State.CollectableCubes.Add(cube.transform.position, cube);
         }
 
