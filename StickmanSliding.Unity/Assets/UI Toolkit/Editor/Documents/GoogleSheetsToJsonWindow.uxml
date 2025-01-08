@@ -1,0 +1,37 @@
+<engine:UXML xmlns:engine="UnityEngine.UIElements"
+             noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:Template name="DefaultSettingsHeader"
+                     src="project://database/Assets/UI%20Toolkit/Documents/DefaultSettingsHeader.uxml?fileID=9197481963319205126&amp;guid=43bd4219d332bd04dac0441dc16e1f8e&amp;type=3#DefaultSettingsHeader"/>
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/GoogleSheetsToJsonWindow.uss?fileID=7433441132597879392&amp;guid=4c6791c081b91374f9d200a4a282ae85&amp;type=3#GoogleSheetsToJsonWindow"/>
+    <engine:Instance template="DefaultSettingsHeader" style="min-height: 22px;"/>
+    <engine:ScrollView
+            style="padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; min-width: 100%; height: 100%;">
+        <engine:TextField label="Spreadsheet ID" name="SpreadsheetId"
+                          tooltip="Id of the spreadsheet document.&lt;br&gt;Copy from the desired spreadsheet URL.&lt;br&gt;For example:&lt;br&gt;https://docs.google.com/spreadsheets/d/&lt;b&gt;1syVgzYdg5YfqwnOfl8l7iLSlTA3-75NdCklQVPcHWw0&lt;/b&gt;/edit?gid=1731073066#gid=1731073066"
+                          class="text-field">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="SpreadsheetId"
+                                    data-source-type="StickmanSliding.Editor.Features.GoogleSheetsToJson.GoogleSheetsToJsonWindow, Assembly-CSharp-Editor"/>
+            </Bindings>
+        </engine:TextField>
+        <engine:TextField label="Spreadsheet Page ID" name="SpreadsheetPageId"
+                          tooltip="Id of the spreadsheet page.&lt;br&gt;Copy from the desired spreadsheet URL.&lt;br&gt;For example:&lt;br&gt;https://docs.google.com/spreadsheets/d/1syVgzYdg5YfqwnOfl8l7iLSlTA3-75NdCklQVPcHWw0/edit?gid=&lt;b&gt;1731073066&lt;/b&gt;#gid=1731073066"
+                          class="text-field">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="SpreadsheetPageId"
+                                    data-source-type="StickmanSliding.Editor.Features.GoogleSheetsToJson.GoogleSheetsToJsonWindow, Assembly-CSharp-Editor"/>
+            </Bindings>
+        </engine:TextField>
+        <engine:TextField label="JSON Storage File Path" name="JsonStorageFilePath"
+                          tooltip="Relative to the project folder path where to store parsed data in JSON format."
+                          class="text-field">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="JsonStorageFilePath"
+                                    data-source-type="StickmanSliding.Editor.Features.GoogleSheetsToJson.GoogleSheetsToJsonWindow, Assembly-CSharp-Editor"/>
+            </Bindings>
+        </engine:TextField>
+        <engine:Button text="Download and Parse to JSON" name="DownloadAndParseToJson"
+                       tooltip="Download a spreadsheet using the specified &lt;i&gt;Spreadsheet ID&lt;/i&gt; and &lt;i&gt;Spreadsheet Page ID&lt;/i&gt;, convert its content into a JSON structure labelled with the spreadsheet name, and save the resulting JSON file at the specified &lt;i&gt;JSON Storage File Path&lt;/i&gt;."
+                       style="white-space: normal; height: 50px; margin-top: 5px; margin-bottom: 5px;"/>
+    </engine:ScrollView>
+</engine:UXML>

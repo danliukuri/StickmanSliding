@@ -6,6 +6,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser*[Ss]ettings/
+/[Uu][Ii]*[Ee]lements*[Ss]chema/
 
 # Recordings can get excessive in size
 /[Rr]ecordings/
