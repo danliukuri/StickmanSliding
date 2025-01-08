@@ -1,75 +1,48 @@
+using StickmanSliding.Editor.Data.Dynamic.State;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static StickmanSliding.Editor.Data.Static.Constants.GoogleSheetsToJsonWindowConstants;
+using static StickmanSliding.Editor.Data.Static.Constants.GoogleSheetsToJsonWindowVisualElementsNameConstants;
 
 namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
 {
     public class GoogleSheetsToJsonWindow : EditorWindow
     {
-        private const string PathSeparator     = "/";
-        private const string DefaultWindowPath = "Window";
-        private const string WindowTitle       = "Google Sheets To JSON";
-        private const string WindowPath        = DefaultWindowPath + PathSeparator + WindowTitle;
-
-        private const string SpreadsheetIdKey =
-            nameof(GoogleSheetsToJsonWindow) + PathSeparator + nameof(SpreadsheetId);
-
-        private const string SpreadsheetPageIdKey =
-            nameof(GoogleSheetsToJsonWindow) + PathSeparator + nameof(SpreadsheetPageId);
-
-        private const string JsonStorageFilePathKey =
-            nameof(GoogleSheetsToJsonWindow) + PathSeparator + nameof(JsonStorageFilePath);
-
-
-        private const string DefaultSpreadsheetId       = "1syVgzYdg5YfqwnOfl8l7iLSlTA3-75NdCklQVPcHWw0";
-        private const string DefaultSpreadsheetPageId   = "0";
-        private const string DefaultJsonStorageFilePath = "./Assets/Configurations/";
-
         [SerializeField] private VisualTreeAsset visualTreeAsset;
 
-        public string SpreadsheetId;
-        public string SpreadsheetPageId;
-        public string JsonStorageFilePath;
+        private readonly GoogleSheetsToJsonWindowStateSaver _stateSaver = new();
+        private readonly GoogleSheetsToJsonWindowState      _state      = new();
 
-        private void OnEnable()
-        {
-            SpreadsheetId       = EditorPrefs.GetString(SpreadsheetIdKey,       DefaultSpreadsheetId);
-            SpreadsheetPageId   = EditorPrefs.GetString(SpreadsheetPageIdKey,   DefaultSpreadsheetPageId);
-            JsonStorageFilePath = EditorPrefs.GetString(JsonStorageFilePathKey, DefaultJsonStorageFilePath);
-        }
+        private void OnEnable() => _stateSaver.Load(_state);
 
-        private void OnDisable()
-        {
-            EditorPrefs.SetString(SpreadsheetIdKey,       SpreadsheetId);
-            EditorPrefs.SetString(SpreadsheetPageIdKey,   SpreadsheetPageId);
-            EditorPrefs.SetString(JsonStorageFilePathKey, JsonStorageFilePath);
-        }
+        private void OnDisable() => _stateSaver.Save(_state);
 
         public void CreateGUI()
         {
             VisualElement root = rootVisualElement;
-            root.dataSource = this;
+            root.dataSource = _state;
 
             VisualElement assetUI = visualTreeAsset.Instantiate();
             root.Add(assetUI);
 
-            assetUI.Q(nameof(SpreadsheetId)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
+            assetUI.Q(nameof(_state.SpreadsheetId)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
             {
-                populateEvent.menu.AppendAction(actionName: "Reset", action =>
-                    SpreadsheetId = DefaultSpreadsheetId);
+                populateEvent.menu.AppendAction(Reset, action =>
+                    _state.SpreadsheetId = DefaultSpreadsheetId);
             }));
-            assetUI.Q(nameof(SpreadsheetPageId)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
+            assetUI.Q(nameof(_state.SpreadsheetPageId)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
             {
-                populateEvent.menu.AppendAction(actionName: "Reset", action =>
-                    SpreadsheetPageId = DefaultSpreadsheetPageId);
+                populateEvent.menu.AppendAction(Reset, action =>
+                    _state.SpreadsheetPageId = DefaultSpreadsheetPageId);
             }));
-            assetUI.Q(nameof(JsonStorageFilePath)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
+            assetUI.Q(nameof(_state.JsonStorageFilePath)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
             {
-                populateEvent.menu.AppendAction(actionName: "Reset", action =>
-                    JsonStorageFilePath = DefaultJsonStorageFilePath);
+                populateEvent.menu.AppendAction(Reset, action =>
+                    _state.JsonStorageFilePath = DefaultJsonStorageFilePath);
             }));
 
-            assetUI.Q<Button>("DownloadAndParseToJson").clicked += DownloadAndParse;
+            assetUI.Q<Button>(DownloadAndParseToJson).clicked += DownloadAndParse;
         }
 
         [MenuItem(WindowPath)]
