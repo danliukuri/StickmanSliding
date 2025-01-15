@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using StickmanSliding.Editor.Data.Dynamic.State;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,6 +19,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
         private readonly GoogleSheetsToJsonWindowState      _state      = new();
         private readonly GoogleSheetsToJsonWindowStateSaver _stateSaver = new();
         private readonly GoogleSheetsDownloader             _downloader = new();
+        private readonly GoogleSheetsParser                 _parser     = new();
 
         private void OnEnable() => _stateSaver.Load(_state);
 
@@ -53,11 +57,36 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
 
         private async void DownloadAndParse()
         {
+            const string fileName      = "DATA";
+            const string csvExtension  = ".csv";
+            const string jsonExtension = ".json";
             try
             {
                 string rawCsvData = await _downloader.DownloadCsv(_state);
                 if (!string.IsNullOrEmpty(rawCsvData))
-                    await File.WriteAllTextAsync(_state.JsonStorageFilePath + "DATA.csv", rawCsvData);
+                {
+                    Debug.Log("Started saving CSV data");
+                    string csvStorageFilePath = Path.Join(_state.JsonStorageFilePath, fileName + csvExtension);
+                    await File.WriteAllTextAsync(csvStorageFilePath, rawCsvData);
+                    Debug.Log("Finished saving CSV data to "                                        +
+                              $"<a href=\"{csvStorageFilePath}\">{fileName + csvExtension}</a> at " +
+                              $"<a href=\"{_state.JsonStorageFilePath}\">{_state.JsonStorageFilePath}</a>");
+
+                    List<object> parsedData = _parser.ParseCsv(rawCsvData);
+                    if (parsedData != null && parsedData.Any())
+                    {
+                        Debug.Log("Started converting parsed data to JSON");
+                        string jsonData = JsonConvert.SerializeObject(parsedData);
+                        Debug.Log("Finished converting parsed data to JSON");
+
+                        Debug.Log("Started saving JSON data");
+                        string jsonStorageFilePath = Path.Join(_state.JsonStorageFilePath, fileName + jsonExtension);
+                        await File.WriteAllTextAsync(jsonStorageFilePath, jsonData);
+                        Debug.Log("Finished saving JSON data to "                                         +
+                                  $"<a href=\"{jsonStorageFilePath}\">{fileName + jsonExtension}</a> at " +
+                                  $"<a href=\"{_state.JsonStorageFilePath}\">{_state.JsonStorageFilePath}</a>");
+                    }
+                }
             }
             catch (Exception exception)
             {
