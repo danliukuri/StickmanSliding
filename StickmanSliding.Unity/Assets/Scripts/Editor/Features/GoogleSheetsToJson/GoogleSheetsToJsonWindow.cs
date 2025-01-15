@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using StickmanSliding.Editor.Data.Dynamic.State;
 using UnityEditor;
 using UnityEngine;
@@ -11,8 +13,9 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
     {
         [SerializeField] private VisualTreeAsset visualTreeAsset;
 
-        private readonly GoogleSheetsToJsonWindowStateSaver _stateSaver = new();
         private readonly GoogleSheetsToJsonWindowState      _state      = new();
+        private readonly GoogleSheetsToJsonWindowStateSaver _stateSaver = new();
+        private readonly GoogleSheetsDownloader             _downloader = new();
 
         private void OnEnable() => _stateSaver.Load(_state);
 
@@ -48,6 +51,18 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
         [MenuItem(WindowPath)]
         public static void ShowExample() => GetWindow<GoogleSheetsToJsonWindow>(WindowTitle);
 
-        private void DownloadAndParse() => Debug.Log("Button clicked!");
+        private async void DownloadAndParse()
+        {
+            try
+            {
+                string rawCsvData = await _downloader.DownloadCsv(_state);
+                if (!string.IsNullOrEmpty(rawCsvData))
+                    await File.WriteAllTextAsync(_state.JsonStorageFilePath + "DATA.csv", rawCsvData);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception);
+            }
+        }
     }
 }
