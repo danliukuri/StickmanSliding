@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using StickmanSliding.Editor.Features.GoogleSheetsToJson.StringParsers;
-using StickmanSliding.Editor.Utilities;
+using StickmanSliding.Editor.Features.GoogleSheetsToJson.Utilities;
 using UnityEngine;
 
 namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.TableParsers

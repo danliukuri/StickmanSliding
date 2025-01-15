@@ -1,4 +1,4 @@
-﻿using StickmanSliding.Editor.Utilities;
+﻿using StickmanSliding.Editor.Features.GoogleSheetsToJson.Utilities;
 
 namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.StringParsers
 {

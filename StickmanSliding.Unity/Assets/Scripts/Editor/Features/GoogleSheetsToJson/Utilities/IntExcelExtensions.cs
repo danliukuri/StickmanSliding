@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StickmanSliding.Editor.Utilities
+namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.Utilities
 {
     public static class IntExcelExtensions
     {

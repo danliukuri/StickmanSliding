@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StickmanSliding.Editor.Utilities
+namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.Utilities
 {
     public static class TypeAliasesExtensions
     {
