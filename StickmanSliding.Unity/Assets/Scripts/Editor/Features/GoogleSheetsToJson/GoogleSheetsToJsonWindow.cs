@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using StickmanSliding.Editor.Data.Dynamic.State;
+using StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Dynamic.State;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static StickmanSliding.Editor.Data.Static.Constants.GoogleSheetsToJsonWindowConstants;
-using static StickmanSliding.Editor.Data.Static.Constants.GoogleSheetsToJsonWindowVisualElementsNameConstants;
+using static StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Static.Constants.GoogleSheetsToJsonWindowConstants;
+using static StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Static.Constants.GoogleSheetsToJsonWindowVisualElementsNameConstants;
 
 namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
 {

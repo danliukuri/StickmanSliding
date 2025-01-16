@@ -11,7 +11,7 @@
                           class="text-field">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="SpreadsheetId"
-                                    data-source-type="StickmanSliding.Editor.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
+                                    data-source-type="StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
             </Bindings>
         </engine:TextField>
         <engine:TextField label="Spreadsheet Page ID" name="SpreadsheetPageId"
@@ -19,7 +19,7 @@
                           class="text-field">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="SpreadsheetPageId"
-                                    data-source-type="StickmanSliding.Editor.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
+                                    data-source-type="StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
             </Bindings>
         </engine:TextField>
         <engine:TextField label="JSON Storage File Path" name="JsonStorageFilePath"
@@ -27,7 +27,7 @@
                           class="text-field">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="JsonStorageFilePath"
-                                    data-source-type="StickmanSliding.Editor.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
+                                    data-source-type="StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
             </Bindings>
         </engine:TextField>
         <engine:TextField label="File Name" name="FileName"
@@ -35,7 +35,7 @@
                           class="text-field">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="FileName"
-                                    data-source-type="StickmanSliding.Editor.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
+                                    data-source-type="StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
             </Bindings>
         </engine:TextField>
         <engine:Button text="Download and Parse to JSON" name="DownloadAndParseToJson"

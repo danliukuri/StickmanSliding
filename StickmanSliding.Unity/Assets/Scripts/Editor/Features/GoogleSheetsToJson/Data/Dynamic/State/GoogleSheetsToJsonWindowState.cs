@@ -1,4 +1,4 @@
-﻿namespace StickmanSliding.Editor.Data.Dynamic.State
+﻿namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Dynamic.State
 {
     public class GoogleSheetsToJsonWindowState
     {

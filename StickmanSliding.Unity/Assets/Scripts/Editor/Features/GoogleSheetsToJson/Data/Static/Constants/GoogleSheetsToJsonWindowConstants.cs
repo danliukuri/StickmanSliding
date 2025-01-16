@@ -1,6 +1,6 @@
-﻿using static StickmanSliding.Editor.Data.Static.Constants.GoogleSheetsToJsonWindowVisualElementsNameConstants;
+﻿using static StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Static.Constants.GoogleSheetsToJsonWindowVisualElementsNameConstants;
 
-namespace StickmanSliding.Editor.Data.Static.Constants
+namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Static.Constants
 {
     public class GoogleSheetsToJsonWindowConstants
     {

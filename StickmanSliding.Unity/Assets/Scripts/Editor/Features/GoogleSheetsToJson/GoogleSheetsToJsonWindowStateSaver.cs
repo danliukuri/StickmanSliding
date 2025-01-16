@@ -1,5 +1,5 @@
-﻿using StickmanSliding.Editor.Data.Dynamic.State;
-using static StickmanSliding.Editor.Data.Static.Constants.GoogleSheetsToJsonWindowConstants;
+﻿using StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Dynamic.State;
+using static StickmanSliding.Editor.Features.GoogleSheetsToJson.Data.Static.Constants.GoogleSheetsToJsonWindowConstants;
 using static UnityEditor.EditorPrefs;
 
 
