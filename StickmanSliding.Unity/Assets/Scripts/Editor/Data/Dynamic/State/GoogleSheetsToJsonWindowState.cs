@@ -5,5 +5,6 @@
         public string SpreadsheetId;
         public string SpreadsheetPageId;
         public string JsonStorageFilePath;
+        public string FileName;
     }
 }

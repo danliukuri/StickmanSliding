@@ -12,6 +12,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
             SetString(SpreadsheetIdEditorPrefsKey,       state.SpreadsheetId);
             SetString(SpreadsheetPageIdEditorPrefsKey,   state.SpreadsheetPageId);
             SetString(JsonStorageFilePathEditorPrefsKey, state.JsonStorageFilePath);
+            SetString(FileNameEditorPrefsKey,            state.FileName);
         }
 
         public void Load(GoogleSheetsToJsonWindowState state)
@@ -19,6 +20,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
             state.SpreadsheetId       = GetString(SpreadsheetIdEditorPrefsKey,       DefaultSpreadsheetId);
             state.SpreadsheetPageId   = GetString(SpreadsheetPageIdEditorPrefsKey,   DefaultSpreadsheetPageId);
             state.JsonStorageFilePath = GetString(JsonStorageFilePathEditorPrefsKey, DefaultJsonStorageFilePath);
+            state.FileName            = GetString(FileNameEditorPrefsKey,            DefaultFileName);
         }
     }
 }

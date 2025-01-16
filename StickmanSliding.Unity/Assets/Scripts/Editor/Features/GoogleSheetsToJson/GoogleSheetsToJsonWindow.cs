@@ -12,6 +12,12 @@ using static StickmanSliding.Editor.Data.Static.Constants.GoogleSheetsToJsonWind
 
 namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
 {
+    // TODO: Move "Google Sheets To JSON" feature to separate custom package
+    // TODO: Replace Debug.Log on custom logger
+    // TODO: Replace constants on configurable values
+    // TODO: Replace TableType and Type on enums
+    // TODO: Make dependencies resolving more flexible
+    // TODO: Fix "Unsaved Unity state" Rider warning on commit
     public class GoogleSheetsToJsonWindow : EditorWindow
     {
         [SerializeField] private VisualTreeAsset visualTreeAsset;
@@ -33,20 +39,25 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
             VisualElement assetUI = visualTreeAsset.Instantiate();
             root.Add(assetUI);
 
-            assetUI.Q(nameof(_state.SpreadsheetId)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
+            assetUI.Q(SpreadsheetId).AddManipulator(new ContextualMenuManipulator(populateEvent =>
             {
                 populateEvent.menu.AppendAction(Reset, action =>
                     _state.SpreadsheetId = DefaultSpreadsheetId);
             }));
-            assetUI.Q(nameof(_state.SpreadsheetPageId)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
+            assetUI.Q(SpreadsheetPageId).AddManipulator(new ContextualMenuManipulator(populateEvent =>
             {
                 populateEvent.menu.AppendAction(Reset, action =>
                     _state.SpreadsheetPageId = DefaultSpreadsheetPageId);
             }));
-            assetUI.Q(nameof(_state.JsonStorageFilePath)).AddManipulator(new ContextualMenuManipulator(populateEvent =>
+            assetUI.Q(JsonStorageFilePath).AddManipulator(new ContextualMenuManipulator(populateEvent =>
             {
                 populateEvent.menu.AppendAction(Reset, action =>
                     _state.JsonStorageFilePath = DefaultJsonStorageFilePath);
+            }));
+            assetUI.Q(FileName).AddManipulator(new ContextualMenuManipulator(populateEvent =>
+            {
+                populateEvent.menu.AppendAction(Reset, action =>
+                    _state.FileName = DefaultFileName);
             }));
 
             assetUI.Q<Button>(DownloadAndParseToJson).clicked += DownloadAndParse;
@@ -57,7 +68,6 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
 
         private async void DownloadAndParse()
         {
-            const string fileName      = "DATA";
             const string csvExtension  = ".csv";
             const string jsonExtension = ".json";
             try
@@ -66,10 +76,10 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
                 if (!string.IsNullOrEmpty(rawCsvData))
                 {
                     Debug.Log("Started saving CSV data");
-                    string csvStorageFilePath = Path.Join(_state.JsonStorageFilePath, fileName + csvExtension);
+                    string csvStorageFilePath = Path.Join(_state.JsonStorageFilePath, _state.FileName + csvExtension);
                     await File.WriteAllTextAsync(csvStorageFilePath, rawCsvData);
-                    Debug.Log("Finished saving CSV data to "                                        +
-                              $"<a href=\"{csvStorageFilePath}\">{fileName + csvExtension}</a> at " +
+                    Debug.Log("Finished saving CSV data to "                                               +
+                              $"<a href=\"{csvStorageFilePath}\">{_state.FileName + csvExtension}</a> at " +
                               $"<a href=\"{_state.JsonStorageFilePath}\">{_state.JsonStorageFilePath}</a>");
 
                     List<object> parsedData = _parser.ParseCsv(rawCsvData);
@@ -80,10 +90,11 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
                         Debug.Log("Finished converting parsed data to JSON");
 
                         Debug.Log("Started saving JSON data");
-                        string jsonStorageFilePath = Path.Join(_state.JsonStorageFilePath, fileName + jsonExtension);
+                        string jsonStorageFilePath =
+                            Path.Join(_state.JsonStorageFilePath, _state.FileName + jsonExtension);
                         await File.WriteAllTextAsync(jsonStorageFilePath, jsonData);
-                        Debug.Log("Finished saving JSON data to "                                         +
-                                  $"<a href=\"{jsonStorageFilePath}\">{fileName + jsonExtension}</a> at " +
+                        Debug.Log("Finished saving JSON data to "                                                +
+                                  $"<a href=\"{jsonStorageFilePath}\">{_state.FileName + jsonExtension}</a> at " +
                                   $"<a href=\"{_state.JsonStorageFilePath}\">{_state.JsonStorageFilePath}</a>");
                     }
                 }

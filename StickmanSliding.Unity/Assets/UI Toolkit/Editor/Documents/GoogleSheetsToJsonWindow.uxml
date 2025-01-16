@@ -30,6 +30,14 @@
                                     data-source-type="StickmanSliding.Editor.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
             </Bindings>
         </engine:TextField>
+        <engine:TextField label="File Name" name="FileName"
+                          tooltip="Relative to the project folder path where to store parsed data in JSON format."
+                          class="text-field">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="FileName"
+                                    data-source-type="StickmanSliding.Editor.Data.Dynamic.State.GoogleSheetsToJsonWindowState, Assembly-CSharp-Editor"/>
+            </Bindings>
+        </engine:TextField>
         <engine:Button text="Download and Parse to JSON" name="DownloadAndParseToJson"
                        tooltip="Download a spreadsheet using the specified &lt;i&gt;Spreadsheet ID&lt;/i&gt; and &lt;i&gt;Spreadsheet Page ID&lt;/i&gt;, convert its content into a JSON structure labelled with the spreadsheet name, and save the resulting JSON file at the specified &lt;i&gt;JSON Storage File Path&lt;/i&gt;."
                        style="white-space: normal; height: 50px; margin-top: 5px; margin-bottom: 5px;"/>
