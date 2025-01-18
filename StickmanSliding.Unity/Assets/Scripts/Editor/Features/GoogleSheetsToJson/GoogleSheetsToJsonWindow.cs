@@ -69,20 +69,12 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
 
         private async void DownloadAndParse()
         {
-            const string csvExtension  = ".csv";
             const string jsonExtension = ".json";
             try
             {
                 string rawCsvData = await _downloader.DownloadCsv(_state);
                 if (!string.IsNullOrEmpty(rawCsvData))
                 {
-                    Debug.Log("Started saving CSV data");
-                    string csvStorageFilePath = Path.Join(_state.JsonStorageFilePath, _state.FileName + csvExtension);
-                    await File.WriteAllTextAsync(csvStorageFilePath, rawCsvData);
-                    Debug.Log("Finished saving CSV data to "                                               +
-                              $"<a href=\"{csvStorageFilePath}\">{_state.FileName + csvExtension}</a> at " +
-                              $"<a href=\"{_state.JsonStorageFilePath}\">{_state.JsonStorageFilePath}</a>");
-
                     Dictionary<string, object> parsedData = _parser.ParseCsv(rawCsvData);
                     if (parsedData != null && parsedData.Any())
                     {
