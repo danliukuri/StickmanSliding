@@ -9,8 +9,8 @@ namespace StickmanSliding.Features.Track
 
         void SubscribeToDespawnTriggerEnter(TrackPartEntity trackPart, Action<Collider> action);
 
-        void UnsubscribeToSpawnTriggerEnter(TrackPartEntity trackPart);
+        void UnsubscribeFromSpawnTriggerEnter(TrackPartEntity trackPart);
 
-        void UnsubscribeToDespawnTriggerEnter(TrackPartEntity trackPart);
+        void UnsubscribeFromDespawnTriggerEnter(TrackPartEntity trackPart);
     }
 }

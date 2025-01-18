@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
+using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
@@ -21,9 +22,12 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IGameObjectFactory<TrackPartEntity>        _trackPartFactory;
         [Inject] private readonly ITrackSpawner                              _trackSpawner;
 
-        [Inject] private readonly IConfigLoader<PlayerConfig>      _playerConfigLoader;
-        [Inject] private readonly IGameObjectFactory<PlayerEntity> _playerFactory;
-        [Inject] private readonly IPlayerProvider                  _playerProvider;
+        [Inject] private readonly IConfigLoader<PlayerConfig>              _playerConfigLoader;
+        [Inject] private readonly IConfigLoader<PlayerCubeDetachingConfig> _playerCubeDetachingConfigLoader;
+        [Inject] private readonly IGameObjectFactory<PlayerEntity>         _playerFactory;
+        [Inject] private readonly IPlayerProvider                          _playerProvider;
+
+        [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity> _obstacleCubeFactory;
 
         [Inject] private readonly IConfigLoader<CollectableCubeSpawnerConfig> _collectableCubesSpawnerConfigLoader;
         [Inject] private readonly IGameObjectFactory<CollectableCubeEntity>   _collectableCubeFactory;
@@ -42,6 +46,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         private UniTask LoadAssets() => UniTask.WhenAll(
             _trackPartSpawnerConfigLoader.Load(),
             _playerConfigLoader.Load(),
+            _playerCubeDetachingConfigLoader.Load(),
             _collectableCubesSpawnerConfigLoader.Load()
         );
 
@@ -49,6 +54,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _initialTrackPartFactory.Initialize(),
             _trackPartFactory.Initialize(),
             _playerFactory.Initialize(),
+            _obstacleCubeFactory.Initialize(),
             _collectableCubeFactory.Initialize(),
             _moveInputService.Initialize()
         );

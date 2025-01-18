@@ -5,6 +5,7 @@ using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Utilities.Extensions;
+using UnityEngine;
 using Zenject;
 
 namespace StickmanSliding.Features.Player
@@ -23,13 +24,15 @@ namespace StickmanSliding.Features.Player
             CollectableCubeEntity cube = _factory.Create();
 
             cube.transform.SetParent(_player.CubesParent);
-            cube.Collider.gameObject.layer = _player.gameObject.layer;
 
             cube.transform.position    =  _player.Character.position;
             _player.Character.position += cube.transform.HeightVector();
 
-            cube.Collider.isTrigger    = false;
-            cube.Rigidbody.isKinematic = false;
+            cube.Rigidbody.isKinematic  = false;
+            cube.Collider.enabled       = true;
+            cube.CollectTrigger.enabled = false;
+
+            cube.Rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
             return cube;
         }

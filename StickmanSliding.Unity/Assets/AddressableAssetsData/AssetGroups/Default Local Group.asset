@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fb65e286389c2e40bb009e0f5a2b567
+    m_Address: PlayerCubeDetachingConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 117d96075ef60a340bd0b3cdae7f051c
     m_Address: TrackPart
     m_ReadOnly: 0
@@ -47,6 +52,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 617d9c4b40bb90745aca909b8085f884
     m_Address: GameHub
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ba22900468e7c14d84e803f3c8dd1f4
+    m_Address: ObstacleCube
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c36c412de8725f4e9a69d1a6ff8a0df
+    m_Address: ObstacleCubePoolConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

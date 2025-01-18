@@ -33,16 +33,16 @@ namespace StickmanSliding.Features.Track
         {
             if (!_trackPartsDespawningSubscriptions.ContainsKey(trackPart))
                 _trackPartsDespawningSubscriptions.Add(trackPart,
-                    trackPart.Triggers.DestroyLastTrackPart.OnTriggerEnterAsObservable().Subscribe(action));
+                    trackPart.Triggers.DespawnLastTrackPart.OnTriggerEnterAsObservable().Subscribe(action));
         }
 
-        public void UnsubscribeToSpawnTriggerEnter(TrackPartEntity trackPart)
+        public void UnsubscribeFromSpawnTriggerEnter(TrackPartEntity trackPart)
         {
             if (_trackPartsSpawningSubscriptions.Remove(trackPart, out IDisposable subscription))
                 subscription.Dispose();
         }
 
-        public void UnsubscribeToDespawnTriggerEnter(TrackPartEntity trackPart)
+        public void UnsubscribeFromDespawnTriggerEnter(TrackPartEntity trackPart)
         {
             if (_trackPartsDespawningSubscriptions.Remove(trackPart, out IDisposable subscription))
                 subscription.Dispose();

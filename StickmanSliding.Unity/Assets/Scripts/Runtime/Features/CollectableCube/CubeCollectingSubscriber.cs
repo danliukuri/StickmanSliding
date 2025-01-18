@@ -14,12 +14,12 @@ namespace StickmanSliding.Features.CollectableCube
         private IDisposable _respawningSubscription;
 
         public void SubscribeToCollectByPlayer() =>
-            _respawningSubscription = _cube.Collider.OnTriggerEnterAsObservable()
-                .Select(collision => collision.transform.root.GetComponent<PlayerEntity>())
+            _respawningSubscription = _cube.CollectTrigger.OnTriggerEnterAsObservable()
+                .Select(collider => collider.GetComponentInParent<PlayerEntity>())
                 .Where(player => player != default)
                 .Subscribe(CollectCube);
 
-        public void UnsubscribeToCollectByPlayer() => _respawningSubscription.Dispose();
+        public void UnsubscribeToCollectByPlayer() => _respawningSubscription?.Dispose();
 
         private void CollectCube(PlayerEntity player)
         {
