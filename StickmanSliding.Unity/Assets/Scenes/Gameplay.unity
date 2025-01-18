@@ -890,6 +890,12 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  wallObstacleSpawnerConfig:
+    m_AssetGUID: 8a7cc7faef35e7b459e9d0d4c1ef6955
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!1 &1243620421
 GameObject:
   m_ObjectHideFlags: 0
