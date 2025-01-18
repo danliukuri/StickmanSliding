@@ -1,0 +1,13 @@
+:root {
+    height: 100%;
+}
+
+.unity-scroll-view--vertical > .text-field > .unity-text-field__label {
+    min-width: 140px;
+}
+
+.unity-scroll-view--vertical > .text-field {
+    min-width: 460px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}

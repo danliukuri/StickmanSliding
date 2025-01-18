@@ -1,0 +1,7 @@
+<engine:UXML xmlns:engine="UnityEngine.UIElements"
+             noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:VisualElement name="DefaultSettingsHeader" style="min-height: 22px; min-width: 100%;">
+        <engine:VisualElement name="Background" style="background-color: rgb(60, 60, 60); min-height: 21px;"/>
+        <engine:VisualElement name="BottomLine" style="background-color: rgb(35, 35, 35); min-height: 1px;"/>
+    </engine:VisualElement>
+</engine:UXML>
