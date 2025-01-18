@@ -12,10 +12,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.TableParsers
 
         public string Type => "2D";
 
-        public Dictionary<string, object> Parse(List<List<string>>    table,
-                                                (int Row, int Column) startIndex,
-                                                int                   height,
-                                                int                   width)
+        public object Parse(List<List<string>> table, (int Row, int Column) startIndex, int height, int width)
         {
             const int tableDataTypeRowOffset    = 2;
             const int tableDataTypeColumnOffset = 0;
@@ -28,25 +25,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.TableParsers
             IStringParser dataTypeParser = stringParsers.Find(parser =>
                 string.Equals(parser.Type, tableDataType, StringComparison.OrdinalIgnoreCase));
 
-            Dictionary<string, object> parsedData = null;
-
-            if (dataTypeParser != null)
-            {
-                List<object> tableData = ParseTableData(table, startIndex, height, width, dataTypeParser);
-
-                if (tableData != null)
-                {
-                    const int tableNameTypeRowOffset    = 0;
-                    const int tableNameTypeColumnOffset = 1;
-
-                    string tableName =
-                        table[startIndex.Row + tableNameTypeRowOffset][startIndex.Column + tableNameTypeColumnOffset];
-
-                    parsedData = new Dictionary<string, object> { { tableName, tableData } };
-                }
-            }
-
-            return parsedData;
+            return dataTypeParser == null ? null : ParseTableData(table, startIndex, height, width, dataTypeParser);
         }
 
         private List<object> ParseTableData(List<List<string>>    table,

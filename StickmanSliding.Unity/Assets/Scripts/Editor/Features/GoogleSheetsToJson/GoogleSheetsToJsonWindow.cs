@@ -18,6 +18,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
     // TODO: Replace TableType and Type on enums
     // TODO: Make dependencies resolving more flexible
     // TODO: Fix "Unsaved Unity state" Rider warning on commit
+    // TODO: Add code generation for json data models
     public class GoogleSheetsToJsonWindow : EditorWindow
     {
         [SerializeField] private VisualTreeAsset visualTreeAsset;
@@ -82,7 +83,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
                               $"<a href=\"{csvStorageFilePath}\">{_state.FileName + csvExtension}</a> at " +
                               $"<a href=\"{_state.JsonStorageFilePath}\">{_state.JsonStorageFilePath}</a>");
 
-                    List<object> parsedData = _parser.ParseCsv(rawCsvData);
+                    Dictionary<string, object> parsedData = _parser.ParseCsv(rawCsvData);
                     if (parsedData != null && parsedData.Any())
                     {
                         Debug.Log("Started converting parsed data to JSON");

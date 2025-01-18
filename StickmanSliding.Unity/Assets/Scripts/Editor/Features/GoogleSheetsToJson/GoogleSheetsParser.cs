@@ -11,7 +11,7 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
     {
         private readonly TypeInstancesProvider _instancesProvider = new();
 
-        public List<object> ParseCsv(string csvData)
+        public Dictionary<string, object> ParseCsv(string csvData)
         {
             Debug.Log("Started parsing CSV data");
 
@@ -24,15 +24,13 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
             List<List<string>> spreadsheetTable =
                 rows.Select(row => SplitIgnoringDelimiters(row, columnSplitPattern, columnDelimitersPattern)).ToList();
 
-            List<object> parsedData = ParseSpreadsheetTable(spreadsheetTable);
+            Dictionary<string, object> parsedData = ParseSpreadsheetTable(spreadsheetTable);
 
             Debug.Log("Finished parsing CSV data");
             return parsedData;
         }
 
-        private static List<string> SplitIgnoringDelimiters(string input,
-                                                            string splitPattern,
-                                                            string delimitersPattern)
+        private List<string> SplitIgnoringDelimiters(string input, string splitPattern, string delimitersPattern)
         {
             IEnumerable<(int Start, int End)> ignoreRanges =
                 Regex.Matches(input, delimitersPattern).Select(match => (match.Index, match.Index + match.Length));
@@ -50,28 +48,34 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson
             return result.Lines;
         }
 
-        private List<object> ParseSpreadsheetTable(List<List<string>> table)
+        private Dictionary<string, object> ParseSpreadsheetTable(List<List<string>> table)
         {
-            var parsedData = new List<object>();
+            var parsedData = new Dictionary<string, object>();
 
             for (var i = 0; i < table.Count; i++)
                 for (var j = 0; j < table[i].Count; j++)
                 {
-                    Dictionary<string, object> tableData = ParseTable(table, (i, j));
+                    object tableData = ParseTable(table, (i, j));
                     if (tableData != null)
-                        parsedData.Add(tableData);
+                    {
+                        const int tableNameTypeRowOffset    = 0;
+                        const int tableNameTypeColumnOffset = 1;
+
+                        string tableName = table[i + tableNameTypeRowOffset][j + tableNameTypeColumnOffset];
+
+                        parsedData.Add(tableName, tableData);
+                    }
                 }
 
             return parsedData;
         }
 
-
-        private Dictionary<string, object> ParseTable(List<List<string>> table, (int Row, int Column) startIndex)
+        private object ParseTable(List<List<string>> table, (int Row, int Column) startIndex)
         {
             const string tableStartMarker = "start";
             const string tableEndMarker   = "end";
 
-            Dictionary<string, object> tableData = null;
+            object tableData = null;
 
             if (table[startIndex.Row][startIndex.Column] == tableStartMarker)
             {
