@@ -28,13 +28,10 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.TableParsers
             return dataTypeParser == null ? null : ParseTableData(table, startIndex, height, width, dataTypeParser);
         }
 
-        private List<object> ParseTableData(List<List<string>>    table,
-                                            (int Row, int Column) startIndex,
-                                            int                   height,
-                                            int                   width,
-                                            IStringParser         dataTypeParser)
+        private object ParseTableData(List<List<string>> table, (int Row, int Column) startIndex, int height, int width,
+                                      IStringParser      dataTypeParser)
         {
-            List<object> arrayData = new();
+            var tableData = new object[height, width];
 
             const int tableContentRowOffset    = 1;
             const int tableContentColumnOffset = 1;
@@ -43,10 +40,11 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.TableParsers
             int contentColumnOffset = startIndex.Column + tableContentColumnOffset;
 
             for (int i = contentRowOffset; i < contentRowOffset + height; i++)
+            {
                 for (int j = contentColumnOffset; j < contentColumnOffset + width; j++)
                     try
                     {
-                        arrayData.Add(dataTypeParser.Parse(table[i][j]));
+                        tableData[i - contentRowOffset, j - contentColumnOffset] = dataTypeParser.Parse(table[i][j]);
                     }
                     catch (FormatException exception)
                     {
@@ -54,8 +52,9 @@ namespace StickmanSliding.Editor.Features.GoogleSheetsToJson.TableParsers
                                        $"to {dataTypeParser.Type}: {exception.Message}");
                         return null;
                     }
+            }
 
-            return arrayData;
+            return tableData;
         }
     }
 }
