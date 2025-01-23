@@ -73,7 +73,8 @@ namespace StickmanSliding.Features.CollectableCube
                 cubeLocalPosition = trackPart.transform.right   * randomHorizontalPosition +
                                     trackPart.transform.forward * randomVerticalPosition;
             }
-            while (trackPart.State.CollectableCubes.ContainsKey(cubeLocalPosition));
+            while (trackPart.State.CollectableCubes.ContainsKey(cubeLocalPosition) ||
+                   trackPart.State.ObstacleCubes.ContainsKey(cubeLocalPosition));
 
             return cubeLocalPosition;
         }

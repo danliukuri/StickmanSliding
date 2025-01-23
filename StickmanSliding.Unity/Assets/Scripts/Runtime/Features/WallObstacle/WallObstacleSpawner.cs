@@ -1,5 +1,8 @@
-﻿using StickmanSliding.Features.ObstacleCube;
+﻿using System.Collections.Generic;
+using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Track;
+using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Infrastructure.Randomization;
 using StickmanSliding.Utilities.Extensions;
@@ -10,22 +13,31 @@ namespace StickmanSliding.Features.WallObstacle
 {
     public class WallObstacleSpawner : IWallObstacleSpawner
     {
-        [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity> _factory;
-        [Inject] private readonly IRandomizer                            _randomizer;
+        [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity>     _factory;
+        [Inject] private readonly IRandomizer                                _randomizer;
+        [Inject] private readonly IConfigProvider<WallObstacleSpawnerConfig> _configProvider;
 
-        public ObstacleCubeEntity Spawn(TrackPartEntity trackPart)
+        public List<ObstacleCubeEntity> Spawn(TrackPartEntity trackPart)
         {
-            ObstacleCubeEntity cube = _factory.Create();
+            float[,] spawnProbabilities =
+                _randomizer.NextElement(_configProvider.Config.ObstacleCubeSpawnProbabilities).Value;
 
-            cube.TrackPlacementState.OriginLocalPosition = GenerateRandomLocalPositionInGrid(trackPart, cube);
-            cube.TrackPlacementState.OriginTrackPart     = trackPart;
-            trackPart.State.ObstacleCubes.Add(cube.TrackPlacementState.OriginLocalPosition, cube);
+            Vector3 wallPosition = GenerateRandomWallLocalPositionInGrid(trackPart, spawnProbabilities);
 
-            cube.transform.position = trackPart.transform.position + cube.TrackPlacementState.OriginLocalPosition;
+            var cubes = new List<ObstacleCubeEntity>();
+            for (int i = spawnProbabilities.RowFirstIndex(); i < spawnProbabilities.RowLength(); i++)
+                for (int j = spawnProbabilities.ColumnFirstIndex(); j < spawnProbabilities.ColumnLength(); j++)
+                    if (_randomizer.IsProbable(spawnProbabilities[i, j]))
+                    {
+                        Vector3 cubeLocalPosition =
+                            trackPart.transform.up * _factory.Prefab.Height() *
+                            (spawnProbabilities.RowLastIndex() - i) +
+                            trackPart.transform.right * _factory.Prefab.Width() * j;
 
-            cube.PlayerCubeDetachingSubscriber.SubscribeToDetachPlayerCube(cube.PlayerCubesDetachCollider, trackPart);
+                        cubes.Add(SpawnObstacleCube(trackPart, wallPosition + cubeLocalPosition));
+                    }
 
-            return cube;
+            return cubes;
         }
 
         public void Despawn(TrackPartEntity trackPart)
@@ -39,10 +51,36 @@ namespace StickmanSliding.Features.WallObstacle
             trackPart.State.ObstacleCubes.Clear();
         }
 
-        private Vector3 GenerateRandomLocalPositionInGrid(TrackPartEntity trackPart, ObstacleCubeEntity cube)
+        private ObstacleCubeEntity SpawnObstacleCube(TrackPartEntity trackPart, Vector3 localPosition)
         {
-            var horizontalPositionExtremum = (int)(trackPart.Body.HalfWidth()  - cube.HalfWidth());
-            var verticalPositionExtremum   = (int)(trackPart.Body.HalfLength() - cube.HalfLength());
+            ObstacleCubeEntity cube = _factory.Create();
+
+            cube.TrackPlacementState.OriginTrackPart     = trackPart;
+            cube.TrackPlacementState.OriginLocalPosition = localPosition;
+
+            cube.transform.position = trackPart.transform.position + localPosition;
+            trackPart.State.ObstacleCubes.Add(localPosition, cube);
+
+            cube.PlayerCubeDetachingSubscriber.SubscribeToDetachPlayerCube(cube.PlayerCubesDetachCollider, trackPart);
+
+            return cube;
+        }
+
+        private Vector3 GenerateRandomWallLocalPositionInGrid(TrackPartEntity trackPart, float[,] spawnProbabilities)
+        {
+            (float Width, float Length) wallHalfSize =
+                (_factory.Prefab.HalfWidth() * spawnProbabilities.ColumnLength(), _factory.Prefab.HalfLength());
+
+            Vector3 leftmostCubeOrigin = trackPart.transform.right * (wallHalfSize.Width - _factory.Prefab.HalfWidth());
+
+            return GenerateRandomLocalPositionInGrid(trackPart, wallHalfSize) - leftmostCubeOrigin;
+        }
+
+        private Vector3 GenerateRandomLocalPositionInGrid(TrackPartEntity             trackPart,
+                                                          (float Width, float Length) halfSize)
+        {
+            var horizontalPositionExtremum = (int)(trackPart.Body.HalfWidth()  - halfSize.Width);
+            var verticalPositionExtremum   = (int)(trackPart.Body.HalfLength() - halfSize.Length);
 
             Vector3 cubeLocalPosition;
             do
@@ -55,8 +93,7 @@ namespace StickmanSliding.Features.WallObstacle
                 cubeLocalPosition = trackPart.transform.right   * randomHorizontalPosition +
                                     trackPart.transform.forward * randomVerticalPosition;
             }
-            while (trackPart.State.CollectableCubes.ContainsKey(cubeLocalPosition) ||
-                   trackPart.State.ObstacleCubes.ContainsKey(cubeLocalPosition));
+            while (trackPart.State.ObstacleCubes.ContainsKey(cubeLocalPosition));
 
             return cubeLocalPosition;
         }
