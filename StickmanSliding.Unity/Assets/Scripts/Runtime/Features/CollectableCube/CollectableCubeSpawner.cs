@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.Track;
-using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Infrastructure.Randomization;
 using Zenject;
@@ -11,14 +9,13 @@ namespace StickmanSliding.Features.CollectableCube
 {
     public class CollectableCubeSpawner : ICollectableCubeSpawner
     {
-        [Inject] private readonly IGameObjectFactory<CollectableCubeEntity>     _factory;
-        [Inject] private readonly IConfigProvider<CollectableCubeSpawnerConfig> _configProvider;
-        [Inject] private readonly IRandomizer                                   _randomizer;
-        [Inject] private readonly ITrackPartObjectPositionGenerator             _positionGenerator;
+        [Inject] private readonly IGameObjectFactory<CollectableCubeEntity> _factory;
+        [Inject] private readonly IRandomizer                               _randomizer;
+        [Inject] private readonly ITrackPartObjectPositionGenerator         _positionGenerator;
 
         public void Spawn(TrackPartEntity trackPart)
         {
-            int numberOfCubesToSpawn = _randomizer.NextInclusive(_configProvider.Config.CubesRangeToSpawn);
+            int numberOfCubesToSpawn = _randomizer.NextElement(trackPart.State.WallObstacleCubesCountPerColumn);
             SpawnCubes(trackPart, numberOfCubesToSpawn);
         }
 

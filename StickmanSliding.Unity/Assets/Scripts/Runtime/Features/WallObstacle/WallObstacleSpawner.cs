@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Track;
@@ -18,7 +18,7 @@ namespace StickmanSliding.Features.WallObstacle
         [Inject] private readonly IRandomizer                                _randomizer;
         [Inject] private readonly ITrackPartObjectPositionGenerator          _positionGenerator;
 
-        public List<ObstacleCubeEntity> Spawn(TrackPartEntity trackPart)
+        public ObstacleCubeEntity[,] Spawn(TrackPartEntity trackPart)
         {
             float[,] spawnProbabilities =
                 _randomizer.NextElement(_configProvider.Config.ObstacleCubeSpawnProbabilities).Value;
@@ -26,7 +26,7 @@ namespace StickmanSliding.Features.WallObstacle
             Vector3 wallPosition = _positionGenerator
                 .GenerateRandomWallLocalPositionInGrid(trackPart, _factory.Prefab, spawnProbabilities);
 
-            var cubes = new List<ObstacleCubeEntity>();
+            var cubes = new ObstacleCubeEntity[spawnProbabilities.RowLength(), spawnProbabilities.ColumnLength()];
             for (int i = spawnProbabilities.RowFirstIndex(); i < spawnProbabilities.RowLength(); i++)
                 for (int j = spawnProbabilities.ColumnFirstIndex(); j < spawnProbabilities.ColumnLength(); j++)
                     if (_randomizer.IsProbable(spawnProbabilities[i, j]))
@@ -36,8 +36,11 @@ namespace StickmanSliding.Features.WallObstacle
                             (spawnProbabilities.RowLastIndex() - i) +
                             trackPart.transform.right * _factory.Prefab.Width() * j;
 
-                        cubes.Add(SpawnObstacleCube(trackPart, wallPosition + cubeLocalPosition));
+                        cubes[i, j] = SpawnObstacleCube(trackPart, wallPosition + cubeLocalPosition);
                     }
+
+            trackPart.State.WallObstacleCubesCountPerColumn
+                .AddRange(cubes.ColumnIndexes().Select(j => cubes.RowIndexes().Count(i => cubes[i, j] != default)));
 
             return cubes;
         }
@@ -51,6 +54,9 @@ namespace StickmanSliding.Features.WallObstacle
             }
 
             trackPart.State.ObstacleCubes.Clear();
+
+            trackPart.State.WallObstacleCubesCountPerColumn.Clear();
+            trackPart.State.WallObstacleCubesCountPerColumn.Clear();
         }
 
         private ObstacleCubeEntity SpawnObstacleCube(TrackPartEntity trackPart, Vector3 localPosition)

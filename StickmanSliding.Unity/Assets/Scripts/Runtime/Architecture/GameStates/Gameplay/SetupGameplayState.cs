@@ -30,8 +30,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IConfigLoader<WallObstacleSpawnerConfig> _wallObstacleSpawnerConfigLoader;
         [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity>   _obstacleCubeFactory;
 
-        [Inject] private readonly IConfigLoader<CollectableCubeSpawnerConfig> _collectableCubesSpawnerConfigLoader;
-        [Inject] private readonly IGameObjectFactory<CollectableCubeEntity>   _collectableCubeFactory;
+        [Inject] private readonly IGameObjectFactory<CollectableCubeEntity> _collectableCubeFactory;
 
         [Inject] private readonly IMoveInputService _moveInputService;
 
@@ -48,7 +47,6 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _trackPartSpawnerConfigLoader.Load(),
             _playerConfigLoader.Load(),
             _playerCubeDetachingConfigLoader.Load(),
-            _collectableCubesSpawnerConfigLoader.Load(),
             _wallObstacleSpawnerConfigLoader.Load()
         );
 

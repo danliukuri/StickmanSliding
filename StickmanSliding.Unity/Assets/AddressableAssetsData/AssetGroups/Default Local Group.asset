@@ -40,11 +40,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 33ccbc90240ab6745af312c05a93f0b1
-    m_Address: CollectableCubesSpawnerConfig
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ebba9c9ec31d754f8a084b0f784e9b8
     m_Address: Player
     m_ReadOnly: 0
