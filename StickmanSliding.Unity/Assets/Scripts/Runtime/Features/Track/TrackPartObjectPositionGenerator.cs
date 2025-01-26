@@ -12,16 +12,28 @@ namespace StickmanSliding.Features.Track
 
         public Vector3 GenerateRandomLocalPositionInGrid(TrackPartEntity trackPart, Dimensions size)
         {
-            var horizontalPositionExtremum = (int)(trackPart.Body.HalfWidth()  - size.HalfWidth);
-            var verticalPositionExtremum   = (int)(trackPart.Body.HalfLength() - size.HalfLength);
+            const float minExtremum    = 0f;
+            const float gridHalfUnit   = 0.5f;
+            const float zeroGridOffset = 0f;
+
+            float horizontalPositionExtremum = Mathf.Max(trackPart.Body.HalfWidth()  - size.HalfWidth,  minExtremum);
+            float verticalPositionExtremum   = Mathf.Max(trackPart.Body.HalfLength() - size.HalfLength, minExtremum);
+
+            float horizontalPivotOffset = size.Width.IsEven() ? gridHalfUnit : zeroGridOffset;
+            float verticalPivotOffset   = size.Length.IsEven() ? gridHalfUnit : zeroGridOffset;
+
+            int minHorizontalPosition = -Mathf.FloorToInt(horizontalPositionExtremum);
+            int maxHorizontalPosition = Mathf.CeilToInt(horizontalPositionExtremum);
+            int minVerticalPosition   = -Mathf.FloorToInt(verticalPositionExtremum);
+            int maxVerticalPosition   = Mathf.CeilToInt(verticalPositionExtremum);
 
             Vector3 cubeLocalPosition;
             do
             {
-                int randomHorizontalPosition =
-                    _randomizer.NextInclusive(-horizontalPositionExtremum, horizontalPositionExtremum);
-                int randomVerticalPosition =
-                    _randomizer.NextInclusive(-verticalPositionExtremum, verticalPositionExtremum);
+                float randomHorizontalPosition =
+                    _randomizer.NextInclusive(minHorizontalPosition, maxHorizontalPosition) - horizontalPivotOffset;
+                float randomVerticalPosition =
+                    _randomizer.NextInclusive(minVerticalPosition, maxVerticalPosition) - verticalPivotOffset;
 
                 cubeLocalPosition = trackPart.transform.right   * randomHorizontalPosition +
                                     trackPart.transform.forward * randomVerticalPosition;
