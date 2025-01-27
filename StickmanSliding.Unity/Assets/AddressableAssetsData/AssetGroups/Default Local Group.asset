@@ -45,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 513f0805d24f9d1439253aa6ae38cf3b
+    m_Address: TimeDependentConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 617d9c4b40bb90745aca909b8085f884
     m_Address: GameHub
     m_ReadOnly: 0

@@ -10,8 +10,9 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 {
     public class PlayerInstaller : MonoInstaller
     {
-        [SerializeField] private AssetReferenceGameObject      playerPrefab;
-        [SerializeField] private AssetReferenceT<PlayerConfig> config;
+        [SerializeField] private AssetReferenceGameObject             playerPrefab;
+        [SerializeField] private AssetReferenceT<PlayerConfig>        config;
+        [SerializeField] private AssetReferenceT<TimeDependentConfig> timeDependentConfig;
 
 
         public override void InstallBindings()
@@ -19,6 +20,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             BindFactory();
             BindConfigLoader();
             BindProvider();
+            BindTimeDependentConfigLoader();
         }
 
         private void BindFactory() =>
@@ -28,5 +30,9 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             Container.BindInterfacesTo<ConfigLoader<PlayerConfig>>().AsSingle().WithArguments(config);
 
         private void BindProvider() => Container.BindInterfacesTo<PlayerProvider>().AsSingle();
+
+        private void BindTimeDependentConfigLoader() =>
+            Container.BindInterfacesTo<ConfigLoader<TimeDependentConfig>>().AsSingle()
+                .WithArguments(timeDependentConfig);
     }
 }

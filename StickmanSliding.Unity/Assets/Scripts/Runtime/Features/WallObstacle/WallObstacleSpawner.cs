@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Track;
@@ -15,13 +17,13 @@ namespace StickmanSliding.Features.WallObstacle
     {
         [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity>     _factory;
         [Inject] private readonly IConfigProvider<WallObstacleSpawnerConfig> _configProvider;
+        [Inject] private readonly IConfigProvider<TimeDependentConfig>       _timeDependentConfigProvider;
         [Inject] private readonly IRandomizer                                _randomizer;
         [Inject] private readonly ITrackPartObjectPositionGenerator          _positionGenerator;
 
         public ObstacleCubeEntity[,] Spawn(TrackPartEntity trackPart)
         {
-            float[,] spawnProbabilities =
-                _randomizer.NextElement(_configProvider.Config.ObstacleCubeSpawnProbabilities).Value;
+            float[,] spawnProbabilities = PickRandomCubeSpawnProbabilities();
 
             Vector3 wallPosition = _positionGenerator
                 .GenerateRandomWallLocalPositionInGrid(trackPart, _factory.Prefab, spawnProbabilities);
@@ -57,6 +59,20 @@ namespace StickmanSliding.Features.WallObstacle
 
             trackPart.State.WallObstacleCubesCountPerColumn.Clear();
             trackPart.State.WallObstacleCubesCountPerColumn.Clear();
+        }
+
+        private float[,] PickRandomCubeSpawnProbabilities()
+        {
+            var totalMinutesPassed = (float)TimeSpan.FromSeconds(Time.time).TotalMinutes;
+
+            float allowedWallComplexity =
+                _timeDependentConfigProvider.Config.WallObstacleComplexity.Evaluate(totalMinutesPassed);
+
+            KeyValuePair<string, float[,]>[] allowedSpawnProbabilities =
+                _configProvider.Config.ObstacleCubeSpawnProbabilities
+                    .Where(pair => _configProvider.Config.WallComplexity[pair.Key] <= allowedWallComplexity).ToArray();
+
+            return _randomizer.NextElement(allowedSpawnProbabilities).Value;
         }
 
         private ObstacleCubeEntity SpawnObstacleCube(TrackPartEntity trackPart, Vector3 localPosition)

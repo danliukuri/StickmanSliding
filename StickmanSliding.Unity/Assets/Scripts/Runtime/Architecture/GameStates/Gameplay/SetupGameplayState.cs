@@ -24,6 +24,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 
         [Inject] private readonly IConfigLoader<PlayerConfig>              _playerConfigLoader;
         [Inject] private readonly IConfigLoader<PlayerCubeDetachingConfig> _playerCubeDetachingConfigLoader;
+        [Inject] private readonly IConfigLoader<TimeDependentConfig>       _timeDependentConfigLoader;
         [Inject] private readonly IGameObjectFactory<PlayerEntity>         _playerFactory;
         [Inject] private readonly IPlayerProvider                          _playerProvider;
 
@@ -47,6 +48,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _trackPartSpawnerConfigLoader.Load(),
             _playerConfigLoader.Load(),
             _playerCubeDetachingConfigLoader.Load(),
+            _timeDependentConfigLoader.Load(),
             _wallObstacleSpawnerConfigLoader.Load()
         );
 

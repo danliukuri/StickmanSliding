@@ -9,6 +9,7 @@ namespace StickmanSliding.Data.Static.Configuration
     public partial class WallObstacleSpawnerConfig
     {
         public IReadOnlyDictionary<string, float[,]> ObstacleCubeSpawnProbabilities { get; private set; }
+        public IReadOnlyDictionary<string, float>    WallComplexity                 { get; private set; }
     }
 
     public partial class WallObstacleSpawnerConfig // JSON deserialization class part
@@ -16,7 +17,13 @@ namespace StickmanSliding.Data.Static.Configuration
         [JsonExtensionData] private IDictionary<string, JToken> _deserializedData;
 
         [OnDeserialized]
-        private void Deserialize(StreamingContext context) => ObstacleCubeSpawnProbabilities =
-            _deserializedData.ToDictionary(pair => pair.Key, pair => pair.Value.ToObject<float[,]>());
+        private void Deserialize(StreamingContext context)
+        {
+            ObstacleCubeSpawnProbabilities =
+                _deserializedData.ToDictionary(pair => pair.Key, pair => pair.Value.ToObject<float[,]>());
+
+            WallComplexity =
+                ObstacleCubeSpawnProbabilities.ToDictionary(pair => pair.Key, pair => pair.Value.Cast<float>().Sum());
+        }
     }
 }

@@ -827,6 +827,12 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  timeDependentConfig:
+    m_AssetGUID: 513f0805d24f9d1439253aa6ae38cf3b
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!114 &1081873148
 MonoBehaviour:
   m_ObjectHideFlags: 0
