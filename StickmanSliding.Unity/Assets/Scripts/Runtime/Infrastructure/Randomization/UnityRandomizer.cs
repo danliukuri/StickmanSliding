@@ -10,6 +10,9 @@ namespace StickmanSliding.Infrastructure.Randomization
 
         public int NextInclusive(int min, int max) => Next(min, max + MinIntStep);
 
-        public float Next(float minInclusive, float maxInclusive) => Random.Range(minInclusive, maxInclusive);
+        public float Next(float minInclusive, float maxExclusive) =>
+            NextInclusive(minInclusive, maxExclusive - Mathf.Epsilon);
+
+        public float NextInclusive(float min, float max) => Random.Range(min, max);
     }
 }
