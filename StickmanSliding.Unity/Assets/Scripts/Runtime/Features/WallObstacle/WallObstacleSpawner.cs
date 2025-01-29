@@ -68,11 +68,12 @@ namespace StickmanSliding.Features.WallObstacle
             float allowedWallComplexity =
                 _timeDependentConfigProvider.Config.WallObstacleComplexity.Evaluate(totalMinutesPassed);
 
-            KeyValuePair<string, float[,]>[] allowedSpawnProbabilities =
+            Dictionary<float[,], float> allowedSpawnProbabilities =
                 _configProvider.Config.ObstacleCubeSpawnProbabilities
-                    .Where(pair => _configProvider.Config.WallComplexity[pair.Key] <= allowedWallComplexity).ToArray();
+                    .Where(pair => _configProvider.Config.WallComplexity[pair.Key] <= allowedWallComplexity)
+                    .ToDictionary(pair => pair.Value, pair => _configProvider.Config.WallComplexity[pair.Key]);
 
-            return _randomizer.NextElement(allowedSpawnProbabilities).Value;
+            return _randomizer.NextWeightedElement(allowedSpawnProbabilities);
         }
 
         private ObstacleCubeEntity SpawnObstacleCube(TrackPartEntity trackPart, Vector3 localPosition)
