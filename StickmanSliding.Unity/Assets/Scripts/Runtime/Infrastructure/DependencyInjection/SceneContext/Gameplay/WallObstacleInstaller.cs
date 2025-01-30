@@ -14,6 +14,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         [SerializeField] private AssetReferenceGameObject                   obstacleCubePrefab;
         [SerializeField] private Transform                                  wallObstaclesParent;
         [SerializeField] private AssetReferenceT<PlayerCubeDetachingConfig> playerCubeDetachingConfig;
+        [SerializeField] private AssetReferenceT<TextAsset>                 wallObstacleSpawnerConfig;
 
         public override void InstallBindings()
         {
@@ -22,6 +23,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             BindPlayerCubeDetachingConfigLoader();
             BindPlayerCubeDetacher();
             BindPlayerCubeDetachingSubscriber();
+            BindWallObstacleSpawnerConfigLoader();
         }
 
         private void BindObstacleCubeFactory() =>
@@ -40,5 +42,9 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 
         private void BindPlayerCubeDetachingSubscriber() =>
             Container.BindInterfacesTo<PlayerCubeDetachingSubscriber>().AsSingle();
+
+        private void BindWallObstacleSpawnerConfigLoader() =>
+            Container.BindInterfacesTo<JsonConfigLoader<WallObstacleSpawnerConfig>>().AsSingle()
+                .WithArguments(wallObstacleSpawnerConfig);
     }
 }

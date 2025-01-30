@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0da8ccd6eaa480ca55f0855900b57fa, type: 3}
+  m_Name: TimeDependentConfig
+  m_EditorClassIdentifier: 
+  <WallObstacleComplexity>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 5.3
+      inSlope: 0
+      outSlope: 0.15718208
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.112484686
+    - serializedVersion: 3
+      time: 7.7900944
+      value: 10.020525
+      inSlope: 1.8309273
+      outSlope: 1.8309273
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.061600346
+      outWeight: 0.047831893
+    - serializedVersion: 3
+      time: 17.01736
+      value: 19.85501
+      inSlope: 1.2418525
+      outSlope: 1.2418525
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04258093
+      outWeight: 0.18128781
+    - serializedVersion: 3
+      time: 20
+      value: 30
+      inSlope: 7.023653
+      outSlope: 0
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.0838657
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

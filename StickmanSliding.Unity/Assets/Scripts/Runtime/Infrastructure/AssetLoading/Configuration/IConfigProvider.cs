@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace StickmanSliding.Infrastructure.AssetLoading.Configuration
+﻿namespace StickmanSliding.Infrastructure.AssetLoading.Configuration
 {
-    public interface IConfigProvider<out TConfig> where TConfig : ScriptableObject
+    public interface IConfigProvider<out TConfig>
     {
         TConfig Config { get; }
     }

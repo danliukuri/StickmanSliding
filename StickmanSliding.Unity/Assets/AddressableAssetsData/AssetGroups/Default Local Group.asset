@@ -40,18 +40,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 33ccbc90240ab6745af312c05a93f0b1
-    m_Address: CollectableCubesSpawnerConfig
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ebba9c9ec31d754f8a084b0f784e9b8
     m_Address: Player
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 513f0805d24f9d1439253aa6ae38cf3b
+    m_Address: TimeDependentConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 617d9c4b40bb90745aca909b8085f884
     m_Address: GameHub
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a7cc7faef35e7b459e9d0d4c1ef6955
+    m_Address: WallObstacleSpawnerConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

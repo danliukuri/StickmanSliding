@@ -827,6 +827,12 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  timeDependentConfig:
+    m_AssetGUID: 513f0805d24f9d1439253aa6ae38cf3b
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!114 &1081873148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,12 +858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104af7a4227645fa8a4a7da68f7a0d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerConfig:
-    m_AssetGUID: 33ccbc90240ab6745af312c05a93f0b1
-    m_SubObjectName: 
-    m_SubObjectGUID: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
   prefab:
     m_AssetGUID: a21f773c458ab214db0e736900765cde
     m_SubObjectName: 
@@ -886,6 +886,12 @@ MonoBehaviour:
   wallObstaclesParent: {fileID: 1059309235}
   playerCubeDetachingConfig:
     m_AssetGUID: 0fb65e286389c2e40bb009e0f5a2b567
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  wallObstacleSpawnerConfig:
+    m_AssetGUID: 8a7cc7faef35e7b459e9d0d4c1ef6955
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 

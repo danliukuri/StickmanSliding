@@ -1,25 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.Track;
-using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using StickmanSliding.Infrastructure.Randomization;
-using StickmanSliding.Utilities.Extensions;
-using UnityEngine;
 using Zenject;
 
 namespace StickmanSliding.Features.CollectableCube
 {
     public class CollectableCubeSpawner : ICollectableCubeSpawner
     {
-        [Inject] private readonly IGameObjectFactory<CollectableCubeEntity>     _factory;
-        [Inject] private readonly IRandomizer                                   _randomizer;
-        [Inject] private readonly IConfigProvider<CollectableCubeSpawnerConfig> _configProvider;
+        [Inject] private readonly IGameObjectFactory<CollectableCubeEntity> _factory;
+        [Inject] private readonly IRandomizer                               _randomizer;
+        [Inject] private readonly ITrackPartObjectPositionGenerator         _positionGenerator;
 
         public void Spawn(TrackPartEntity trackPart)
         {
-            int numberOfCubesToSpawn = _randomizer.NextInclusive(_configProvider.Config.CubesRangeToSpawn);
+            int numberOfCubesToSpawn = _randomizer.NextElement(trackPart.State.WallObstacleCubesCountPerColumn);
             SpawnCubes(trackPart, numberOfCubesToSpawn);
         }
 
@@ -46,8 +42,9 @@ namespace StickmanSliding.Features.CollectableCube
         {
             CollectableCubeEntity cube = _factory.Create();
 
-            cube.TrackPlacementState.OriginLocalPosition = GenerateRandomLocalPositionInGrid(trackPart, cube);
-            cube.TrackPlacementState.OriginTrackPart     = trackPart;
+            cube.TrackPlacementState.OriginLocalPosition =
+                _positionGenerator.GenerateRandomLocalPositionInGrid(trackPart, cube);
+            cube.TrackPlacementState.OriginTrackPart = trackPart;
             trackPart.State.CollectableCubes.Add(cube.TrackPlacementState.OriginLocalPosition, cube);
 
             cube.transform.position = trackPart.transform.position + cube.TrackPlacementState.OriginLocalPosition;
@@ -55,27 +52,6 @@ namespace StickmanSliding.Features.CollectableCube
             cube.CollectingSubscriber.SubscribeToCollectByPlayer();
 
             return cube;
-        }
-
-        private Vector3 GenerateRandomLocalPositionInGrid(TrackPartEntity trackPart, CollectableCubeEntity cube)
-        {
-            var horizontalPositionExtremum = (int)(trackPart.Body.HalfWidth()  - cube.HalfWidth());
-            var verticalPositionExtremum   = (int)(trackPart.Body.HalfLength() - cube.HalfLength());
-
-            Vector3 cubeLocalPosition;
-            do
-            {
-                int randomHorizontalPosition =
-                    _randomizer.NextInclusive(-horizontalPositionExtremum, horizontalPositionExtremum);
-                int randomVerticalPosition =
-                    _randomizer.NextInclusive(-verticalPositionExtremum, verticalPositionExtremum);
-
-                cubeLocalPosition = trackPart.transform.right   * randomHorizontalPosition +
-                                    trackPart.transform.forward * randomVerticalPosition;
-            }
-            while (trackPart.State.CollectableCubes.ContainsKey(cubeLocalPosition));
-
-            return cubeLocalPosition;
         }
 
         private List<CollectableCubeEntity> SpawnCubes(TrackPartEntity trackPart, int count) =>

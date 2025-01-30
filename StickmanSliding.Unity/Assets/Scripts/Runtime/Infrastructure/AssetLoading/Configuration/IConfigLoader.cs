@@ -1,11 +1,11 @@
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace StickmanSliding.Infrastructure.AssetLoading.Configuration
 {
-    public interface IConfigLoader<TConfig> where TConfig : ScriptableObject
+    public interface IConfigLoader<TConfig>
     {
         UniTask<TConfig> Load();
-        void             Release();
+
+        void Release();
     }
 }

@@ -1,6 +1,4 @@
-﻿using StickmanSliding.Data.Static.Configuration;
-using StickmanSliding.Features.CollectableCube;
-using StickmanSliding.Infrastructure.AssetLoading.Configuration;
+﻿using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,15 +8,13 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 {
     public class CollectableCubeInstaller : MonoInstaller
     {
-        [SerializeField] private AssetReferenceT<CollectableCubeSpawnerConfig> spawnerConfig;
-        [SerializeField] private AssetReferenceGameObject                      prefab;
-        [SerializeField] private Transform                                     defaultParent;
+        [SerializeField] private AssetReferenceGameObject prefab;
+        [SerializeField] private Transform                defaultParent;
 
         public override void InstallBindings()
         {
             BindFactory();
             BindResetter();
-            BindSpawnerConfigLoader();
             BindSpawner();
             BindParentProvider();
         }
@@ -29,10 +25,6 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 
         private void BindResetter() =>
             Container.BindInterfacesTo<CollectableCubeResetter>().AsSingle();
-
-        private void BindSpawnerConfigLoader() =>
-            Container.BindInterfacesTo<ConfigLoader<CollectableCubeSpawnerConfig>>().AsSingle()
-                .WithArguments(spawnerConfig);
 
         private void BindSpawner() =>
             Container.BindInterfacesTo<CollectableCubeSpawner>().AsSingle();
