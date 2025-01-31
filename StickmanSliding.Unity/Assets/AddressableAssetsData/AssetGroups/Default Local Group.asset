@@ -40,6 +40,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 312c91f111a54e94aa1429f38615f19b
+    m_Address: CubeObstacleConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ebba9c9ec31d754f8a084b0f784e9b8
     m_Address: Player
     m_ReadOnly: 0

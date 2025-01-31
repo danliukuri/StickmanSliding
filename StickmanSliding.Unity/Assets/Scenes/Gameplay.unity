@@ -896,6 +896,12 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  cubeObstacleConfig:
+    m_AssetGUID: 312c91f111a54e94aa1429f38615f19b
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!1 &1243620421
 GameObject:
   m_ObjectHideFlags: 0

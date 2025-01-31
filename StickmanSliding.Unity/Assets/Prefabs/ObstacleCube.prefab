@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3a00e303d84168811378032afb4e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Renderer>k__BackingField: {fileID: 3298693268911985733}
   <PlayerCubesDetachCollider>k__BackingField: {fileID: 2125950189783076199}
 --- !u!1 &9176765464961763602
 GameObject:
