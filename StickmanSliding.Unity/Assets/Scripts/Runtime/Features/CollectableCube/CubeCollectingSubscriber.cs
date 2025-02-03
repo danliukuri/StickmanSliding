@@ -24,6 +24,7 @@ namespace StickmanSliding.Features.CollectableCube
         private void CollectCube(PlayerEntity player)
         {
             _spawner.Despawn(_cube);
+            player.CharacterAnimationActivator.Jump();
             player.CubeSpawner.Spawn();
         }
     }
