@@ -15,3 +15,8 @@ MonoBehaviour:
   <ForwardSpeed>k__BackingField: 5
   <LateralSpeed>k__BackingField: 5
   <InitialCubesCount>k__BackingField: 1
+  <GroundCheckSphereHeightDisplacement>k__BackingField: 0
+  <RadiusOfGroundCheckSphere>k__BackingField: 0.3
+  <GroundLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 4096
