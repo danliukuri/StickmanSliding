@@ -15,14 +15,22 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         public void Enter()
         {
             _cameraTargetFollower.StartFollowing(_playerProvider.Player.transform);
+
             _moveInputService.Enable();
+
             _playerProvider.Player.Mover.StartMoving();
+            _playerProvider.Player.GroundedStateUpdater.StartUpdating();
+            _playerProvider.Player.CharacterAnimatorParametersChanger.StartUpdatingGroundedState();
         }
 
         public void Exit()
         {
+            _playerProvider.Player.CharacterAnimatorParametersChanger.StopUpdatingGroundedState();
+            _playerProvider.Player.GroundedStateUpdater.StopUpdating();
             _playerProvider.Player.Mover.StopMoving();
+
             _moveInputService.Disable();
+
             _cameraTargetFollower.StopFollowing();
         }
     }

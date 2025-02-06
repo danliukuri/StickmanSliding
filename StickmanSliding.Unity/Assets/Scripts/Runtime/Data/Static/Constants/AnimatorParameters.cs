@@ -2,11 +2,12 @@
 
 namespace StickmanSliding.Data.Static.Constants
 {
-    public static class PlayerCharacterGameplayAnimatorController
+    public static class PlayerCharacterGameplayAnimator
     {
-        public static class AnimatorParameters
+        public static class Parameters
         {
-            public static readonly int Jump = Animator.StringToHash(nameof(Jump));
+            public static int Jump       { get; } = Animator.StringToHash(nameof(Jump));
+            public static int IsGrounded { get; } = Animator.StringToHash(nameof(IsGrounded));
         }
     }
 }
