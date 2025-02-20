@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using StickmanSliding.Data.Static.Configuration;
+using StickmanSliding.Features.Background;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Player;
@@ -7,6 +8,7 @@ using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Infrastructure.InputServices;
 using StickmanSliding.Infrastructure.ObjectCreation;
+using StickmanSliding.Infrastructure.Randomization;
 using StickmanSliding.Utilities.Patterns.State.Machines;
 using StickmanSliding.Utilities.Patterns.State.Types;
 using Zenject;
@@ -29,11 +31,14 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IPlayerProvider                          _playerProvider;
 
         [Inject] private readonly IConfigLoader<WallObstacleSpawnerConfig> _wallObstacleSpawnerConfigLoader;
+        [Inject] private readonly IConfigLoader<CubeObstacleConfig>        _cubeObstacleConfigLoader;
         [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity>   _obstacleCubeFactory;
 
         [Inject] private readonly IGameObjectFactory<CollectableCubeEntity> _collectableCubeFactory;
 
-        [Inject] private readonly IMoveInputService _moveInputService;
+        [Inject] private readonly IMoveInputService       _moveInputService;
+        [Inject] private readonly IBackgroundColorChanger _backgroundColorChanger;
+        [Inject] private readonly IRandomizer             _randomizer;
 
         public async UniTask Enter()
         {
@@ -49,17 +54,23 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _playerConfigLoader.Load(),
             _playerCubeDetachingConfigLoader.Load(),
             _timeDependentConfigLoader.Load(),
-            _wallObstacleSpawnerConfigLoader.Load()
+            _wallObstacleSpawnerConfigLoader.Load(),
+            _cubeObstacleConfigLoader.Load()
         );
 
-        private UniTask InitializeServices() => UniTask.WhenAll(
-            _initialTrackPartFactory.Initialize(),
-            _trackPartFactory.Initialize(),
-            _playerFactory.Initialize(),
-            _obstacleCubeFactory.Initialize(),
-            _collectableCubeFactory.Initialize(),
-            _moveInputService.Initialize()
-        );
+        private UniTask InitializeServices()
+        {
+            _backgroundColorChanger.Initialize(_randomizer.NextHue());
+
+            return UniTask.WhenAll(
+                _initialTrackPartFactory.Initialize(),
+                _trackPartFactory.Initialize(),
+                _playerFactory.Initialize(),
+                _obstacleCubeFactory.Initialize(),
+                _collectableCubeFactory.Initialize(),
+                _moveInputService.Initialize()
+            );
+        }
 
         private void PlaceTrack()
         {

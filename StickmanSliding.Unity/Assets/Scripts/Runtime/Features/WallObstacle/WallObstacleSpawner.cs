@@ -18,6 +18,7 @@ namespace StickmanSliding.Features.WallObstacle
         [Inject] private readonly IGameObjectFactory<ObstacleCubeEntity>     _factory;
         [Inject] private readonly IConfigProvider<WallObstacleSpawnerConfig> _configProvider;
         [Inject] private readonly IConfigProvider<TimeDependentConfig>       _timeDependentConfigProvider;
+        [Inject] private readonly IConfigProvider<CubeObstacleConfig>        _cubeObstacleConfigProvider;
         [Inject] private readonly IRandomizer                                _randomizer;
         [Inject] private readonly ITrackPartObjectPositionGenerator          _positionGenerator;
 
@@ -25,6 +26,7 @@ namespace StickmanSliding.Features.WallObstacle
         {
             float[,] spawnProbabilities = PickRandomCubeSpawnProbabilities();
 
+            Color wallColor = _randomizer.NextElement(_cubeObstacleConfigProvider.Config.AvailableColors);
             Vector3 wallPosition = _positionGenerator
                 .GenerateRandomWallLocalPositionInGrid(trackPart, _factory.Prefab, spawnProbabilities);
 
@@ -39,6 +41,7 @@ namespace StickmanSliding.Features.WallObstacle
                             trackPart.transform.right * _factory.Prefab.Width() * j;
 
                         cubes[i, j] = SpawnObstacleCube(trackPart, wallPosition + cubeLocalPosition);
+                        cubes[i, j].Renderer.material.color = wallColor;
                     }
 
             trackPart.State.WallObstacleCubesCountPerColumn

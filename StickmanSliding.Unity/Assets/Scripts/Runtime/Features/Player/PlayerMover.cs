@@ -17,15 +17,15 @@ namespace StickmanSliding.Features.Player
 
         private IDisposable _movingSubscription;
 
-        public void StartMoving() => _movingSubscription =
-            Observable.EveryUpdate(UnityFrameProvider.FixedUpdate).Subscribe(_ => Move()).AddTo(_transform);
+        public void StartMoving() => _movingSubscription = Observable.EveryUpdate(UnityFrameProvider.Update)
+            .Select(_ => Time.deltaTime).Subscribe(Move).AddTo(_transform);
 
         public void StopMoving() => _movingSubscription.Dispose();
 
-        private void Move() => _transform.Translate(
-            _moveInputService.GetMovement() * _configProvider.Config.LateralSpeed * Time.fixedDeltaTime,
+        private void Move(float deltaTime) => _transform.Translate(
+            _moveInputService.GetMovement() * _configProvider.Config.LateralSpeed * deltaTime,
             y: default,
-            _configProvider.Config.ForwardSpeed * Time.fixedDeltaTime
+            _configProvider.Config.ForwardSpeed * deltaTime
         );
     }
 }

@@ -6,7 +6,7 @@ namespace StickmanSliding.Infrastructure.Randomization
 
         int NextInclusive(int min, int max);
 
-        float Next(float minInclusive, float maxInclusive);
+        float Next(float minInclusive, float maxExclusive);
 
         float NextInclusive(float min, float max);
     }
