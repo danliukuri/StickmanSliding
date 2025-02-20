@@ -18,7 +18,7 @@ namespace StickmanSliding.Infrastructure.Randomization
         {
             const float minWeight     = 0f;
             float       maxWeight     = weightedElements.Sum(pair => pair.Value);
-            float       currentWeight = randomizer.Next(minWeight, maxWeight - float.Epsilon);
+            float       currentWeight = randomizer.Next(minWeight, maxWeight);
 
             return weightedElements
                 .OrderBy(item => item.Value)
