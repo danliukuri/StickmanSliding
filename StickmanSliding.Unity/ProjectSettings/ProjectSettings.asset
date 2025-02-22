@@ -816,7 +816,8 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: ZENJECT_DISABLE_DEFAULT_UI_ELEMENTS_INJECTION
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
