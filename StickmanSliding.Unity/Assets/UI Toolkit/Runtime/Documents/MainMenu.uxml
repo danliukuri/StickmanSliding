@@ -1,0 +1,10 @@
+<engine:UXML xmlns:engine="UnityEngine.UIElements"
+             noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Runtime/StyleSheets/MainMenu.uss?fileID=7433441132597879392&amp;guid=c433c35b431d57d4284afa47796322ed&amp;type=3#MainMenu"/>
+    <engine:Button text="PLAY" name="PlayButton">
+        <engine:VisualElement name="ButtonIcon" class="button-icon"
+                              style="background-image: url(&quot;project://database/Assets/External/Art/Icons/SkymonIconPackFree/skymon-icons-white/hand-point-right.png?fileID=21300000&amp;guid=b623003e0662b084f8e0084fb47e1f13&amp;type=3#hand-point-right&quot;);"/>
+        <engine:VisualElement name="ButtonIcon" class="button-icon"
+                              style="background-image: url(&quot;project://database/Assets/External/Art/Icons/SkymonIconPackFree/skymon-icons-white/hand-point-left.png?fileID=21300000&amp;guid=3331674e274cbf7469e5e4cbd6511a97&amp;type=3#hand-point-left&quot;);"/>
+    </engine:Button>
+</engine:UXML>

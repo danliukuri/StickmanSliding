@@ -1,0 +1,31 @@
+:root {
+    --collectable-cube-color: rgb(31, 31, 31);
+    --track-color: rgb(230, 230, 230);
+    flex-direction: column-reverse;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+Button {
+    -unity-font-definition: url("project://database/Assets/External/Art/Fonts/Matemasie/Matemasie-Regular.ttf?fileID=12800000&guid=bd56e5a7a89eb4c4bbfb21711558e633&type=3#Matemasie-Regular");
+    height: 120px;
+    background-color: var(--collectable-cube-color);
+    color: var(--track-color);
+    border-radius: 50px;
+    font-size: 40px;
+    width: 350px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding-left: 35px;
+    padding-right: 35px;
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.button-icon {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    -unity-background-image-tint-color: var(--track-color);
+    margin-top: 5px;
+}
