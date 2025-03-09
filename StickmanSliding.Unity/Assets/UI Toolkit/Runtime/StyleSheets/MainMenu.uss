@@ -1,6 +1,5 @@
 :root {
-    --collectable-cube-color: rgb(31, 31, 31);
-    --track-color: rgb(230, 230, 230);
+    --player-charachter-face-color: rgb(219, 212, 205);
     flex-direction: column-reverse;
     align-items: center;
     padding-bottom: 50px;
@@ -9,23 +8,38 @@
 Button {
     -unity-font-definition: url("project://database/Assets/External/Art/Fonts/Matemasie/Matemasie-Regular.ttf?fileID=12800000&guid=bd56e5a7a89eb4c4bbfb21711558e633&type=3#Matemasie-Regular");
     height: 120px;
-    background-color: var(--collectable-cube-color);
-    color: var(--track-color);
     border-radius: 50px;
     font-size: 40px;
     width: 350px;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    padding-left: 35px;
-    padding-right: 35px;
     border-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/External/Art/Icons/ButtonBackground/Square-Dark.png?fileID=21300000&guid=caa40a6ca8f424c41882c3451b801097&type=3#Square-Dark");
+    -unity-slice-scale: 1.3px;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0 35px 10px;
+    color: var(--player-charachter-face-color);
+    -unity-background-image-tint-color: rgb(255, 249, 242);
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out-elastic;
 }
 
 .button-icon {
     width: 50px;
     height: 50px;
-    background-size: cover;
-    -unity-background-image-tint-color: var(--track-color);
     margin-top: 5px;
+    -unity-background-image-tint-color: var(--player-charachter-face-color);
+    transition-timing-function: ease-out-elastic;
+    transition-duration: 0.5s;
+}
+
+Button:hover {
+    background-image: url("project://database/Assets/External/Art/Icons/ButtonBackground/Square-Dark-Hover.png?fileID=21300000&guid=cb3b0ce55c07dc64187c4575cb4a2833&type=3#Square-Dark-Hover");
+    font-size: 45px;
+}
+
+Button:hover > .button-icon {
+    width: 55px;
+    height: 55px;
 }
