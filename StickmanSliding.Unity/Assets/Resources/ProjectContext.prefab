@@ -117,4 +117,3 @@ MonoBehaviour:
       m_SubObjectType: UnityEngine.InputSystem.InputActionReference, Unity.InputSystem,
         Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
       m_EditorAssetChanged: 0
-  backgroundColorChangingSpeed: 0.002

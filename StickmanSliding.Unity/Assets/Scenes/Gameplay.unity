@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 510436487}
+  backgroundColorChangingSpeed: 0.002
 --- !u!114 &1081873149
 MonoBehaviour:
   m_ObjectHideFlags: 0

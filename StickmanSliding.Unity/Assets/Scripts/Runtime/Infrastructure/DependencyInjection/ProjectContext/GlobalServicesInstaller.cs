@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using StickmanSliding.Data.Static.Configuration;
-using StickmanSliding.Features.Background;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Track;
@@ -20,7 +19,6 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
     {
         [SerializeField] private PoolConfigReferences  poolConfigReferences;
         [SerializeField] private InputActionReferences inputActionReferences;
-        [SerializeField] private float                 backgroundColorChangingSpeed;
 
         public override void InstallBindings()
         {
@@ -29,7 +27,6 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
             BindPoolConfigLoader();
             BindInputServices();
             BindRandomizer();
-            BindBackgroundColorChanger();
         }
 
 
@@ -44,9 +41,6 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
             .WithArguments(inputActionReferences.Move);
 
         private void BindRandomizer() => Container.BindInterfacesTo<UnityRandomizer>().AsSingle();
-
-        private void BindBackgroundColorChanger() => Container.BindInterfacesTo<BackgroundColorChanger>().AsSingle()
-            .WithArguments(backgroundColorChangingSpeed);
 
         [Serializable]
         public class PoolConfigReferences
