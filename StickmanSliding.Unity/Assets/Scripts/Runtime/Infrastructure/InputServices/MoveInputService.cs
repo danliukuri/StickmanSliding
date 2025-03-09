@@ -18,7 +18,7 @@ namespace StickmanSliding.Infrastructure.InputServices
 
         public void Dispose()
         {
-            _inputAction.Dispose();
+            _inputAction?.Dispose();
             _assetLoader.Release(_inputActionReference);
         }
 

@@ -1,7 +1,7 @@
-﻿using StickmanSliding.Architecture.GameStates.Gameplay;
+﻿using StickmanSliding.Architecture.GameStates.GameHub;
 using Zenject;
 
-namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gameplay
+namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.GameHub
 {
     public class GameStateMachineSceneStatesInstaller : MonoInstaller
     {
@@ -10,7 +10,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             Container.BindStateFactory();
             Container.BindStateContainerInitializer(new[]
             {
-                typeof(SetupGameplayState), typeof(ProcessGameplayState)
+                typeof(SetupGameHubState), typeof(ProcessGameHubState)
             });
         }
     }
