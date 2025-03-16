@@ -684,6 +684,12 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  config:
+    m_AssetGUID: 9c53d3fe0cb3f684288ac41eafe9b5bb
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   playerSpawnPoint: {fileID: 821934520}
 --- !u!1 &1626892775
 GameObject:

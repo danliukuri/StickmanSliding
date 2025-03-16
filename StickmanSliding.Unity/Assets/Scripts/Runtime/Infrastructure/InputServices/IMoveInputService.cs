@@ -1,13 +1,7 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
-
-namespace StickmanSliding.Infrastructure.InputServices
+﻿namespace StickmanSliding.Infrastructure.InputServices
 {
-    public interface IMoveInputService : IDisposable
+    public interface IMoveInputService : IInputService
     {
-        UniTask Initialize();
-        void    Enable();
-        void    Disable();
-        float   GetMovement();
+        float GetMovement();
     }
 }

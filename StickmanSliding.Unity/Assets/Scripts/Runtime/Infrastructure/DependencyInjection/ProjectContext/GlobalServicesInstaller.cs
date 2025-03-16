@@ -37,8 +37,11 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
         private void BindPoolConfigLoader() => Container.BindInterfacesTo<PoolConfigLoader>().AsSingle()
             .WithArguments(poolConfigReferences.ToDictionary());
 
-        private void BindInputServices() => Container.BindInterfacesTo<MoveInputService>().AsSingle()
-            .WithArguments(inputActionReferences.Move);
+        private void BindInputServices()
+        {
+            Container.BindInterfacesTo<MoveInputService>().AsSingle().WithArguments(inputActionReferences.Move);
+            Container.BindInterfacesTo<RotateInputService>().AsSingle().WithArguments(inputActionReferences.Rotate);
+        }
 
         private void BindRandomizer() => Container.BindInterfacesTo<UnityRandomizer>().AsSingle();
 
@@ -60,7 +63,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
         [Serializable]
         public class InputActionReferences
         {
-            [field: SerializeField] public AssetReferenceT<InputActionReference> Move { get; private set; }
+            [field: SerializeField] public AssetReferenceT<InputActionReference> Move   { get; private set; }
+            [field: SerializeField] public AssetReferenceT<InputActionReference> Rotate { get; private set; }
         }
     }
 }
