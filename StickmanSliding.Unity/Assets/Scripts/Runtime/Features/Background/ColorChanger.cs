@@ -36,7 +36,12 @@ namespace StickmanSliding.Features.Background
             _changeColor.Invoke(_originalColor);
         }
 
-        private void Update(float deltaTime) =>
-            _changeColor.Invoke(_originalColor.ChangeHue(_currentColorHue += deltaTime * _speed));
+        private void Update(float deltaTime)
+        {
+            const float hueMaxValue = 1.0f;
+            _currentColorHue = Mathf.Repeat(_currentColorHue + deltaTime * _speed, hueMaxValue);
+            Color newColor = _originalColor.ChangeHue(_currentColorHue);
+            _changeColor.Invoke(newColor);
+        }
     }
 }
