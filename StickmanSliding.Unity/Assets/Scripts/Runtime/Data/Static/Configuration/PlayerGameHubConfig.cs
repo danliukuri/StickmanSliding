@@ -8,5 +8,9 @@ namespace StickmanSliding.Data.Static.Configuration
         [field: SerializeField] public float TargetRotationSpeed           { get; private set; }
         [field: SerializeField] public float RotationSpeedAcceleratingTime { get; private set; }
         [field: SerializeField] public float RotationSpeedDeceleratingTime { get; private set; }
+
+        [field: SerializeField] public float ResettingRotationTime  { get; private set; }
+        [field: SerializeField] public float ResettingRotationDelay { get; private set; }
+        [field: SerializeField] public float RotationThreshold      { get; private set; }
     }
 }

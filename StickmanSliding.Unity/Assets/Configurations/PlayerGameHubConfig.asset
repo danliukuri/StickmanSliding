@@ -15,3 +15,6 @@ MonoBehaviour:
   <TargetRotationSpeed>k__BackingField: 150
   <RotationSpeedAcceleratingTime>k__BackingField: 1
   <RotationSpeedDeceleratingTime>k__BackingField: 0.5
+  <ResettingRotationTime>k__BackingField: 2
+  <ResettingRotationDelay>k__BackingField: 5
+  <RotationThreshold>k__BackingField: 0.1
