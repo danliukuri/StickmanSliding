@@ -35,6 +35,9 @@ crashlytics-build.properties
 *.pdb.meta
 *.mdb.meta
 
+# Temporary build auto-generated data
+/.utmp/
+
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treaming*[Aa]ssets/aa/*
 /[Aa]ssets/[Ss]treaming*[Aa]ssets/aa.meta

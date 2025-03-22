@@ -27,15 +27,16 @@ namespace StickmanSliding.Features.Player.GameHub
 
         private void Rotate(float deltaTime)
         {
-            PlayerGameHubConfig config = _configProvider.Config;
+            float targetRotation = _rotateInputService.GetRotation() * _configProvider.Config.TargetRotationSpeed;
 
-            float targetRotation = -_rotateInputService.GetRotation() * config.TargetRotationSpeed;
+            float smoothTime = Mathf.Abs(targetRotation) > Mathf.Abs(_currentRotation)
+                ? _configProvider.Config.RotationSpeedAcceleratingTime
+                : _configProvider.Config.RotationSpeedDeceleratingTime;
 
-            _currentRotation = Mathf.SmoothDamp(_currentRotation, targetRotation,
-                ref _currentRotationChangingVelocity, config.RotationSmoothTime);
+            _currentRotation =
+                Mathf.SmoothDamp(_currentRotation, targetRotation, ref _currentRotationChangingVelocity, smoothTime);
 
-            float rotation = Mathf.Clamp(_currentRotation, -config.MaxRotationSpeed, config.MaxRotationSpeed);
-            _player.Character.Rotate(xAngle: default, rotation * deltaTime, zAngle: default);
+            _player.Character.Rotate(xAngle: default, _currentRotation * deltaTime, zAngle: default);
         }
     }
 }

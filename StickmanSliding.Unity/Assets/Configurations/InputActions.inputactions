@@ -93,6 +93,39 @@
                 },
                 {
                     "name": "Press+Delta/X [Pointer]",
+                    "id": "a9d343b1-5d0e-4ad3-8468-02f581c948f4",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "9a9482d2-af42-4739-bf1e-97d5274e1034",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Touch",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "0fd18d2a-6dcd-4a97-b1c6-a19871f7e4d1",
+                    "path": "<Pointer>/delta/x",
+                    "interactions": "",
+                    "processors": "Clamp(min=-1,max=1)",
+                    "groups": ";Keyboard&Mouse;Touch",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Press+Delta/X [Pointer]",
                     "id": "f474086b-8c86-4a67-a099-b89f1ea8da12",
                     "path": "OneModifier",
                     "interactions": "",
@@ -118,7 +151,7 @@
                     "id": "558dd5c4-7e0b-4c5f-8258-c94656a342ff",
                     "path": "<Pointer>/delta/x",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Invert,AxisDeadzone(min=0.01,max=0.01)",
                     "groups": ";Keyboard&Mouse;Touch",
                     "action": "Rotate",
                     "isComposite": false,

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e41f4cc51d84b1cbf943f978e350f3f, type: 3}
   m_Name: PlayerGameHubConfig
   m_EditorClassIdentifier: 
-  <TargetRotationSpeed>k__BackingField: 100
-  <MaxRotationSpeed>k__BackingField: 500
-  <RotationSmoothTime>k__BackingField: 0.4
+  <TargetRotationSpeed>k__BackingField: 150
+  <RotationSpeedAcceleratingTime>k__BackingField: 1
+  <RotationSpeedDeceleratingTime>k__BackingField: 0.5
