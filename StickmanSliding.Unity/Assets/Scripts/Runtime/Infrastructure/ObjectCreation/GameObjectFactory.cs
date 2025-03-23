@@ -49,7 +49,7 @@ namespace StickmanSliding.Infrastructure.ObjectCreation
         protected TComponent CreateActualObject()
         {
             if (_prefab == default)
-                throw new InvalidOperationException($"Prefab {_prefab.name} is not loaded!\n" +
+                throw new InvalidOperationException($"Prefab for {typeof(TComponent).Name} is not loaded!\n" +
                                                     $"Make sure factory {GetType().Name} is initialized.");
             using (_prefab.AsInactive())
                 return _instantiator.InstantiatePrefabForComponent<TComponent>(_prefab, _position, _rotation, _parent);

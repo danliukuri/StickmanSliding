@@ -20,7 +20,7 @@ namespace StickmanSliding.Features.Player
         public void StartMoving() => _movingSubscription = Observable.EveryUpdate(UnityFrameProvider.Update)
             .Select(_ => Time.deltaTime).Subscribe(Move).AddTo(_transform);
 
-        public void StopMoving() => _movingSubscription.Dispose();
+        public void StopMoving() => _movingSubscription?.Dispose();
 
         private void Move(float deltaTime) => _transform.Translate(
             _moveInputService.GetMovement() * _configProvider.Config.LateralSpeed * deltaTime,

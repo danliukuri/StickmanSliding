@@ -816,7 +816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab:
-    m_AssetGUID: 3ebba9c9ec31d754f8a084b0f784e9b8
+    m_AssetGUID: 7ea5469d38525184781019a5688d796f
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 510436487}
+  backgroundColorChangingSpeed: 0.002
 --- !u!114 &1081873149
 MonoBehaviour:
   m_ObjectHideFlags: 0

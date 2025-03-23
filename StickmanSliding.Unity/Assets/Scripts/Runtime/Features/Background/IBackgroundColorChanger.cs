@@ -1,8 +1,12 @@
-﻿namespace StickmanSliding.Features.Background
+﻿using System;
+
+namespace StickmanSliding.Features.Background
 {
-    public interface IBackgroundColorChanger
+    public interface IBackgroundColorChanger : IDisposable
     {
-        void Initialize(float colorHue);
+        void IDisposable.Dispose() => StopChanging();
+
+        void Initialize(float initialColorHue);
 
         void StartChanging();
         void StopChanging();

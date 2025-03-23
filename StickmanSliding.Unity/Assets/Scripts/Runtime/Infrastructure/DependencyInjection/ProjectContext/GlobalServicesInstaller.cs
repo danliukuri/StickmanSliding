@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using StickmanSliding.Data.Static.Configuration;
-using StickmanSliding.Features.Background;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.ObstacleCube;
 using StickmanSliding.Features.Track;
@@ -20,7 +19,6 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
     {
         [SerializeField] private PoolConfigReferences  poolConfigReferences;
         [SerializeField] private InputActionReferences inputActionReferences;
-        [SerializeField] private float                 backgroundColorChangingSpeed;
 
         public override void InstallBindings()
         {
@@ -29,7 +27,6 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
             BindPoolConfigLoader();
             BindInputServices();
             BindRandomizer();
-            BindBackgroundColorChanger();
         }
 
 
@@ -40,13 +37,13 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
         private void BindPoolConfigLoader() => Container.BindInterfacesTo<PoolConfigLoader>().AsSingle()
             .WithArguments(poolConfigReferences.ToDictionary());
 
-        private void BindInputServices() => Container.BindInterfacesTo<MoveInputService>().AsSingle()
-            .WithArguments(inputActionReferences.Move);
+        private void BindInputServices()
+        {
+            Container.BindInterfacesTo<MoveInputService>().AsSingle().WithArguments(inputActionReferences.Move);
+            Container.BindInterfacesTo<RotateInputService>().AsSingle().WithArguments(inputActionReferences.Rotate);
+        }
 
         private void BindRandomizer() => Container.BindInterfacesTo<UnityRandomizer>().AsSingle();
-
-        private void BindBackgroundColorChanger() => Container.BindInterfacesTo<BackgroundColorChanger>().AsSingle()
-            .WithArguments(backgroundColorChangingSpeed);
 
         [Serializable]
         public class PoolConfigReferences
@@ -66,7 +63,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.ProjectContext
         [Serializable]
         public class InputActionReferences
         {
-            [field: SerializeField] public AssetReferenceT<InputActionReference> Move { get; private set; }
+            [field: SerializeField] public AssetReferenceT<InputActionReference> Move   { get; private set; }
+            [field: SerializeField] public AssetReferenceT<InputActionReference> Rotate { get; private set; }
         }
     }
 }

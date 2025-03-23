@@ -3,7 +3,7 @@ using Zenject;
 
 namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gameplay
 {
-    public class GameStateMachineGameplayStatesInstaller : MonoInstaller
+    public class GameStateMachineSceneStatesInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {

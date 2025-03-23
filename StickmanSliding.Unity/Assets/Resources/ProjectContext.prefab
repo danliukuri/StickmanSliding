@@ -117,4 +117,10 @@ MonoBehaviour:
       m_SubObjectType: UnityEngine.InputSystem.InputActionReference, Unity.InputSystem,
         Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
       m_EditorAssetChanged: 0
-  backgroundColorChangingSpeed: 0.002
+    <Rotate>k__BackingField:
+      m_AssetGUID: 052faaac586de48259a63d0c4782560b
+      m_SubObjectName: Player/Rotate
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.InputSystem.InputActionReference, Unity.InputSystem,
+        Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
