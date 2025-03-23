@@ -38,7 +38,9 @@ crashlytics-build.properties
 # Temporary build auto-generated data
 /.utmp/
 
-# Temporary auto-generated Android Assets
+*/[Aa]ddressable*[Aa]ssets*[Dd]ata/[Ll]ink.xml
+*/[Aa]ddressable*[Aa]ssets*[Dd]ata/[Ll]ink.xml.meta
+
 /[Aa]ssets/[Ss]treaming*[Aa]ssets/aa/*
 /[Aa]ssets/[Ss]treaming*[Aa]ssets/aa.meta
 
