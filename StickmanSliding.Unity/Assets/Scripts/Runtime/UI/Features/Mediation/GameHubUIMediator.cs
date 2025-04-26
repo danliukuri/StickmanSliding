@@ -10,15 +10,15 @@ using static StickmanSliding.UI.Data.Static.MainMenuVisualElementsNameConstants;
 
 namespace StickmanSliding.UI.Features.Mediation
 {
-    public class UIMediator : Mediator
+    public class GameHubUIMediator : Mediator
     {
         [Inject] private readonly IStateMachine _gameStateMachine;
 
-        protected override Dictionary<string, Dictionary<Type, Action<EventArgs>>> BindEventHandlers() => new()
+        protected override Dictionary<string, Dictionary<string, Action<EventArgs>>> BindEventHandlers() => new()
         {
-            [PlayButton] = new Dictionary<Type, Action<EventArgs>>
+            [PlayButton] = new Dictionary<string, Action<EventArgs>>
             {
-                [typeof(ClickEvent)] = _ => StartGameplay()
+                [nameof(ClickEvent)] = _ => StartGameplay()
             }
         };
 
