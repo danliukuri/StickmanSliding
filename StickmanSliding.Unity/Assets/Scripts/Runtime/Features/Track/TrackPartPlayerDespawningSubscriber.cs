@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using R3;
 using R3.Triggers;
+using StickmanSliding.Architecture.GameStates.Gameplay;
 using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Player;
 using StickmanSliding.Infrastructure.ObjectCreation;
@@ -9,8 +10,10 @@ using Zenject;
 
 namespace StickmanSliding.Features.Track
 {
-    public class TrackPartPlayerDespawningSubscriber : ITrackPartPlayerDespawningSubscriber
+    public class TrackPartPlayerDespawningSubscriber : ITrackPartPlayerDespawningSubscriber, IGameplayFinishingInformer
     {
+        public event Action GameplayFinished;
+
         [Inject] private readonly ICollectableCubeSpawner          _collectableCubeSpawner;
         [Inject] private readonly IGameObjectFactory<PlayerEntity> _playerFactory;
 
@@ -47,7 +50,7 @@ namespace StickmanSliding.Features.Track
                         .Where(collider => collider.GetComponentInParent<PlayerCharacterEntity>() != default)
                         .Select(collider => collider.GetComponentInParent<PlayerEntity>())
                         .Where(player => player != default)
-                        .Subscribe(_playerFactory.Release)
+                        .Subscribe(DespawnPlayerCharacter)
                 );
         }
 
@@ -61,6 +64,12 @@ namespace StickmanSliding.Features.Track
         {
             if (_playerCharacterDespawningSubscriptions.Remove(trackPart, out IDisposable subscription))
                 subscription.Dispose();
+        }
+
+        private void DespawnPlayerCharacter(PlayerEntity player)
+        {
+            _playerFactory.Release(player);
+            GameplayFinished?.Invoke();
         }
     }
 }

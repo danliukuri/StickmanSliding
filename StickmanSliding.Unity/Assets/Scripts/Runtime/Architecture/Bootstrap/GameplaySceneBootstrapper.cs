@@ -10,7 +10,8 @@ namespace StickmanSliding.Architecture.Bootstrap
         private async UniTaskVoid BootstrapSceneAsync()
         {
             await _gameStateMachine.ChangeState<SetupGameplayState>();
-            _gameStateMachine.ChangeState<ProcessGameplayState>().Forget();
+            await _gameStateMachine.ChangeState<ProcessGameplayState>();
+            await _gameStateMachine.ChangeState<FinishGameplayState>();
         }
     }
 }
