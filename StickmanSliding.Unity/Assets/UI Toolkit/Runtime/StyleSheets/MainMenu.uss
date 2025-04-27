@@ -49,3 +49,19 @@ Button > * {
     margin: 0 10px;
     padding: 0;
 }
+
+.button-wrapper {
+    width: 100%;
+    align-items: center;
+    transition-duration: 3s;
+    transition-timing-function: ease-in-out-elastic;
+    transition-delay: -1.3s;
+}
+
+.button-wrapper-left-offscreen {
+    translate: -100% 0;
+}
+
+.button-wrapper-right-offscreen {
+    translate: 100% 0;
+}

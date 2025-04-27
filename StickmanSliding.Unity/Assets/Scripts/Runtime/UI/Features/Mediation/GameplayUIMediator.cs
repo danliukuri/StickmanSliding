@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using StickmanSliding.Architecture.GameStates.Gameplay;
+using StickmanSliding.UI.Features.Animation;
 using UnityEngine;
 using Zenject;
 
@@ -8,7 +9,8 @@ namespace StickmanSliding.UI.Features.Mediation
 {
     public class GameplayUIMediator : Mediator
     {
-        [Inject] private GameObject _gameoverUI;
+        [Inject] private GameObject           _gameoverUI;
+        [Inject] private IUIAppearingAnimator _gameoverUIAppearingAnimator;
 
         protected override Dictionary<string, Dictionary<string, Action<EventArgs>>> BindEventHandlers() => new()
         {
@@ -18,6 +20,10 @@ namespace StickmanSliding.UI.Features.Mediation
             }
         };
 
-        private void ShowGameoverUI() => _gameoverUI.SetActive(true);
+        private void ShowGameoverUI()
+        {
+            _gameoverUI.SetActive(true);
+            _gameoverUIAppearingAnimator.AnimateUIAppearing();
+        }
     }
 }
