@@ -21,6 +21,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             BindConfigLoader();
             BindProvider();
             BindTimeDependentConfigLoader();
+            BindCollectedCubesMonitor();
         }
 
         private void BindFactory() =>
@@ -34,5 +35,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         private void BindTimeDependentConfigLoader() =>
             Container.BindInterfacesTo<ConfigLoader<TimeDependentConfig>>().AsSingle()
                 .WithArguments(timeDependentConfig);
+
+        private void BindCollectedCubesMonitor() =>
+            Container.BindInterfacesTo<PlayerCollectedCubesMonitor>().AsSingle();
     }
 }

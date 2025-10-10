@@ -1,5 +1,6 @@
 ﻿using StickmanSliding.Data.Static.Configuration;
 using StickmanSliding.Features.CollectableCube;
+using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
 using StickmanSliding.Utilities.Extensions;
@@ -14,8 +15,10 @@ namespace StickmanSliding.Features.ObstacleCube
         [Inject] private readonly ICollectableCubesParentProvider            _collectableCubesParentProvider;
         [Inject] private readonly IConfigProvider<PlayerCubeDetachingConfig> _configProvider;
 
-        public void Detach(CollectableCubeEntity cube, TrackPartEntity trackPart)
+        public void Detach(PlayerEntity player, CollectableCubeEntity cube, TrackPartEntity trackPart)
         {
+            player.State.CollectedCubes.Remove(cube);
+
             cube.transform.SetParent(_collectableCubesParentProvider.DefaultParent);
 
             cube.Rigidbody.constraints &= ~RigidbodyConstraints.FreezePositionX & ~RigidbodyConstraints.FreezePositionZ;
