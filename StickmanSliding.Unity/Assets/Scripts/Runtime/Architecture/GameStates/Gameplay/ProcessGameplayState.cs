@@ -16,6 +16,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         [Inject] private readonly IMoveInputService                _moveInputService;
         [Inject] private readonly IPlayerProvider                  _playerProvider;
         [Inject] private readonly IBackgroundColorChanger          _backgroundColorChanger;
+        [Inject] private readonly IPlayerCollectedCubesMonitor     _collectedCubesMonitor;
         [Inject] private readonly List<IGameplayFinishingInformer> _gameplayFinishingInformers;
 
         public async UniTask Enter()
@@ -26,6 +27,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 
             _moveInputService.Enable();
 
+            _collectedCubesMonitor.SubscribeToMonitor();
             _playerProvider.Player.Mover.StartMoving();
             _playerProvider.Player.GroundedStateUpdater.StartUpdating();
             _playerProvider.Player.CharacterAnimatorParametersChanger.StartUpdatingGroundedState();
@@ -38,6 +40,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _playerProvider.Player.CharacterAnimatorParametersChanger.StopUpdatingGroundedState();
             _playerProvider.Player.GroundedStateUpdater.StopUpdating();
             _playerProvider.Player.Mover.StopMoving();
+            _collectedCubesMonitor.UnsubscribeToMonitor();
 
             _moveInputService.Disable();
 

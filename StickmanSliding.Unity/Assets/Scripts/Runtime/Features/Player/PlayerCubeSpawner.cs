@@ -23,6 +23,8 @@ namespace StickmanSliding.Features.Player
         {
             CollectableCubeEntity cube = _factory.Create();
 
+            _player.State.CollectedCubes.Add(cube);
+
             cube.transform.SetParent(_player.CubesParent);
 
             cube.transform.position    =  _player.Character.position;
