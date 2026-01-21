@@ -9,6 +9,6 @@ namespace StickmanSliding.Features.ObstacleCube
     {
         void Detach(PlayerEntity player, CollectableCubeEntity cube, TrackPartEntity trackPart);
 
-        bool IsCollisionFromDetachableDirection(Collision collision);
+        bool IsCollisionFromDetachableDirection(CollectableCubeEntity playerCube, Collision collision);
     }
 }

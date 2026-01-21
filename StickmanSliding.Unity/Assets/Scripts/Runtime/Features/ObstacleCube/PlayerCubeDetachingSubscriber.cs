@@ -21,10 +21,10 @@ namespace StickmanSliding.Features.ObstacleCube
         {
             if (!_detachingSubscriptions.ContainsKey(collider))
                 _detachingSubscriptions.Add(collider, collider.OnCollisionEnterAsObservable()
-                    .Where(_playerCubeDetacher.IsCollisionFromDetachableDirection)
                     .Select(collision => (Entity: collision.transform.GetComponentInParent<PlayerEntity>(),
-                        Cube: collision.transform.GetComponentInParent<CollectableCubeEntity>()))
-                    .Where(player => player.Entity != default && player.Cube != default)
+                        Cube: collision.transform.GetComponentInParent<CollectableCubeEntity>(), Collision: collision))
+                    .Where(player => player.Entity != default && player.Cube != default &&
+                        _playerCubeDetacher.IsCollisionFromDetachableDirection(player.Cube, player.Collision))
                     .Subscribe(trackPart,
                         (player, track) => _playerCubeDetacher.Detach(player.Entity, player.Cube, track)));
         }
