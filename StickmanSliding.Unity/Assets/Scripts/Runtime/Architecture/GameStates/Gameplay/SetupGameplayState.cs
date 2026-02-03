@@ -36,6 +36,8 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 
         [Inject] private readonly IGameObjectFactory<CollectableCubeEntity> _collectableCubeFactory;
 
+        [Inject] private readonly IConfigLoader<RagdollConfig> _playerRagdollConfigLoader;
+
         [Inject] private readonly IMoveInputService       _moveInputService;
         [Inject] private readonly IBackgroundColorChanger _backgroundColorChanger;
         [Inject] private readonly IRandomizer             _randomizer;
@@ -55,7 +57,8 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             _playerCubeDetachingConfigLoader.Load(),
             _timeDependentConfigLoader.Load(),
             _wallObstacleSpawnerConfigLoader.Load(),
-            _cubeObstacleConfigLoader.Load()
+            _cubeObstacleConfigLoader.Load(),
+            _playerRagdollConfigLoader.Load()
         );
 
         private UniTask InitializeServices()
@@ -81,6 +84,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
         private void PlacePlayer()
         {
             PlayerEntity player = _playerFactory.Create();
+            player.Ragdoll.Initialize();
             _playerProvider.Initialize(player);
             player.CubeSpawner.SpawnInitial();
         }

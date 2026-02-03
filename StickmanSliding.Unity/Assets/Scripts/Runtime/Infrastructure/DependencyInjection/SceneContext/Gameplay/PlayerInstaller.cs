@@ -13,12 +13,12 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         [SerializeField] private AssetReferenceGameObject             playerPrefab;
         [SerializeField] private AssetReferenceT<PlayerConfig>        config;
         [SerializeField] private AssetReferenceT<TimeDependentConfig> timeDependentConfig;
-
+        [SerializeField] private AssetReferenceT<RagdollConfig>       ragdollConfig;
 
         public override void InstallBindings()
         {
             BindFactory();
-            BindConfigLoader();
+            BindConfigLoaders();
             BindProvider();
             BindTimeDependentConfigLoader();
             BindCollectedCubesMonitor();
@@ -27,8 +27,11 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         private void BindFactory() =>
             Container.BindInterfacesTo<GameObjectFactory<PlayerEntity>>().AsSingle().WithArguments(playerPrefab);
 
-        private void BindConfigLoader() =>
+        private void BindConfigLoaders()
+        {
             Container.BindInterfacesTo<ConfigLoader<PlayerConfig>>().AsSingle().WithArguments(config);
+            Container.BindInterfacesTo<ConfigLoader<RagdollConfig>>().AsSingle().WithArguments(ragdollConfig);
+        }
 
         private void BindProvider() => Container.BindInterfacesTo<PlayerProvider>().AsSingle();
 

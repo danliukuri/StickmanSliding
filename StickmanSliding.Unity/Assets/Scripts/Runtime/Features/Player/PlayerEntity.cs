@@ -1,4 +1,5 @@
 ﻿using StickmanSliding.Data.Dynamic.State;
+using StickmanSliding.Features.Ragdoll;
 using UnityEngine;
 using Zenject;
 
@@ -12,8 +13,9 @@ namespace StickmanSliding.Features.Player
         [Inject] public IPlayerGroundedStateUpdater               GroundedStateUpdater               { get; }
         [Inject] public IPlayerCharacterAnimatorParametersChanger CharacterAnimatorParametersChanger { get; }
 
-        [field: SerializeField] public Transform Character   { get; private set; }
-        [field: SerializeField] public Transform CubesParent { get; private set; }
+        [field: SerializeField] public RagdollEntity Ragdoll     { get; private set; }
+        [field: SerializeField] public Transform     Character   { get; private set; }
+        [field: SerializeField] public Transform     CubesParent { get; private set; }
 
         public PlayerState State { get; } = new();
     }
