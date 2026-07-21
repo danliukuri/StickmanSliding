@@ -12,7 +12,13 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 
         public void Enter()
         {
-            _playerProvider.Player?.Ragdoll.Thrower.ThrowInPlayerDirection();
+            PlayerEntity player = _playerProvider.Player;
+
+            if (player != default)
+            {
+                player.State.IsAlive.Value = false;
+                player.Ragdoll.Thrower.ThrowInPlayerDirection();
+            }
 
             _uiMediator.Notify(nameof(FinishGameplayState), nameof(Enter));
         }
