@@ -8,7 +8,7 @@ namespace StickmanSliding.Features.Track
     {
         [Inject] private readonly ITrackPartPlacer                     _trackPartPlacer;
         [Inject] private readonly ITrackPartPlayerDespawningSubscriber _trackPartPlayerDespawningSubscriber;
-        [Inject] private readonly IPlayerCubeDetachingSubscriber       _playerCubeDetachingSubscriber;
+        [Inject] private readonly IPlayerCollisionHandlingSubscriber   _playerCollisionHandlingSubscriber;
 
         public void Configure(InitialTrackPartEntity trackPart)
         {
@@ -16,7 +16,7 @@ namespace StickmanSliding.Features.Track
 
             _trackPartPlayerDespawningSubscriber.SubscribeToDespawnPlayerCubes(trackPart);
             _trackPartPlayerDespawningSubscriber.SubscribeToDespawnPlayerCharacter(trackPart);
-            _playerCubeDetachingSubscriber.SubscribeToDetachPlayerCube(trackPart.PlayerCubesDetachCollider);
+            _playerCollisionHandlingSubscriber.Subscribe(trackPart.PlayerCubesDetachCollider);
         }
     }
 }

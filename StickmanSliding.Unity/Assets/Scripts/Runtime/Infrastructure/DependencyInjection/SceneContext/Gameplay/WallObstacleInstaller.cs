@@ -23,7 +23,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             BindWallObstacleSpawner();
             BindPlayerCubeDetachingConfigLoader();
             BindPlayerCubeDetacher();
-            BindPlayerCubeDetachingSubscriber();
+            BindPlayerCollisionHandlingSubscriber();
+            BindPlayerCollisionHandler();
             BindWallObstacleSpawnerConfigLoader();
             BindCubeObstacleConfigLoader();
         }
@@ -42,8 +43,11 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
         private void BindPlayerCubeDetacher() =>
             Container.BindInterfacesTo<PlayerCubeDetacher>().AsSingle();
 
-        private void BindPlayerCubeDetachingSubscriber() =>
-            Container.BindInterfacesTo<PlayerCubeDetachingSubscriber>().AsSingle();
+        private void BindPlayerCollisionHandlingSubscriber() =>
+            Container.BindInterfacesTo<PlayerCollisionHandlingSubscriber>().AsSingle();
+
+        private void BindPlayerCollisionHandler() =>
+            Container.BindInterfacesTo<PlayerCollisionHandler>().AsSingle();
 
         private void BindWallObstacleSpawnerConfigLoader() =>
             Container.BindInterfacesTo<JsonConfigLoader<WallObstacleSpawnerConfig>>().AsSingle()

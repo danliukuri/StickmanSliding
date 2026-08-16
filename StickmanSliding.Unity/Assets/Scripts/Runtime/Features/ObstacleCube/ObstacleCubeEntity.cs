@@ -7,7 +7,7 @@ namespace StickmanSliding.Features.ObstacleCube
     /// <inheritdoc/>
     public class ObstacleCubeEntity : Entity
     {
-        [Inject] public IPlayerCubeDetachingSubscriber PlayerCubeDetachingSubscriber { get; private set; }
+        [Inject] public IPlayerCollisionHandlingSubscriber PlayerCollisionHandlingSubscriber { get; private set; }
 
         [field: SerializeField] public Renderer Renderer                  { get; private set; }
         [field: SerializeField] public Collider PlayerCubesDetachCollider { get; private set; }
