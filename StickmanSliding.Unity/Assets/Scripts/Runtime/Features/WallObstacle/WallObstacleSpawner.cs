@@ -54,7 +54,7 @@ namespace StickmanSliding.Features.WallObstacle
         {
             foreach (ObstacleCubeEntity cube in trackPart.State.ObstacleCubes.Values)
             {
-                cube.PlayerCubeDetachingSubscriber.UnsubscribeToDetachPlayerCube(cube.PlayerCubesDetachCollider);
+                cube.PlayerCollisionHandlingSubscriber.Unsubscribe(cube.PlayerCubesDetachCollider);
                 _factory.Release(cube);
             }
 
@@ -89,7 +89,7 @@ namespace StickmanSliding.Features.WallObstacle
             cube.transform.position = trackPart.transform.position + localPosition;
             trackPart.State.ObstacleCubes.Add(localPosition, cube);
 
-            cube.PlayerCubeDetachingSubscriber.SubscribeToDetachPlayerCube(cube.PlayerCubesDetachCollider, trackPart);
+            cube.PlayerCollisionHandlingSubscriber.Subscribe(cube.PlayerCubesDetachCollider, trackPart);
 
             return cube;
         }

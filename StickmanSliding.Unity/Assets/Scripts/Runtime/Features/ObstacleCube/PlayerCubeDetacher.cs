@@ -26,10 +26,10 @@ namespace StickmanSliding.Features.ObstacleCube
             trackPart?.State.CollectableCubes.Add(cube.transform.position, cube);
         }
 
-        public bool IsCollisionFromDetachableDirection(CollectableCubeEntity playerCube, Collision collision)
+        public bool IsCollisionFromDetachableDirection(Collision collision)
         {
             Vector3 contactPoint       = collision.contacts.Average(contact => contact.point);
-            Vector3 collisionDirection = IgnoreSmallestAxis(playerCube.Collider.transform.position - contactPoint);
+            Vector3 collisionDirection = IgnoreSmallestAxis(collision.collider.transform.position - contactPoint);
 
             float objectsAngle = Vector3.Angle(collisionDirection, _configProvider.Config.NotDetachableDirection);
             return objectsAngle > _configProvider.Config.MaxDetachAngle;
