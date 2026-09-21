@@ -18,6 +18,7 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
             {
                 player.State.IsAlive.Value = false;
                 player.Ragdoll.Thrower.ThrowInPlayerDirection();
+                player.CubeThrower.ThrowAllInPlayerDirection();
             }
 
             _uiMediator.Notify(nameof(FinishGameplayState), nameof(Enter));

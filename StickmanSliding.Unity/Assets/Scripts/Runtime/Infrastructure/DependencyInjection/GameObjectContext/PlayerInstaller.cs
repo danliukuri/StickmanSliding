@@ -1,4 +1,5 @@
-﻿using StickmanSliding.Features.Player;
+﻿using StickmanSliding.Features.CollectableCube;
+using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Ragdoll;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
             BindGroundedStateUpdater();
             BindCharacterAnimatorParametersChanger();
             BindRagdollServices();
+            BindCubeThrower();
         }
 
         private void BindCubeSpawner() =>
@@ -40,5 +42,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
             Container.BindInterfacesTo<RagdollEnabler>().AsSingle().WithArguments(ragdoll);
             Container.BindInterfacesTo<RagdollThrower>().AsSingle().WithArguments(ragdoll);
         }
+
+        private void BindCubeThrower() =>
+            Container.BindInterfacesTo<CollectableCubeThrower>().AsSingle().WithArguments(player);
     }
 }

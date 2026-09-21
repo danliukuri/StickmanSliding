@@ -1,4 +1,5 @@
 ﻿using StickmanSliding.Data.Dynamic.State;
+using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Ragdoll;
 using UnityEngine;
 using Zenject;
@@ -10,6 +11,7 @@ namespace StickmanSliding.Features.Player
     {
         [Inject] public IPlayerMover                              Mover                              { get; }
         [Inject] public IPlayerCubeSpawner                        CubeSpawner                        { get; }
+        [Inject] public ICollectableCubeThrower                   CubeThrower                        { get; }
         [Inject] public IPlayerGroundedStateUpdater               GroundedStateUpdater               { get; }
         [Inject] public IPlayerCharacterAnimatorParametersChanger CharacterAnimatorParametersChanger { get; }
 
