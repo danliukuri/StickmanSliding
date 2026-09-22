@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using R3;
 using StickmanSliding.UI.Features.Mediation;
 using StickmanSliding.UI.Utilities.Extensions;
@@ -15,11 +16,13 @@ namespace StickmanSliding.UI.Features.EventsListeners
 
         private IDisposable _clickingSubscription;
 
-        public void Initialize()
+        public void Initialize() => _mainMenuDocument.WaitUntilIsActiveThenDo(Subscribe).Forget();
+
+        private void Subscribe()
         {
             var button = _mainMenuDocument.rootVisualElement.Q<Button>(PlayButton);
 
-            _clickingSubscription = button.OnClickAsObservable().Select(_ => PlayButton)
+            _clickingSubscription = button.OnClickOnceAsObservable().Select(_ => PlayButton)
                 .Subscribe(_uiMediator.Notify<ClickEvent>).AddTo(_mainMenuDocument);
         }
 

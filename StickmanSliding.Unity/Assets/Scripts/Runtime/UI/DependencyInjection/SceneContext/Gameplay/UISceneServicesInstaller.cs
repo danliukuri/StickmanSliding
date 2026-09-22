@@ -1,4 +1,5 @@
 ﻿using StickmanSliding.UI.Features.Animation;
+using StickmanSliding.UI.Features.EventsListeners;
 using StickmanSliding.UI.Features.Mediation;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,12 +13,16 @@ namespace StickmanSliding.UI.DependencyInjection.SceneContext.Gameplay
 
         public override void InstallBindings()
         {
+            BindGameoverButtonsEventsListener();
             BindUIMediator();
             BindGameoverUIAppearingAnimator();
         }
 
         private void BindUIMediator() =>
-            Container.BindInterfacesTo<GameplayUIMediator>().AsSingle().WithArguments(_gameoverUI.gameObject);
+            Container.BindInterfacesTo<GameoverUIMediator>().AsSingle().WithArguments(_gameoverUI.gameObject);
+
+        private void BindGameoverButtonsEventsListener() =>
+            Container.BindInterfacesTo<GameoverButtonsEventsListener>().AsSingle().WithArguments(_gameoverUI);
 
         private void BindGameoverUIAppearingAnimator() =>
             Container.BindInterfacesTo<GameoverUIAppearingAnimator>().AsSingle().WithArguments(_gameoverUI);
