@@ -15,17 +15,26 @@ namespace StickmanSliding.UI.Features.EventsListeners
         [Inject] private IMediator  _uiMediator;
 
         private IDisposable _mainMenuClickingSubscription;
+        private IDisposable _tryAgainClickingSubscription;
 
         public void Initialize() => _gameoverDocument.WaitUntilIsActiveThenDo(Subscribe).Forget();
 
         private void Subscribe()
         {
             var mainMenuButton = _gameoverDocument.rootVisualElement.Q<Button>(MainMenuButton);
+            var tryAgainButton = _gameoverDocument.rootVisualElement.Q<Button>(TryAgainButton);
 
             _mainMenuClickingSubscription = mainMenuButton.OnClickOnceAsObservable().Select(_ => MainMenuButton)
                 .Subscribe(_uiMediator.Notify<ClickEvent>).AddTo(_gameoverDocument);
+
+            _tryAgainClickingSubscription = tryAgainButton.OnClickOnceAsObservable().Select(_ => TryAgainButton)
+                .Subscribe(_uiMediator.Notify<ClickEvent>).AddTo(_gameoverDocument);
         }
 
-        public void Dispose() => _mainMenuClickingSubscription?.Dispose();
+        public void Dispose()
+        {
+            _mainMenuClickingSubscription?.Dispose();
+            _tryAgainClickingSubscription?.Dispose();
+        }
     }
 }

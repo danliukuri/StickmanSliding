@@ -28,6 +28,10 @@ namespace StickmanSliding.UI.Features.Mediation
             [MainMenuButton] = new Dictionary<string, Action<EventArgs>>
             {
                 [nameof(ClickEvent)] = _ => ReturnToMainMenu()
+            },
+            [TryAgainButton] = new Dictionary<string, Action<EventArgs>>
+            {
+                [nameof(ClickEvent)] = _ => RestartGameplay()
             }
         };
 
@@ -39,5 +43,8 @@ namespace StickmanSliding.UI.Features.Mediation
 
         private void ReturnToMainMenu() =>
             _gameStateMachine.ChangeState<SceneLoadingGameState, SceneName>(SceneName.GameHub).Forget();
+
+        private void RestartGameplay() =>
+            _gameStateMachine.ChangeState<SceneLoadingGameState, SceneName>(SceneName.Gameplay).Forget();
     }
 }
