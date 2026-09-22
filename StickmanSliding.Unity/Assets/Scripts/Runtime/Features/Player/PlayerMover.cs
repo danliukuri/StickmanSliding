@@ -8,7 +8,7 @@ using Zenject;
 
 namespace StickmanSliding.Features.Player
 {
-    public class PlayerMover : IPlayerMover
+    public class PlayerMover : IPlayerMover, IPlayerDirectionProvider
     {
         [Inject] private readonly IConfigProvider<PlayerConfig> _configProvider;
         [Inject] private readonly IMoveInputService             _moveInputService;
@@ -17,15 +17,14 @@ namespace StickmanSliding.Features.Player
 
         private IDisposable _movingSubscription;
 
+        public Vector3 Direction => new(_moveInputService.GetMovement() * _configProvider.Config.LateralSpeed,
+            y: default, _configProvider.Config.ForwardSpeed);
+
         public void StartMoving() => _movingSubscription = Observable.EveryUpdate(UnityFrameProvider.Update)
             .Select(_ => Time.deltaTime).Subscribe(Move).AddTo(_transform);
 
         public void StopMoving() => _movingSubscription?.Dispose();
 
-        private void Move(float deltaTime) => _transform.Translate(
-            _moveInputService.GetMovement() * _configProvider.Config.LateralSpeed * deltaTime,
-            y: default,
-            _configProvider.Config.ForwardSpeed * deltaTime
-        );
+        private void Move(float deltaTime) => _transform.Translate(Direction * deltaTime);
     }
 }

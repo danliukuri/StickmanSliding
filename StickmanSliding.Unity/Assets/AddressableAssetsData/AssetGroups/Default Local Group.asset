@@ -85,6 +85,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e6638484cfdc3e4a948e2680c0e9c79
+    m_Address: Assets/Configurations/PlayerRagdollConfig.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a21f773c458ab214db0e736900765cde
     m_Address: CollectibleCube
     m_ReadOnly: 0

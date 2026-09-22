@@ -17,7 +17,7 @@ namespace StickmanSliding.Features.Track
         [Inject] private readonly ICollectableCubeSpawner              _collectableCubeSpawner;
         [Inject] private readonly ITrackPartSpawningSubscriber         _trackPartSpawningSubscriber;
         [Inject] private readonly ITrackPartPlayerDespawningSubscriber _trackPartPlayerDespawningSubscriber;
-        [Inject] private readonly IPlayerCubeDetachingSubscriber       _playerCubeDetachingSubscriber;
+        [Inject] private readonly IPlayerCollisionHandlingSubscriber   _playerCollisionHandlingSubscriber;
 
         private Action<Collider> _spawnAction;
         private Action<Collider> _despawnAction;
@@ -44,7 +44,7 @@ namespace StickmanSliding.Features.Track
             _trackPartSpawningSubscriber.SubscribeToDespawnTriggerEnter(trackPart, _despawnAction);
             _trackPartPlayerDespawningSubscriber.SubscribeToDespawnPlayerCubes(trackPart);
             _trackPartPlayerDespawningSubscriber.SubscribeToDespawnPlayerCharacter(trackPart);
-            _playerCubeDetachingSubscriber.SubscribeToDetachPlayerCube(trackPart.PlayerCubesDetachCollider);
+            _playerCollisionHandlingSubscriber.Subscribe(trackPart.PlayerCubesDetachCollider);
         }
 
         public void Reset(TrackPartEntity trackPart)

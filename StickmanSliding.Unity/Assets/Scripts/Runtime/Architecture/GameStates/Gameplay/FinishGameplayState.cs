@@ -1,4 +1,5 @@
-﻿using StickmanSliding.UI.Features.Mediation;
+﻿using StickmanSliding.Features.Player;
+using StickmanSliding.UI.Features.Mediation;
 using StickmanSliding.Utilities.Patterns.State.Types;
 using Zenject;
 
@@ -6,8 +7,21 @@ namespace StickmanSliding.Architecture.GameStates.Gameplay
 {
     public class FinishGameplayState : IEnterableState
     {
-        [Inject] private readonly IMediator _uiMediator;
+        [Inject] private readonly IPlayerProvider _playerProvider;
+        [Inject] private readonly IMediator       _uiMediator;
 
-        public void Enter() => _uiMediator.Notify(nameof(FinishGameplayState), nameof(Enter));
+        public void Enter()
+        {
+            PlayerEntity player = _playerProvider.Player;
+
+            if (player != default)
+            {
+                player.State.IsAlive.Value = false;
+                player.Ragdoll.Thrower.ThrowInPlayerDirection();
+                player.CubeThrower.ThrowAllInPlayerDirection();
+            }
+
+            _uiMediator.Notify(nameof(FinishGameplayState), nameof(Enter));
+        }
     }
 }

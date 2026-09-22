@@ -1,4 +1,6 @@
-﻿using StickmanSliding.Features.Player;
+﻿using StickmanSliding.Features.CollectableCube;
+using StickmanSliding.Features.Player;
+using StickmanSliding.Features.Ragdoll;
 using UnityEngine;
 using Zenject;
 
@@ -6,9 +8,10 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
 {
     public class PlayerInstaller : MonoInstaller
     {
-        [SerializeField] private PlayerEntity player;
-        [SerializeField] private Animator     characterAnimator;
-        [SerializeField] private Rigidbody    characterRigidbody;
+        [SerializeField] private PlayerEntity  player;
+        [SerializeField] private RagdollEntity ragdoll;
+        [SerializeField] private Animator      characterAnimator;
+        [SerializeField] private Rigidbody     characterRigidbody;
 
         public override void InstallBindings()
         {
@@ -16,6 +19,8 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
             BindCubeSpawner();
             BindGroundedStateUpdater();
             BindCharacterAnimatorParametersChanger();
+            BindRagdollServices();
+            BindCubeThrower();
         }
 
         private void BindCubeSpawner() =>
@@ -31,5 +36,14 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.GameObjectContext
         private void BindCharacterAnimatorParametersChanger() =>
             Container.BindInterfacesTo<PlayerCharacterAnimatorParametersChanger>().AsSingle()
                 .WithArguments(characterAnimator, player);
+
+        private void BindRagdollServices()
+        {
+            Container.BindInterfacesTo<RagdollEnabler>().AsSingle().WithArguments(ragdoll);
+            Container.BindInterfacesTo<RagdollThrower>().AsSingle().WithArguments(ragdoll);
+        }
+
+        private void BindCubeThrower() =>
+            Container.BindInterfacesTo<CollectableCubeThrower>().AsSingle().WithArguments(player);
     }
 }

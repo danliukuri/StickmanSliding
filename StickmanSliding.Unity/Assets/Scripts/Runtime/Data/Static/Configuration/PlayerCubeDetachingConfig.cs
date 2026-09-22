@@ -7,5 +7,6 @@ namespace StickmanSliding.Data.Static.Configuration
     {
         [field: SerializeField] public float   MaxDetachAngle         { get; private set; }
         [field: SerializeField] public Vector3 NotDetachableDirection { get; private set; }
+        [field: SerializeField] public float   ThrowForce             { get; private set; }
     }
 }
