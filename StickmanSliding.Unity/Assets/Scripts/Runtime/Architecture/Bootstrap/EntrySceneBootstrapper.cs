@@ -7,6 +7,6 @@ namespace StickmanSliding.Architecture.Bootstrap
     public class EntrySceneBootstrapper : GameBootstrapper
     {
         protected override void BootstrapScene() =>
-            _gameStateMachine.ChangeState<SceneLoadingGameState, SceneName>(SceneName.Gameplay).Forget();
+            _gameStateMachine.ChangeState<SceneLoadingGameState, SceneName>(SceneName.GameHub).Forget();
     }
 }

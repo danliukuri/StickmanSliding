@@ -4,6 +4,7 @@
     <engine:Button text="PLAY" name="PlayButton">
         <engine:VisualElement name="ButtonIcon" class="button-icon"
                               style="background-image: url(&quot;project://database/Assets/External/Art/Icons/SkymonIconPackFree/skymon-icons-white/hand-point-right.png?fileID=21300000&amp;guid=b623003e0662b084f8e0084fb47e1f13&amp;type=3#hand-point-right&quot;);"/>
+        <engine:Label text="PLAY"/>
         <engine:VisualElement name="ButtonIcon" class="button-icon"
                               style="background-image: url(&quot;project://database/Assets/External/Art/Icons/SkymonIconPackFree/skymon-icons-white/hand-point-left.png?fileID=21300000&amp;guid=3331674e274cbf7469e5e4cbd6511a97&amp;type=3#hand-point-left&quot;);"/>
     </engine:Button>

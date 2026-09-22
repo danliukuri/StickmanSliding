@@ -7,6 +7,6 @@ namespace StickmanSliding.UI.DependencyInjection.SceneContext.GameHub
     {
         public override void InstallBindings() => BindUIMediator();
 
-        private void BindUIMediator() => Container.BindInterfacesTo<UIMediator>().AsSingle();
+        private void BindUIMediator() => Container.BindInterfacesTo<GameHubUIMediator>().AsSingle();
     }
 }
