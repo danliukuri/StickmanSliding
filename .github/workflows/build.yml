@@ -31,27 +31,40 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v7
 
       - name: Restore library cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ inputs.projectPath }}/Library
-          key: Library-Build-${{ matrix.targetPlatform }}
-          restore-keys: |
-            Library-Build-
-            Library-
+          key: Library-${{ runner.os }}-${{ matrix.targetPlatform }}-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt', '**/Packages/packages-lock.json') }}
 
       - name: Restore NuGet packages
-        run : |
-          dotnet tool install --global NuGetForUnity.Cli
+        run: |
+          dotnet tool install --global NuGetForUnity.Cli --version 4.5.0
           nugetforunity restore ${{ inputs.projectPath }}
 
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
 
+      - name: Verify Unity license secrets
+        shell: bash
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        run: |
+          missing=0
+          for name in UNITY_LICENSE UNITY_EMAIL UNITY_PASSWORD; do
+            if [ -z "${!name:-}" ]; then
+              echo "::error::$name is not configured"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
       - name: Build
-        uses: game-ci/unity-builder@v4.3.0
+        uses: game-ci/unity-builder@v6
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -60,9 +73,10 @@ jobs:
           projectPath: ${{ inputs.projectPath }}
           buildName: ${{ inputs.projectName }}
           targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: auto
 
       - name: Upload build
-        uses: actions/upload-artifact@v4.4.3
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.projectName }}${{ matrix.targetPlatform }} 
           path: build/${{ matrix.targetPlatform }}
