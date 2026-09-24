@@ -19,7 +19,7 @@ namespace StickmanSliding.Features.ObstacleCube
 
             if (cube == default)
                 GameplayFinished?.Invoke();
-            else if (_playerCubeDetacher.IsCollisionFromDetachableDirection(player.Collision))
+            else if (_playerCubeDetacher.ShouldDetach(player.Collision, cube))
                 _playerCubeDetacher.Detach(player.Entity, cube, track);
         }
     }
