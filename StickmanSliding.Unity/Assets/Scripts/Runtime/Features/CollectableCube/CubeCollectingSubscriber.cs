@@ -16,30 +16,16 @@ namespace StickmanSliding.Features.CollectableCube
         public void SubscribeToCollectByPlayer() =>
             _respawningSubscription = _cube.CollectTrigger.OnTriggerEnterAsObservable()
                 .Select(collider => collider.GetComponentInParent<PlayerEntity>())
-                .Where(player => player != default)
-                .Subscribe(HandlePlayerEnter);
+                .Where(player => player != default && player.State.IsAlive.Value)
+                .Subscribe(CollectCube);
 
         public void UnsubscribeToCollectByPlayer() => _respawningSubscription?.Dispose();
-
-        private void HandlePlayerEnter(PlayerEntity player)
-        {
-            if (player.State.IsAlive.Value)
-                CollectCube(player);
-            else
-                EnableKinematicCollision();
-        }
 
         private void CollectCube(PlayerEntity player)
         {
             _spawner.Despawn(_cube);
             player.CharacterAnimatorParametersChanger.SetJumpTrigger();
             player.CubeSpawner.Spawn();
-        }
-
-        private void EnableKinematicCollision()
-        {
-            _cube.Collider.enabled      = true;
-            _cube.Rigidbody.isKinematic = true;
         }
     }
 }

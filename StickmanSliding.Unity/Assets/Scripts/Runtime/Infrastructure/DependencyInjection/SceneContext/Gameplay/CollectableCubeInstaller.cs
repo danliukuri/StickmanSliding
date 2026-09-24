@@ -16,6 +16,7 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
             BindFactory();
             BindResetter();
             BindSpawner();
+            BindPhysicsConfigurator();
             BindParentProvider();
         }
 
@@ -28,6 +29,9 @@ namespace StickmanSliding.Infrastructure.DependencyInjection.SceneContext.Gamepl
 
         private void BindSpawner() =>
             Container.BindInterfacesTo<CollectableCubeSpawner>().AsSingle();
+
+        private void BindPhysicsConfigurator() =>
+            Container.BindInterfacesTo<CollectableCubePhysicsConfigurator>().AsSingle();
 
         private void BindParentProvider() =>
             Container.BindInterfacesTo<CollectableCubesParentProvider>().AsSingle()

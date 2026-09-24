@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using StickmanSliding.Infrastructure.ObjectCreation;
 using Zenject;
 
 namespace StickmanSliding.Features.Track
 {
-    public class TrackPartSpawner : ITrackPartSpawner
+    public class TrackPartSpawner : ITrackPartSpawner, ITrackPartProvider
     {
         [Inject] private readonly IGameObjectFactory<InitialTrackPartEntity> _initialTrackPartFactory;
         [Inject] private readonly IGameObjectFactory<TrackPartEntity>        _trackPartFactory;
         [Inject] private readonly ITrackPartConfigurator                     _trackPartConfigurator;
 
         private readonly Queue<ITrackPart> _trackParts = new();
+
+        public IEnumerable<TrackPartEntity> TrackParts => _trackParts.OfType<TrackPartEntity>();
 
         public void Initialize() => _trackPartConfigurator.Initialize(collider => Spawn(), collider => DespawnLast());
 

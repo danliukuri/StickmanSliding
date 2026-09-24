@@ -13,6 +13,7 @@ namespace StickmanSliding.Features.ObstacleCube
     public class PlayerCubeDetacher : IPlayerCubeDetacher
     {
         [Inject] private readonly ICollectableCubesParentProvider            _collectableCubesParentProvider;
+        [Inject] private readonly ICollectableCubePhysicsConfigurator        _physicsConfigurator;
         [Inject] private readonly IConfigProvider<PlayerCubeDetachingConfig> _configProvider;
 
         public void Detach(PlayerEntity player, CollectableCubeEntity cube, TrackPartEntity trackPart)
@@ -21,7 +22,7 @@ namespace StickmanSliding.Features.ObstacleCube
 
             cube.transform.SetParent(_collectableCubesParentProvider.DefaultParent);
 
-            cube.Rigidbody.constraints &= ~RigidbodyConstraints.FreezePositionX & ~RigidbodyConstraints.FreezePositionZ;
+            _physicsConfigurator.ConfigureAsDetached(cube);
 
             trackPart?.State.CollectableCubes.Add(cube.transform.position, cube);
         }

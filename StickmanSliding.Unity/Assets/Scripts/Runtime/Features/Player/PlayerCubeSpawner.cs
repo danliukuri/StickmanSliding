@@ -14,6 +14,7 @@ namespace StickmanSliding.Features.Player
     {
         [Inject] private readonly IGameObjectFactory<CollectableCubeEntity> _factory;
         [Inject] private readonly IConfigProvider<PlayerConfig>             _configProvider;
+        [Inject] private readonly ICollectableCubePhysicsConfigurator       _physicsConfigurator;
 
         [Inject] private readonly PlayerEntity _player;
 
@@ -30,11 +31,7 @@ namespace StickmanSliding.Features.Player
             cube.transform.position    =  _player.Character.position;
             _player.Character.position += cube.transform.HeightVector();
 
-            cube.Rigidbody.isKinematic  = false;
-            cube.Collider.enabled       = true;
-            cube.CollectTrigger.enabled = false;
-
-            cube.Rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            _physicsConfigurator.ConfigureAsPlayerStack(cube);
 
             return cube;
         }
