@@ -11,6 +11,7 @@ namespace StickmanSliding.Features.CollectableCube
     public class CollectableCubeThrower : ICollectableCubeThrower
     {
         [Inject] private readonly IConfigProvider<PlayerCubeDetachingConfig> _configProvider;
+        [Inject] private readonly ICollectableCubePhysicsConfigurator        _physicsConfigurator;
         [Inject] private readonly IPlayerCubeDetacher                        _playerCubeDetacher;
         [Inject] private readonly IPlayerDirectionProvider                   _playerDirectionProvider;
         [Inject] private readonly PlayerEntity                               _player;
@@ -24,6 +25,7 @@ namespace StickmanSliding.Features.CollectableCube
         private void ThrowInDirection(CollectableCubeEntity cube, Vector3 direction)
         {
             _playerCubeDetacher.Detach(_player, cube, trackPart: default);
+            _physicsConfigurator.ConfigureAsThrown(cube);
             cube.Rigidbody.AddForce(direction.normalized * _configProvider.Config.ThrowForce, ForceMode.Acceleration);
         }
     }

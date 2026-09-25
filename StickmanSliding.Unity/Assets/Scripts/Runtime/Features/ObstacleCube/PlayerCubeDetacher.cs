@@ -3,7 +3,8 @@ using StickmanSliding.Features.CollectableCube;
 using StickmanSliding.Features.Player;
 using StickmanSliding.Features.Track;
 using StickmanSliding.Infrastructure.AssetLoading.Configuration;
-using StickmanSliding.Utilities.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
@@ -12,7 +13,10 @@ namespace StickmanSliding.Features.ObstacleCube
 {
     public class PlayerCubeDetacher : IPlayerCubeDetacher
     {
+        private readonly List<ContactPoint> _contactBuffer = new();
+
         [Inject] private readonly ICollectableCubesParentProvider            _collectableCubesParentProvider;
+        [Inject] private readonly ICollectableCubePhysicsConfigurator        _physicsConfigurator;
         [Inject] private readonly IConfigProvider<PlayerCubeDetachingConfig> _configProvider;
 
         public void Detach(PlayerEntity player, CollectableCubeEntity cube, TrackPartEntity trackPart)
@@ -21,30 +25,36 @@ namespace StickmanSliding.Features.ObstacleCube
 
             cube.transform.SetParent(_collectableCubesParentProvider.DefaultParent);
 
-            cube.Rigidbody.constraints &= ~RigidbodyConstraints.FreezePositionX & ~RigidbodyConstraints.FreezePositionZ;
+            _physicsConfigurator.ConfigureAsDetached(cube);
 
             trackPart?.State.CollectableCubes.Add(cube.transform.position, cube);
         }
 
-        public bool IsCollisionFromDetachableDirection(Collision collision)
+        public bool ShouldDetach(Collision collision, CollectableCubeEntity cube)
         {
-            Vector3 contactPoint       = collision.contacts.Average(contact => contact.point);
-            Vector3 collisionDirection = IgnoreSmallestAxis(collision.collider.transform.position - contactPoint);
+            Vector3 up = -Physics.gravity.normalized;
 
-            float objectsAngle = Vector3.Angle(collisionDirection, _configProvider.Config.NotDetachableDirection);
-            return objectsAngle > _configProvider.Config.MaxDetachAngle;
+            Bounds cubeBounds = cube.Collider.bounds;
+            float  cubeBottom = GetBottomHeight(cubeBounds, up);
+
+            _contactBuffer.Clear();
+            collision.GetContacts(_contactBuffer);
+
+            return !HasSupportingSurface(cubeBounds.center, up) && HasContactHighEnoughToDetach(cubeBottom, up);
         }
 
-        private static Vector3 IgnoreSmallestAxis(Vector3 source)
-        {
-            Vector3 sourceAbs = source.Abs();
-            return sourceAbs.x < sourceAbs.y
-                ? sourceAbs.x < sourceAbs.z
-                    ? new Vector3(x: default, source.y, source.z)
-                    : new Vector3(source.x,   source.y, z: default)
-                : sourceAbs.y < sourceAbs.z
-                    ? new Vector3(source.x, y: default, source.z)
-                    : new Vector3(source.x, source.y,   z: default);
-        }
+        private bool HasSupportingSurface(Vector3 cubeCenter, Vector3 up) => _contactBuffer
+            .Select(contact => GetNormalTowardCube(contact, cubeCenter))
+            .Any(normalTowardCube => Vector3.Dot(normalTowardCube, up) > 0f);
+
+        private bool HasContactHighEnoughToDetach(float cubeBottom, Vector3 up) => _contactBuffer
+            .Select(contact => Vector3.Dot(contact.point, up) - cubeBottom)
+            .Any(stepHeight => stepHeight > _configProvider.Config.MaxStepHeight);
+
+        private Vector3 GetNormalTowardCube(ContactPoint contact, Vector3 cubeCenter) =>
+            Mathf.Sign(Vector3.Dot(contact.normal, cubeCenter - contact.point)) * contact.normal;
+
+        private float GetBottomHeight(Bounds bounds, Vector3 direction) =>
+            Vector3.Dot(bounds.center, direction) - Vector3.Dot(bounds.extents, direction.Abs());
     }
 }
